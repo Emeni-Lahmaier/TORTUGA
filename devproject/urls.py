@@ -13,23 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
 from django.contrib import admin
-from django.urls import path 
-from django.urls import URLPattern
-from myapp import views
-from myapp.views import *
+from django.urls import path
+from myapp.views import *  
 from django.contrib.auth.views import LogoutView ,PasswordChangeView
 
-
-
+from django.urls import URLPattern
+ 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('acceuil/',views.acceuil, name='acceuil'),
+
+    path('', home, name='home'),  
+    path('acceuil/', acceuil, name='acceuil'),  
+    path('index/', index, name='index'), 
+    path('indexa/', indexa, name='indexa'), 
+    path('addnew', addnew, name='addnew'), 
+    path('addnewa', addnewa, name='addnewa'), 
+    path('edit/<int:id>', edit, name='edit'),  
+    path('edita/<int:id>', edita, name='edita'), 
+    path('update/<int:id>', update, name='update'),  
+    path('updatea/<int:id>', updatea, name='updatea'), 
+    path('delete/<int:id>', destroy, name='destroy'),
+    path('destroya/<int:id>', destroya, name='destroya'),   
     path('signup/',SignupView.as_view(),name='signup'),
     path('login/',MyloginView.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='home'),name='logout'),
-    path('change_password/',PasswordChangeView.as_view(template_name='change_password.html',form_class=MyChangePasswordForm),name='change_password'),
  
+
+
+
 ]

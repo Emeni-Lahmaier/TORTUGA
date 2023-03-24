@@ -1,0 +1,39 @@
+{% extends "basee.html" %}
+  
+{% block title %}Liste des Affilies{% endblock title %}
+  
+{% block content %}
+ <div class="col-md-12">
+        <span><a href="/addnewa" class="btn btn-primary">Ajouter un nouveau Affilie</a></span>  
+        <div class="table-responsive">
+        <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+        <thead>
+            <th><input type="checkbox" id="checkall" /></th>
+            
+            <th>Nom & Prénom</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Description du Contrat</th>
+            <th>Pourcentage</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </thead>
+        <tbody>
+        {% for affilie in affilies %}  
+            <tr>  
+            <td><input type="checkbox" class="checkthis" /></td>
+             
+            <td>{{ affilie.nom_prenom}}</td>  
+            <td>{{ affilie.email }}</td>  
+            <td>{{ affilie.contact }}</td>  
+            <td>{{ affilie.contrat }}</td> 
+            <td>{{ affilie.pourcentage }}</td> 
+            <td><a href="/edita/{{ affilie.id }}" class="btn btn-primary">Editer</a></td>
+            <td><a href="/destroya/{{affilie.id }}" class="btn btn-danger">Supprimer</a></td>  
+            </tr>  
+        {% endfor %} 
+        </tbody>
+        </table>
+        </div>
+    </div>
+{% endblock content %}

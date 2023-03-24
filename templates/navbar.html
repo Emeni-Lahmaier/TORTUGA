@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
+      {% load static %}
+      <img src="{% static 'Tortuga.png' %}" style="height:80px">
       <a class="navbar-brand" href="{% url 'home' %}">La Tortuga </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,18 +21,13 @@
           
         </ul>
         <ul class="navbar-nav me-autc mb-2 mb-1lg-@">
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-          <a class="nav-link" href="#">{{request.user}}</a>
-          <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          {% else %}
+          
           <li class="nav-item">
           <a class="nav-link" href="{% url 'login' %}">Login</a>
           <li class="nav-item">
           <a class="nav-link" href="{% url 'signup' %}">Signup</a>
 
-          {% endif %}
+          
         </ul>
         
         

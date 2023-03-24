@@ -1,18 +1,14 @@
+from django.shortcuts import render, redirect  
+from myapp.forms import ContactForm  
+from myapp.models import Contact  
+from myapp.forms import *
 from django.contrib.auth import authenticate,login
 from django.forms import ValidationError
-from django.shortcuts import redirect, render
 from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField,PasswordChangeForm
-from .form import * 
 from django.contrib import messages
 
 # Create your views here.
-
-def home(request):
- return render(request,'home.html')
-
-def acceuil(request):
-   return render(request,'acceuil.html')
 
 class SignupView(View):
     def get(self, request):
@@ -23,9 +19,10 @@ class SignupView(View):
         if fm.is_valid():
             fm.save()
             messages.success(request,"Sign Up Success !  ")
-            return redirect('/signup')
+            return redirect('/login')
         else:
             return render(request, 'signup.html',{'form':fm} )
+
 
 class MyloginView(View):
    def get(self, request):
@@ -43,3 +40,82 @@ class MyloginView(View):
             return redirect('/acceuil')
       else:
         return render(request , 'login.html',{'form':fm})
+
+# Create your views here.  
+def addnew(request):  
+    if request.method == "POST":  
+        form = ContactForm(request.POST)  
+        if form.is_valid():  
+            try:  
+                form.save()  
+                return redirect('/index')  
+            except:  
+                pass
+    else:  
+        form = ContactForm()  
+    return render(request,'index.html',{'form':form})  
+ 
+def index(request):  
+    contacts = Contact.objects.all()  
+    return render(request,"show.html",{'contacts':contacts})  
+ 
+def edit(request, id):  
+    contact = Contact.objects.get(id=id)  
+    return render(request,'edit.html', {'contact':contact})  
+ 
+def update(request, id):  
+    contact = Contact.objects.get(id=id)  
+    form = ContactForm(request.POST, instance = contact)  
+    if form.is_valid():  
+        form.save()  
+        return redirect("/index")  
+    return render(request, 'edit.html', {'contact':contact})  
+     
+def destroy(request, id):  
+    contact = Contact.objects.get(id=id)  
+    contact.delete()  
+    return redirect("/index")  
+
+def addnewa(request):  
+    if request.method == "POST":  
+        form = AffilieForm(request.POST)  
+        if form.is_valid():  
+            try:  
+                form.save()  
+                return redirect('/indexa')  
+            except:  
+                pass
+    else:  
+        form = AffilieForm()  
+    return render(request,'indexa.html',{'form':form}) 
+
+def indexa(request):  
+    affilies = Affilie.objects.all()  
+    return render(request,"showaffilie.html",{'affilies':affilies}) 
+
+ 
+def edita(request, id):  
+    affilie = Affilie.objects.get(id=id)  
+    return render(request,'edita.html', {'affilie':affilie})  
+ 
+def updatea(request, id):  
+    affilie = Affilie.objects.get(id=id)  
+    form = AffilieForm(request.POST, instance = affilie)  
+    if form.is_valid():  
+        form.save()  
+        return redirect("/indexa")  
+    return render(request, 'edita.html', {'affilie':affilie}) 
+
+def destroya(request, id):  
+    affilie = Affilie.objects.get(id=id)  
+    affilie.delete()  
+    return redirect("/indexa")  
+
+def home(request):
+ return render(request,'home.html')
+
+
+def acceuil(request):
+   return render(request,'acceuil.html')
+
+

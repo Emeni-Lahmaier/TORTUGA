@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="base.css">
+
+       
+</head>
+<body>
+    
+{% extends "basee.html" %} 
+{% block title %}Ajouter un nouveau Affilie{% endblock title %}
+  
+{% block content %}
+
+  
+  
+<div class="col-md-12">    
+    <form method="POST" class="post-form" action="/addnewa">  
+        {% csrf_token %}  
+        <div class="container">  
+            <div class="col-12">  
+            <h3>Entrer Les Détails </h3>  
+            </div>    
+        
+            <div class="mb-3"> 
+                <label>Nom&Prénom: </label>  
+                {{ form.nom_prenom }}   
+            </div> 
+            <div class="mb-3"> 
+                <label>Email:</label>  
+                {{ form.email }}   
+            </div>  
+            <div class="mb-3"> 
+                <label>Contact:</label>  
+                {{ form.contact }}   
+            </div>
+            <div class="mb-3"> 
+                <label>Contrat:</label>  
+                {{ form.contrat}}   
+            </div>
+            <div class="mb-3"> 
+                <label>Pourcentage:</label>  
+                {{ form.pourcentage}}   
+            </div>
+            <div class="mb-3"> 
+                <button type="submit" class="btn btn-primary">Valider</button>    
+            </div> 
+        </div>  
+    </form>  
+</div> 
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src = "https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script> 
+{% endblock content %} 
+
+</body>
+</html>
