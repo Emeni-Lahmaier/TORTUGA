@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Divide Container into Blocks with Buttons</title>
+	<style>
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			margin: 0 auto;
+			max-width: 800px;
+			padding: 20px;
+		}
+		.block {
+			width: 300px;
+			height: 150px;
+			margin: 10px;
+			background-color: #f0f0f0;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			font-size: 24px;
+			color: #333;
+			padding: 10px;
+		}
+		.btn-container {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.btn {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			font-size: 18px;
+			text-transform: uppercase;
+		}
+        pre {
+            max-height: 500px;
+            height:500px;
+            width:200px;
+            font-size: 16px;
+            line-height: 1.4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+            max-width: 300px;
+          }
+	</style>
+</head>
+<body>
+    {% extends "basee.html" %} 
+{% block title %}Email Templates{% endblock title %}
+  
+{% block content %}
+
+        {% for email in emails %} 
+        
+		<div class="block">
+			{{ email.title}}
+           
+			<div class="btn-container">
+                
+				<a href="/share/{{ email.id }}" class="btn btn-primary">Editer</a>
+				<button class="btn">Modifier</button>
+			</div>
+		</div>
+        <pre>{{email.codeHtml|safe }}</pre> 
+        {%endfor%}
+		
+	
+    {%endblock content%}
+</body>
+</html>

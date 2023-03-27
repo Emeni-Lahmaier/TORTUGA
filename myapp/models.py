@@ -84,5 +84,7 @@ class TemplatesUser(models.Model):
      title = models.CharField(max_length=30,null=True)
      codeHtml=models.TextField(null=True)
      type=models.CharField(max_length=30,null=True)
+     URL=models.TextField(null=True)
+     description=models.TextField(null=True)
      id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')

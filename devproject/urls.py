@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import *  
+from myapp.views import  email
+from myapp.views import  sharelandingpage
+from myapp.views import * 
 from django.contrib.auth.views import LogoutView ,PasswordChangeView
 
 from django.urls import URLPattern
@@ -25,7 +27,10 @@ urlpatterns = [
     path('', home, name='home'),  
     path('acceuil/', acceuil, name='acceuil'),  
     path('index/', index, name='index'), 
-    path('indexa/', indexa, name='indexa'), 
+    path('indexa/', indexa, name='indexa'),
+    path('email/', email, name='email'), 
+    path('sharelandingpage/', sharelandingpage, name='sharelandingpage'),
+    path('share/<int:id>', share, name='share'),
     path('addnew', addnew, name='addnew'), 
     path('addnewa', addnewa, name='addnewa'), 
     path('edit/<int:id>', edit, name='edit'),  

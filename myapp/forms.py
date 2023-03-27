@@ -23,7 +23,13 @@ class AffilieForm(forms.ModelForm):
             'contrat': forms.TextInput(attrs={ 'class': 'form-control' }),
             'pourcentage': forms.TextInput(attrs={ 'class': 'form-control' }),
         }
-
+class ShareForm(forms.ModelForm):
+    class Meta:
+        model = TemplatesUser
+        fields = ['title','URL','description']
+        widgets= {'title':forms.TextInput(attrs={ 'class': 'form-control' }),
+                  'URL': forms.TextInput(attrs={ 'class': 'form-control' }),
+                  'description':forms.TextInput(attrs={ 'class': 'form-control' }),}
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(label="Password",widget=forms.PasswordInput

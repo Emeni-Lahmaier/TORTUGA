@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect  
 from myapp.forms import ContactForm  
+from myapp.forms import ShareForm 
 from myapp.models import Contact  
 from myapp.forms import *
 from django.contrib.auth import authenticate,login
@@ -118,4 +119,16 @@ def home(request):
 def acceuil(request):
    return render(request,'acceuil.html')
 
+def email(request):
+    emails = TemplatesCommuns.objects.all()  
+    return render(request,"email.html",{'emails':emails}) 
+def sharelandingpage(request):
+   return render(request,'sharelandingpage.html')
 
+def share(request, id):  
+    tc = TemplatesCommuns.objects.get(id=id)  
+    form = ShareForm(request.POST)  
+    if form.is_valid():  
+        form.save()  
+        return redirect("/email")  
+    return render(request, 'sharelandingpage.html', {'tc':tc}) 
