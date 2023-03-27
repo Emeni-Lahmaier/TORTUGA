@@ -78,7 +78,7 @@ class TemplatesCommuns(models.Model):
      title = models.CharField(max_length=30,null=True)
      codeHtml=models.TextField(null=True)
      type=models.CharField(max_length=30,null=True)
-
+     image = models.ImageField()
 class TemplatesUser(models.Model):
      id= models.IntegerField(primary_key = True)
      title = models.CharField(max_length=30,null=True)
@@ -88,3 +88,4 @@ class TemplatesUser(models.Model):
      description=models.TextField(null=True)
      id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
+     image = models.ImageField()

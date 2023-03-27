@@ -119,9 +119,9 @@ def home(request):
 def acceuil(request):
    return render(request,'acceuil.html')
 
-def email(request):
-    emails = TemplatesCommuns.objects.all()  
-    return render(request,"email.html",{'emails':emails}) 
+def landingpage(request):
+    landingpages = TemplatesCommuns.objects.all()  
+    return render(request,"landingpage.html",{'landingpages':landingpages}) 
 def sharelandingpage(request):
    return render(request,'sharelandingpage.html')
 
@@ -130,5 +130,5 @@ def share(request, id):
     form = ShareForm(request.POST)  
     if form.is_valid():  
         form.save()  
-        return redirect("/email")  
+        return redirect("/landingpage")  
     return render(request, 'sharelandingpage.html', {'tc':tc}) 
