@@ -3,14 +3,59 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
+from PIL import Image
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(
+        upload_to = 'static',
+        default = 'Tortuga.png',
+        blank=True
+    )
+    first_name = models.CharField(max_length=255, default='')
+    last_name = models.CharField(max_length=255, default='')
+    email = models.EmailField(default='none@email.com')
+    birth_date = models.DateField(default='1999-12-31')
+    bio = models.TextField(default='')
+    city = models.CharField(max_length=255, default='')
+    state = models.CharField(max_length=255, default='')
+    country = models.CharField(max_length=255, default='')
+    favorite_animal = models.CharField(max_length=255, default='')
+    hobby = models.CharField(max_length=255, default='')
+
+    def str(self):
+        return self.user.username
+
+
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        profile = Profile.objects.create(user=kwargs['instance'])
+
+post_save.connect(create_profile, sender=User)
+
 # Create your models here.
 class Utilisateur(models.Model):
          id= models.IntegerField(primary_key = True)
          user = models.OneToOneField(User, on_delete=models.CASCADE,default=0)
          num_tel= models.IntegerField()
          date_naissance = models.DateField()  
-         image = models.ImageField()
+         avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
+         bio = models.TextField(default=0)
          USERNAME_FIELD = 'pseudo'
+         def __str__(self):
+            return self.user.username
+    # resizing images     
+def save(self, *args, **kwargs):
+            img = Image.open(self.avatar.path)
+
+            if img.height > 100 or img.width > 100:
+                new_img = (100, 100)
+                img.thumbnail(new_img)
+                img.save(self.avatar.path)
+          
+   
+    
          
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -21,6 +66,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.utilisateur.save()
 """
+    
+
 class Admin(models.Model):
     id_admin =models.OneToOneField(Utilisateur,on_delete=models.CASCADE, primary_key = True)
 
@@ -78,7 +125,8 @@ class TemplatesCommuns(models.Model):
      title = models.CharField(max_length=30,null=True)
      codeHtml=models.TextField(null=True)
      type=models.CharField(max_length=30,null=True)
-     image = models.ImageField()
+     image = models.ImageField(null=True)
+     
 class TemplatesUser(models.Model):
      id= models.IntegerField(primary_key = True)
      title = models.CharField(max_length=30,null=True)
@@ -88,4 +136,4 @@ class TemplatesUser(models.Model):
      description=models.TextField(null=True)
      id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
-     image = models.ImageField()
+     image = models.ImageField(null=True)

@@ -1,6 +1,6 @@
 {% extends "basee.html" %}
   
-{% block title %}Add New Employee Records{% endblock title %}
+{% block title %}Update Contact{% endblock title %}
   
 {% block content %}
 <div class="col-md-12">
@@ -8,14 +8,11 @@
     {% csrf_token %}  
     <div class="container">   
         <div class="col-12">  
-            <h3>Update Details</h3>  
+            <h3>Modifier Les Coordonnees</h3>  
         </div> 
+        
         <div class="mb-3"> 
-            <label>Customer ID:</label>  
-            <input type="text" class="form-control" name="id" id="id_id" required maxlength="20" value="{{ contact.id }}"/>    
-        </div> 
-        <div class="mb-3"> 
-            <label>Name:</label>  
+            <label>Nom & Prénom:</label>  
             <input type="text" class="form-control" name="name" id="id_name" required maxlength="100" value="{{ contact.name }}" />  
         </div> 
         <div class="mb-3"> 
@@ -23,11 +20,11 @@
             <input type="email" class="form-control" name="email" id="id_email" required maxlength="254" value="{{ contact.email }}" />  
         </div> 
         <div class="mb-3"> 
-            <label>Contact:</label>  
+            <label>Numéro de Télephone:</label>  
             <input type="text" class="form-control" name="contact" id="id_contact" required maxlength="15" value="{{ contact.contact }}" />  
         </div> 
         <div class="mb-3"> 
-            <button type="submit" class="btn btn-success btn-lg">Update</button>  
+            <button type="submit" class="btn btn-success btn-lg">Mettre a jours</button>  
         </div> 
     </div>  
     </form>  

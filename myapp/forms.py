@@ -84,3 +84,60 @@ class MyChangePasswordForm(PasswordChangeForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete' : 'current-password', 'autofocus':True,'class':'form-control'}),
     )
+
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+
+class UpdateProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+
+    class Meta:
+        model = Utilisateur
+        fields = ['avatar', 'bio']
+
+class ProfileForm(forms.ModelForm):
+    email=forms.EmailField(widget=forms.EmailInput())
+    confirm_email=forms.EmailField(widget=forms.EmailInput())
+    bio = forms.Textarea()
+
+    class Meta:
+        model = Profile
+        fields = [
+            'avatar',
+            'first_name',
+            'last_name',
+            'email',
+            'birth_date',
+            'bio',
+            'city',
+            'state',
+            'country',
+            'favorite_animal',
+            'hobby',
+        ]
+
+    def clean(self):
+        cleaned_data = super(ProfileForm, self).clean()
+        email = cleaned_data.get("email")
+        confirm_email = cleaned_data.get("confirm_email")
+        bio = cleaned_data.get("bio")
+
+        if email != confirm_email:
+            raise forms.ValidationError(
+                "Emails must match!"
+            )
+
+        if len(bio) < 10:
+            raise forms.ValidationError(
+                "Bio must be 10 characters or longer!"
+            )

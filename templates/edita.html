@@ -1,6 +1,6 @@
 {% extends "basee.html" %}
   
-{% block title %}Modifier Coordonees{% endblock title %}
+{% block title %}Modifier Coordonnées{% endblock title %}
   
 {% block content %}
 <div class="col-md-12">
@@ -8,29 +8,28 @@
     {% csrf_token %}  
     <div class="container">   
         <div class="col-12">  
-            <h3>Mettre a jours Les Données</h3>  
+            <h3>Modifier Détails</h3>  
         </div> 
-         
         <div class="mb-3"> 
             <label>Nom & Prénom:</label>  
-            <input type="text" class="form-control" name="name" id="id_name" required maxlength="100" value="{{ affilie.nom_prenom }}" />  
+            <input type="text" class="form-control" name="nom_prenom" id="nom_prenom" required maxlength="100" value="{{ affilie.nom_prenom }}" />  
         </div> 
         <div class="mb-3"> 
             <label>Email:</label>  
             <input type="email" class="form-control" name="email" id="id_email" required maxlength="254" value="{{ affilie.email }}" />  
         </div> 
         <div class="mb-3"> 
-            <label>Contact:</label>  
+            <label>Numéro de Télephone:</label>  
             <input type="text" class="form-control" name="contact" id="id_contact" required maxlength="15" value="{{ affilie.contact }}" />  
         </div> 
         <div class="mb-3"> 
-            <label>Contrat:</label>  
-            <input type="text" class="form-control" name="contrat" id="id_contrat" required maxlength="254" value="{{ affilie.contrat }}" />  
-        </div> 
+            <label>Description du Contrat:</label>  
+            <input type="text" class="form-control" name="contrat" id="id_contrat" required maxlength="15" value="{{ affilie.contrat }}" />  
+        </div>
         <div class="mb-3"> 
-            <label>Nouveau Pourcentage:</label>  
-            <input type="text" class="form-control" name="pourcentage" id="id_pourcentage" required maxlength="15" value="{{ affilie.pourcentage }}" />  
-        </div> 
+            <label>Pourcentage:</label>  
+            <input type="text" class="form-control" name="pourcentage" id="id_pourcentage" required maxlength="15" value="{{ affilie.pourcentage}}" />  
+        </div>
         <div class="mb-3"> 
             <button type="submit" class="btn btn-success btn-lg">Mettre a jours</button>  
         </div> 

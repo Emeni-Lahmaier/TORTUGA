@@ -56,24 +56,14 @@
 </head>
 <body>
     {% extends "basee.html" %} 
-{% block title %}Landing Page Templates{% endblock title %}
+{% block title %}Preview{% endblock title %}
   
 {% block content %}
 
-        {% for landingpage in landingpages %} 
         
-		<div class="block">
-			{{ landingpage.title}}
-			{{ landingpage.image}}
-           
-			<div class="btn-container">
-                
-				<a href="/prev/{{ landingpage.id }}" class="btn btn-primary">Prévisionner</a>
-				<button class="btn">Sélectionner</button>
-			</div>
-		</div>
-       
-        {%endfor%}
+        
+        <pre>{{landingpage.codeHtml|safe }}</pre>
+        
 		
 	
     {%endblock content%}

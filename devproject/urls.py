@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from myapp.views import  landingpage
 from myapp.views import  sharelandingpage
+from myapp.views import  preview
+from myapp.views import  profile
 from myapp.views import * 
 from django.contrib.auth.views import LogoutView ,PasswordChangeView
 
@@ -25,10 +27,13 @@ from django.urls import URLPattern
 urlpatterns = [
 
     path('', home, name='home'),  
-    path('acceuil/', acceuil, name='acceuil'),  
+    path('acceuil/', acceuil, name='acceuil'), 
+    path('profile/', profile, name='profile'), 
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
-    path('landingpage/', landingpage, name='landingpage'), 
+    path('landingpage/', landingpage, name='landingpage'),
+    path('preview/', preview, name='preview'),
+    path('prev/<int:id>', prev, name='prev'),    
     path('sharelandingpage/', sharelandingpage, name='sharelandingpage'),
     path('share/<int:id>', share, name='share'),
     path('addnew', addnew, name='addnew'), 

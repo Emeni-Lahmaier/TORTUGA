@@ -8,7 +8,12 @@ from django.forms import ValidationError
 from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField,PasswordChangeForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views import View
 
+from .forms import  UpdateUserForm, UpdateProfileForm
 # Create your views here.
 
 class SignupView(View):
@@ -119,9 +124,11 @@ def home(request):
 def acceuil(request):
    return render(request,'acceuil.html')
 
+
 def landingpage(request):
     landingpages = TemplatesCommuns.objects.all()  
     return render(request,"landingpage.html",{'landingpages':landingpages}) 
+
 def sharelandingpage(request):
    return render(request,'sharelandingpage.html')
 
@@ -132,3 +139,16 @@ def share(request, id):
         form.save()  
         return redirect("/landingpage")  
     return render(request, 'sharelandingpage.html', {'tc':tc}) 
+
+def preview(request):
+   return render(request,'preview.html')
+
+def prev(request, id):  
+    tc = TemplatesCommuns.objects.get(id=id) 
+    return render(request, 'preview.html', {'tc':tc}) 
+
+
+def profile(request):
+    """Display User Profile"""
+    profile = request.user.profile
+    return render(request, 'profile.html', {'profile': profile})
