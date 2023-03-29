@@ -6,34 +6,6 @@ from datetime import datetime
 from PIL import Image
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(
-        upload_to = 'static',
-        default = 'Tortuga.png',
-        blank=True
-    )
-    first_name = models.CharField(max_length=255, default='')
-    last_name = models.CharField(max_length=255, default='')
-    email = models.EmailField(default='none@email.com')
-    birth_date = models.DateField(default='1999-12-31')
-    bio = models.TextField(default='')
-    city = models.CharField(max_length=255, default='')
-    state = models.CharField(max_length=255, default='')
-    country = models.CharField(max_length=255, default='')
-    favorite_animal = models.CharField(max_length=255, default='')
-    hobby = models.CharField(max_length=255, default='')
-
-    def str(self):
-        return self.user.username
-
-
-def create_profile(sender, **kwargs):
-    if kwargs['created']:
-        profile = Profile.objects.create(user=kwargs['instance'])
-
-post_save.connect(create_profile, sender=User)
-
 # Create your models here.
 class Utilisateur(models.Model):
          id= models.IntegerField(primary_key = True)
@@ -41,19 +13,7 @@ class Utilisateur(models.Model):
          num_tel= models.IntegerField()
          date_naissance = models.DateField()  
          avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
-         bio = models.TextField(default=0)
          USERNAME_FIELD = 'pseudo'
-         def __str__(self):
-            return self.user.username
-    # resizing images     
-def save(self, *args, **kwargs):
-            img = Image.open(self.avatar.path)
-
-            if img.height > 100 or img.width > 100:
-                new_img = (100, 100)
-                img.thumbnail(new_img)
-                img.save(self.avatar.path)
-          
    
     
          
@@ -61,11 +21,11 @@ def save(self, *args, **kwargs):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Utilisateur.objects.create(user=instance)
-"""
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.utilisateur.save()
-"""
+
     
 
 class Admin(models.Model):

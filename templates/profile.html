@@ -1,37 +1,42 @@
 {% extends "basee.html" %}
-{% load static from staticfiles %}
-
-{% block title %}Profile | {{ user }} {{ super }}{% endblock %}
-
-{% block body %}
-    <h1>Profile</h1>
-    <div class="grid-20">
-        <ul>
-            <li><a href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
-            <li><a href="{% url 'accounts:change_password' %}">Change Password</a></li>
-        </ul>
-    </div>
-    <div class="grid-80">
-        {% if not profile.first_name %}
-            <p>You have an empty profile.</p>
-            <a href="{% url 'accounts:edit_profile' %}">Add some info</a>
-        {% else %}
-            <div class="grid-50">
-                <p><span class="underline">First Name</span>: {{ profile.first_name }}</p>
-                <p><span class="underline">Email</span>: {{ profile.email }}</p>
-                <p><span class="underline">City</span>: {{ profile.city }}</p>
-                <p><span class="underline">State</span>: {{ profile.state }}</p>
-                <p><span class="underline">Country</span>: {{ profile.country }}</p>
-            </div>
-            <div class="grid-50">
-                <p><span class="underline">Last Name</span>: {{ profile.last_name }}</p>
-                <p><span class="underline">Birth Date</span>: {{ profile.birth_date }}</p>
-                <p><span class="underline">Favorite Animal</span>: {{ profile.favorite_animal }}</p>
-                <p><span class="underline">Hobby</span>: {{ profile.hobby }}</p>
-            </div>
-            <div class="grid-100">
-                <p><span class="underline">Bio</span>: {{ profile.bio|safe }}</p>
-            </div>
-        {% endif %}
-    </div>
-{% endblock %}
+  
+{% block title %}User Profile{% endblock title %}
+  
+{% block content %}
+<div class="col-md-12">
+    <form method="POST" class="post-form" action="/updatep/{{utilisateur.id}}">  
+    {% csrf_token %}  
+    <div class="container">   
+        <div class="col-12">  
+            <h3>Profile</h3>  
+        </div> 
+        
+        <div class="mb-3"> 
+            <label>Nom :</label>  
+            <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ utilisateur.first_name}}" />  
+        </div> 
+        <div class="mb-3"> 
+            <label>Prénom:</label>  
+            <input type="text" class="form-control" name="last_name" id="id_last_name" required maxlength="100" value="{{ utilisateur.last_name }}" />  
+        </div>
+        <div class="mb-3"> 
+            <label>Email:</label>  
+            <input type="email" class="form-control" name="email" id="id_email" required maxlength="254" value="{{ utilisateur.email }}" />  
+        </div> 
+        <div class="mb-3"> 
+            <label>Numéro de Télephone:</label>  
+            <input type="text" class="form-control" name="num_tel" id="id_num_tel" required maxlength="15" value="{{ utilisateur.num_tel }}" />  
+        </div> 
+        <div class="mb-3"> 
+            <label>Date de Naissance:</label>  
+            <input type="text" class="form-control" name="date_naissance" id="id_date_naissance" required maxlength="15" value="{{ utilisateur.date_naissance }}" />  
+        </div> 
+        <div class="mb-3"> 
+            <button type="submit" class="btn btn-success btn-lg">Mettre a jours</button>  
+        </div> 
+        <div class="mb-3"> 
+            <button type="reset" class="btn btn-success btn-lg">Annuler</button>  
+        </div> 
+    </div>  
+    </form>  
+{% endblock content %}   

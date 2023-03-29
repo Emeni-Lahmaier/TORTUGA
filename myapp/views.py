@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect  
 from myapp.forms import ContactForm  
 from myapp.forms import ShareForm 
+from myapp.forms import UtilisateurForm
 from myapp.models import Contact  
 from myapp.forms import *
 from django.contrib.auth import authenticate,login
@@ -13,7 +14,6 @@ from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChan
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 
-from .forms import  UpdateUserForm, UpdateProfileForm
 # Create your views here.
 
 class SignupView(View):
@@ -129,6 +129,11 @@ def landingpage(request):
     landingpages = TemplatesCommuns.objects.all()  
     return render(request,"landingpage.html",{'landingpages':landingpages}) 
 
+def preview(request, id):
+    landingpages = TemplatesCommuns.objects.get(id=id)  
+    return render(request,"preview.html",{'landingpages':landingpages}) 
+
+
 def sharelandingpage(request):
    return render(request,'sharelandingpage.html')
 
@@ -140,15 +145,18 @@ def share(request, id):
         return redirect("/landingpage")  
     return render(request, 'sharelandingpage.html', {'tc':tc}) 
 
-def preview(request):
-   return render(request,'preview.html')
-
-def prev(request, id):  
-    tc = TemplatesCommuns.objects.get(id=id) 
-    return render(request, 'preview.html', {'tc':tc}) 
 
 
-def profile(request):
-    """Display User Profile"""
-    profile = request.user.profile
-    return render(request, 'profile.html', {'profile': profile})
+def profile(request, id):  
+    utilisateur = Utilisateur.objects.get(id=id)  
+    return render(request,'profile.html', {'utilisateur':utilisateur})  
+
+
+
+def updatep(request, id):  
+    utilisateur =Utilisateur.objects.get(id=id)  
+    form = UtilisateurForm(request.POST, instance = utilisateur)  
+    if form.is_valid():  
+        form.save()  
+        return redirect("/profile")  
+    return render(request, 'profile.html', {'utilisateur':utilisateur}) 

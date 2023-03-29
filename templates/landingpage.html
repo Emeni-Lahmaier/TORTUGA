@@ -65,10 +65,10 @@
 		<div class="block">
 			{{ landingpage.title}}
 			{{ landingpage.image}}
-           
+			<pre>{{landingpage.codeHtml|safe }}</pre>
 			<div class="btn-container">
                 
-				<a href="/prev/{{ landingpage.id }}" class="btn btn-primary">Prévisionner</a>
+				<a href="/preview/{{ landingpage.id}}" class="btn btn-primary">Prévisionner</a>
 				<button class="btn">Sélectionner</button>
 			</div>
 		</div>
