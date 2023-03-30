@@ -14,6 +14,7 @@ class Utilisateur(models.Model):
          date_naissance = models.DateField()  
          avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
          USERNAME_FIELD = 'pseudo'
+    
    
     
          

@@ -1,42 +1,40 @@
 {% extends "basee.html" %}
-  
-{% block title %}User Profile{% endblock title %}
-  
+{% block title %}Profile Page{% endblock title %}
 {% block content %}
-<div class="col-md-12">
-    <form method="POST" class="post-form" action="/updatep/{{utilisateur.id}}">  
-    {% csrf_token %}  
-    <div class="container">   
-        <div class="col-12">  
-            <h3>Profile</h3>  
-        </div> 
-        
-        <div class="mb-3"> 
-            <label>Nom :</label>  
-            <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ utilisateur.first_name}}" />  
-        </div> 
-        <div class="mb-3"> 
-            <label>Prénom:</label>  
-            <input type="text" class="form-control" name="last_name" id="id_last_name" required maxlength="100" value="{{ utilisateur.last_name }}" />  
-        </div>
-        <div class="mb-3"> 
-            <label>Email:</label>  
-            <input type="email" class="form-control" name="email" id="id_email" required maxlength="254" value="{{ utilisateur.email }}" />  
-        </div> 
-        <div class="mb-3"> 
-            <label>Numéro de Télephone:</label>  
-            <input type="text" class="form-control" name="num_tel" id="id_num_tel" required maxlength="15" value="{{ utilisateur.num_tel }}" />  
-        </div> 
-        <div class="mb-3"> 
-            <label>Date de Naissance:</label>  
-            <input type="text" class="form-control" name="date_naissance" id="id_date_naissance" required maxlength="15" value="{{ utilisateur.date_naissance }}" />  
-        </div> 
-        <div class="mb-3"> 
-            <button type="submit" class="btn btn-success btn-lg">Mettre a jours</button>  
-        </div> 
-        <div class="mb-3"> 
-            <button type="reset" class="btn btn-success btn-lg">Annuler</button>  
-        </div> 
-    </div>  
-    </form>  
-{% endblock content %}   
+<label class="small mb-1">Change Avatar:</label>
+                        {{ utilisateur.avatar }} PROFILE
+    <div class="form-content">
+
+        <form method="post" enctype="multipart/form-data" class="post-form" action="/updatep/{{user.id}}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="small mb-1">First Name:</label>
+                        <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ user.first_name }}" />                   
+                            <label class="small mb-1">Last Name:</label>
+                            <input type="text" class="form-control" name="last_name" id="id_last_name" required maxlength="100" value="{{ user.last_name }}" />
+    
+                        <label class="small mb-1">Email:</label>
+                        <input type="text" class="form-control" name="email" id="id_email" required maxlength="100" value="{{ user.email}}" />
+                    </div>
+                    
+                    <label class="small mb-1">Date Naissance:</label>
+                    <input type="text" class="form-control" name="date_naissance" id="date_naissance" required maxlength="100" value="{{ utilisateur.date_naissance }}" />
+                     
+                    <label class="small mb-1">Numero Telephone:</label> 
+                    <input type="text" class="form-control" name="num_tel" id="num_tel" required maxlength="100" value="{{ utilisateur.num_tel}}" />
+                    <hr>
+                    <div class="form-group">
+                        <a href="{% url 'password_change' %}">Change Password</a>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        </form>
+    </div>
+{% endblock content %}

@@ -151,12 +151,26 @@ def profile(request, id):
     utilisateur = Utilisateur.objects.get(id=id)  
     return render(request,'profile.html', {'utilisateur':utilisateur})  
 
-
-
 def updatep(request, id):  
     utilisateur =Utilisateur.objects.get(id=id)  
     form = UtilisateurForm(request.POST, instance = utilisateur)  
     if form.is_valid():  
         form.save()  
-        return redirect("/profile")  
+        messages.success(request, 'Votre profile a été mis a jours avec success') 
     return render(request, 'profile.html', {'utilisateur':utilisateur}) 
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'password_reset.html'
+    email_template_name = 'password_reset_email.html'
+    subject_template_name = 'password_reset_subject.html'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('acceuil')
+
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('acceuil')

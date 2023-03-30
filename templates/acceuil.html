@@ -350,7 +350,7 @@ body.dark .home .text{
                     <li>
 
                         <i class='bx bx-user icon' ></i>
-                        <a class="nav-link" id="user" href="{% url 'profile' %}">{{request.user}}</a>
+                        <a class="nav-link" id="user" href="{% url 'profile' user.id %}">{{request.user}}</a>
                         
                         {% else %}
                        
