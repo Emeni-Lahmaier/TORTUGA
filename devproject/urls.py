@@ -38,6 +38,7 @@ urlpatterns = [
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
     path('profile/<int:id>', profile, name='profile'),
+    path('delete_profile/', delete_profile, name='delete_profile'),
     path('updatep/<int:id>', updatep, name='updatep'),
     path('landingpage/', landingpage, name='landingpage'),
     path('preview/<int:id>', preview, name='preview'),   

@@ -1,14 +1,16 @@
 {% extends "basee.html" %}
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
-<label class="small mb-1">Change Avatar:</label>
-                        {{ utilisateur.avatar }} PROFILE
+PROFILE
     <div class="form-content">
 
         <form method="post" enctype="multipart/form-data" class="post-form" action="/updatep/{{user.id}}">
             {% csrf_token %}
-            <div class="form-row">
+            <div class="form-row">         
                 <div class="col-md-5">
+                    <label class="small mb-1">Change Avatar:</label>
+
+                    <input type="image" class="form-control" name="avatar" id="id_avatar"  value="{{ utilisateur.avatar }}" />
                     <div class="form-group">
                         <label class="small mb-1">First Name:</label>
                         <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ user.first_name }}" />                   
@@ -35,6 +37,7 @@
             <br><br>
             <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
             <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+            <a href="/delete_profile/" class="btn btn-primary">Supprimer le compte</a>
         </form>
     </div>
 {% endblock content %}

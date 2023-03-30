@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Profile</title>
+</head>
+<body>
+    {% extends "basee.html" %}
+    {%block content%}
+    <h1>Delete Profile</h1>
+    <p>Are you sure you want to delete your account?</p>
+    <form action="{% url 'delete_profile' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Yes, delete my account">
+    </form>
+    {%endblock content%}
+</body>
+</html>

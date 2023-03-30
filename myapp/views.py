@@ -13,7 +13,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 # Create your views here.
 
 class SignupView(View):
@@ -158,6 +160,15 @@ def updatep(request, id):
         form.save()  
         messages.success(request, 'Votre profile a été mis a jours avec success') 
     return render(request, 'profile.html', {'utilisateur':utilisateur}) 
+
+
+@login_required
+def delete_profile(request):
+    if request.method == 'POST':
+        request.user.delete()
+        logout(request)
+        return redirect('home')
+    return render(request, 'delete_profile.html')
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'password_reset.html'
