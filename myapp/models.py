@@ -6,9 +6,10 @@ from datetime import datetime
 from PIL import Image
 
 
+
 # Create your models here.
 class Utilisateur(models.Model):
-         id= models.IntegerField(primary_key = True)
+         id = models.IntegerField(primary_key = True)
          user = models.OneToOneField(User, on_delete=models.CASCADE,default=0)
          num_tel= models.IntegerField()
          date_naissance = models.DateField()  
@@ -41,7 +42,7 @@ class Contactt(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)  
-    email = models.EmailField()  
+    email = models.EmailField(null=True)  
     contact = models.CharField(max_length=15)
    
     class Meta:  
@@ -84,7 +85,7 @@ class Affilie(models.Model):
 class TemplatesCommuns(models.Model):
      id= models.IntegerField(primary_key = True)
      title = models.CharField(max_length=30,null=True)
-     codeHtml=models.TextField(null=True)
+     codeHtml= models.CharField(max_length=30,null=True)
      type=models.CharField(max_length=30,null=True)
      image = models.ImageField(null=True)
      
@@ -98,3 +99,5 @@ class TemplatesUser(models.Model):
      id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
      image = models.ImageField(null=True)
+
+

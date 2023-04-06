@@ -16,6 +16,8 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.urls import reverse
+
 # Create your views here.
 
 class SignupView(View):
@@ -154,12 +156,17 @@ def profile(request, id):
     return render(request,'profile.html', {'utilisateur':utilisateur})  
 
 def updatep(request, id):  
-    utilisateur =Utilisateur.objects.get(id=id)  
-    form = UtilisateurForm(request.POST, instance = utilisateur)  
-    if form.is_valid():  
-        form.save()  
-        messages.success(request, 'Votre profile a été mis a jours avec success') 
-    return render(request, 'profile.html', {'utilisateur':utilisateur}) 
+    utilisateur = Utilisateur.objects.get(id=id)  
+    if request.method == 'POST':
+        form = UtilisateurForm(request.POST, request.FILES, instance=utilisateur)
+        if form.is_valid():  
+            form.save()  
+            messages.success(request, 'Votre profile a été mis a jours avec success') 
+            return redirect('profile')
+    else:
+        form = UtilisateurForm(instance=utilisateur)
+    return render(request, 'profile.html', {'form': form})
+
 
 
 @login_required

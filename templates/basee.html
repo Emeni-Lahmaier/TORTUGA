@@ -28,6 +28,19 @@ background: linear-gradient(to top, rgb(161, 140, 209) 0%, rgb(255,255,255)
 100%);
 }
 
+.dataTables_length label {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-bottom: 0 !important;
+  font-size: 16px !important;
+}
+
+.dataTables_length select {
+  margin-left: 10px !important;
+  font-size: 14px !important;
+}
+
+
 
 
 
@@ -47,14 +60,39 @@ background: linear-gradient(to top, rgb(161, 140, 209) 0%, rgb(255,255,255)
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src = "https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#bootstrapdatatable').DataTable({    
-      "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
-        "iDisplayLength": 3
-       }
-    );
-} );
-</script>
+{% block scripts %}
+  <script type="text/javascript">
+   $(document).ready(function() {
+       $('#bootstrapdatatable').DataTable({
+           "paging": true,
+           "lengthChange": true,
+           "searching": true,
+           "ordering": true,
+           "info": true,
+           "autoWidth": false,
+           "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+           "language": {
+               "lengthMenu": "Show _MENU_ entries",
+               "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+               "search": "Search:",
+               "paginate": {
+                   "first": "First",
+                   "last": "Last",
+                   "next": "Next",
+                   "previous": "Previous"
+               }
+           },
+           "dom": "<'row'<'col-sm-6'<'dataTables_length'l>><'col-sm-6'f>>" +
+                  "<'row'<'col-sm-12'tr>>" +
+                  "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+           "style": {
+               "margin-top": "30px"
+           }
+       });
+   });
+   </script>
+   
+{% endblock scripts %}
+
 </body>
 </html>
