@@ -1,7 +1,7 @@
 from django import forms  
 from myapp.models import *  
 from django import forms
-from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField ,PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField ,PasswordChangeForm ,UserChangeForm
 from django.contrib.auth.models import User
 
 class ContactForm(forms.ModelForm):  
@@ -27,13 +27,23 @@ class AffilieForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['user','num_tel','date_naissance']
+        fields = ['num_tel','date_naissance']
         widgets={'user': forms.TextInput(attrs={ 'class': 'form-control' }), 
             
             'num_tel': forms.TextInput(attrs={ 'class': 'form-control' }),
             'date_naissance': forms.DateInput(attrs={ 'class': 'form-control' }),
         
         }
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','email']
+        widgets={'first_name': forms.TextInput(attrs={ 'class': 'form-control' }), 
+                 'last_name': forms.TextInput(attrs={ 'class': 'form-control' }), 
+            'email': forms.EmailInput(attrs={ 'class': 'form-control' }),
+        
+        }
+
 class ShareForm(forms.ModelForm):
     class Meta:
         model = TemplatesUser
@@ -95,3 +105,14 @@ class MyChangePasswordForm(PasswordChangeForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete' : 'current-password', 'autofocus':True,'class':'form-control'}),
     )
+
+class EditProfileForm(UserChangeForm):
+
+      class Meta:
+        model = User
+        fields = (
+          'first_name',
+          'username',
+          'email',
+        )
+        exclude = ('password',)

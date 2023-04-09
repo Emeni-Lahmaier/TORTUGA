@@ -22,24 +22,25 @@ from myapp.views import  profile
 from myapp.views import * 
 from django.contrib.auth.views import LogoutView
 from django.urls import path, include, re_path
-
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib.auth import views as auth_views
 from myapp.views import ResetPasswordView, ChangePasswordView
-
+from django.urls import include
 from django.urls import URLPattern
- 
+
 urlpatterns = [
 
     path('', home, name='home'),  
     path('acceuil/', acceuil, name='acceuil'), 
+    
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
     path('profile/<int:id>', profile, name='profile'),
     path('delete_profile/', delete_profile, name='delete_profile'),
     path('updatep/<int:id>', updatep, name='updatep'),
+    path('landinguser/', landinguser, name='landinguser'),
+    path('destroylanding/<int:id>', destroylanding, name='destroylanding'), 
     path('landingpage/', landingpage, name='landingpage'),
     path('preview/<int:id>', preview, name='preview'),   
     path('sharelandingpage/', sharelandingpage, name='sharelandingpage'),

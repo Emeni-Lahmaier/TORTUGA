@@ -3,6 +3,7 @@ from myapp.forms import ContactForm
 from myapp.forms import ShareForm 
 from myapp.forms import UtilisateurForm
 from myapp.models import Contact  
+from myapp.forms import UserForm
 from myapp.forms import *
 from django.contrib.auth import authenticate,login
 from django.forms import ValidationError
@@ -156,18 +157,25 @@ def profile(request, id):
     return render(request,'profile.html', {'utilisateur':utilisateur})  
 
 def updatep(request, id):  
-    utilisateur = Utilisateur.objects.get(id=id)  
-    if request.method == 'POST':
-        form = UtilisateurForm(request.POST, request.FILES, instance=utilisateur)
-        if form.is_valid():  
-            form.save()  
-            messages.success(request, 'Votre profile a été mis a jours avec success') 
-            return redirect('profile')
-    else:
-        form = UtilisateurForm(instance=utilisateur)
-    return render(request, 'profile.html', {'form': form})
+    utilisateur =Utilisateur.objects.get(id=id)  
+    form = UtilisateurForm(request.POST, instance = utilisateur)  
+    user =User.objects.get(id=id)  
+    formm = UserForm(request.POST, instance = user) 
+    if form.is_valid() and formm.is_valid():  
+        form.save() 
+        formm.save() 
+        messages.success(request,"Donnees mis a jours avec Success !  ") 
+        return redirect("/acceuil") 
+    return render(request, 'profile.html', {'utilisateur':utilisateur}, {'user':user}) 
 
+def landinguser(request):
+    landingusers = TemplatesUser.objects.all()  
+    return render(request,"landinguser.html",{'landingusers':landingusers}) 
 
+def destroylanding(request, id):  
+    landinguser = TemplatesUser.objects.get(id=id)  
+    landinguser.delete()  
+    return redirect("/landinguser")  
 
 @login_required
 def delete_profile(request):
