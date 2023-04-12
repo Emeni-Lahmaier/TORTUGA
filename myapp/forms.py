@@ -27,11 +27,12 @@ class AffilieForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['num_tel','date_naissance']
+        fields = ['num_tel','date_naissance','bio']
         widgets={'user': forms.TextInput(attrs={ 'class': 'form-control' }), 
             
             'num_tel': forms.TextInput(attrs={ 'class': 'form-control' }),
             'date_naissance': forms.DateInput(attrs={ 'class': 'form-control' }),
+            'bio': forms.TextInput(attrs={ 'class': 'form-control' }),
         
         }
 class UserForm(forms.ModelForm):

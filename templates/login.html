@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> -->
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
     
     <link rel="stylesheet" href="base.css">
@@ -15,143 +14,35 @@
 
 
 
-  
-  .text{
-  text-align: center;
-  font-size: 35px;
-  font-weight: 600;
- background:white;
- background: -webkit-linaer-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: white;
-}
-.container form{
-   
-  padding: 30px 0 0 0;
-  height: 450px;
-  width: 450px;
-  background-color: rgba(255,255,255,0.13);
-  position: absolute;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 40px rgba(8,7,16,0.6);
- 
-}
-
-.container form .form-row{
-  display: flex;
-  margin: 32px 0;
-}
-form .form-row .input-data{
+        .gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
     
-  width: 100%;
-  height: 40px;
-  margin: 0 20px;
-  position: relative;
-}
-form .form-row .textarea{
-  height: 70px;
-}
-.input-data input,
-.textarea textarea{
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-size: 17px;
-  border-bottom: 2px solid rgba(0,0,0, 0.12);
-}
-.input-data input:focus ~ label, .textarea textarea:focus ~ label,
-.input-data input:valid ~ label, .textarea textarea:valid ~ label{
-  transform: translateY(-20px);
-  font-size: 14px;
-  color: #3498db;
-}
-.textarea textarea{
-  resize: none;
-  padding-top: 10px;
-}
-.input-data label{
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), );
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to left, rgba(106, 17, 203, 1),white)
+    }
+
+    .image-container {
   position: absolute;
-  pointer-events: none;
-  bottom: 10px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-.textarea label{
-  width: 100%;
-  bottom: 40px;
-  background: #fff;
-}
-.input-data .underline{
-  position: absolute;
-  bottom: 0;
-  height: 2px;
-  width: 100%;
-}
-.input-data .underline:before{
-  position: absolute;
-  content: "";
-  height: 2px;
-  width: 100%;
-  background: #3498db;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-.input-data input:focus ~ .underline:before,
-.input-data input:valid ~ .underline:before,
-.textarea textarea:focus ~ .underline:before,
-.textarea textarea:valid ~ .underline:before{
-  transform: scale(1);
-}
-.submit-btn .input-data{
-  overflow: hidden;
-  height: 45px!important;
-  width: 25%!important;
-}
-.submit-btn .input-data .inner{
-  height: 100%;
-  width: 300%;
-  position: absolute;
-  left: -100%;
-  background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
-  transition: all 0.4s;
-}
-.submit-btn .input-data:hover .inner{
+  top: 50%;
   left: 0;
-}
-.submit-btn .input-data input{
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-@media (max-width: 700px) {
-  .container .text{
-    font-size: 30px;
-  }
-  .container form{
-    padding: 10px 0 0 0;
-  }
-  .container form .form-row{
-    display: block;
-  }
-  form .form-row .input-data{
-    margin: 35px 0!important;
-  }
-  .submit-btn .input-data{
-    width: 40%!important;
-  }
+  transform: translateY(-30%);
+  width: 52%;
 }
 
+.image-container img {
+  width: 100%;
+  
+  object-fit: cover;
+}
+.gradient-custom {
+    background-color: purple;
+  }
+
+  
     </style>
     
         
@@ -160,31 +51,68 @@ form .form-row .textarea{
        
 </head>
 {% extends 'base.html' %}
-  
+{% load static %}
 {% block title %}Login{% endblock title %}
   
 {% block main_content %}
 
-<div class="row justify-content-around mt-5">
-    <div class="col-md-5  ">
-       <h3 class="text">Login Form</h3>
-    </div>
-  </div>
-<section class="container">
-  
-  <div class="row justify-content:flex-end" >
-    <div class="col-md-5  " >
-        <form action="" method="post" class="bg-light bg-opacity-25% my-3 p-3 rounded" >
-        {% csrf_token %}
-          {% for fm in form  %}
-            {{fm.label_tag}}
-            {{fm}}
-            <small class='text-danger'>{{fm.errors}}</small>
-            {% endfor %}
-          <input type="submit" value="Login" class="btn btn-secondary mt-2">
-       </form>
-    </div>
+
     
-  </section>
+    <section class="vh-80 gradient-custom bg-white">
+      <div class="container py-5 h-100  ">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 offset-md-6 col-lg-6 col-xl-5 order-md-last">
+            <div class="card text-white" style="background-color: transparent; border-radius: 1rem;">
+              <div class="card-body p-5 text-center" style="background-color: rgba(106, 17, 203, 1),white;">
+        
+                <div class="mb-md-5 mt-md-4 pb-5">
+                  
+                  <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                  <p class="text-white-50 mb-5">Please enter your login and password!</p>
+        
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="form-outline form-white mb-4">
+                      {{ form.username.label_tag }}
+                      {{ form.username }}
+                    </div>
+        
+                    <div class="form-outline form-white mb-4">
+                      <div class="form-outline form-white mb-4">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                      </div>
+                    </div>
+        
+                    <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+        
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+        
+                  </form>
+        
+                  <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                    <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                    <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                    <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                  </div>
+        
+                </div>
+        
+                <div>
+                  <p class="mb-0">Don't have an account? <a href="/signup" class="text-white-50 fw-bold">Sign Up</a>
+                  </p>
+                </div>
+        
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="image-container">
+        <img src="{% static 'login.png' %}" alt="Image">
+      </div>
+    </section>
+    
+    
   
 {% endblock main_content %}

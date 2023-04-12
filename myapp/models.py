@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 from PIL import Image
-
+from ckeditor.fields import RichTextField
 # Create your models here.
 class Utilisateur(models.Model):
          id= models.IntegerField(primary_key = True)
@@ -12,6 +12,7 @@ class Utilisateur(models.Model):
          num_tel= models.IntegerField()
          date_naissance = models.DateField()  
          avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
+         bio=models.CharField(max_length=256,null=True)
          USERNAME_FIELD = 'pseudo'
          
 @receiver(post_save, sender=User)
@@ -81,7 +82,11 @@ class TemplatesCommuns(models.Model):
      id= models.IntegerField(primary_key = True)
      title = models.CharField(max_length=30,null=True)
      codeHtml=models.TextField(null=True)
-     type=models.CharField(max_length=30,null=True)
+     type=[
+    ('LP', 'LANDINGPAGE'),
+    ('FP', 'FORM POPUP'),
+    ('E', 'EMAIL'),
+                ]
      image = models.ImageField(null=True)
      
 class TemplatesUser(models.Model):
