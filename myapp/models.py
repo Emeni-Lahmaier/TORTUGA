@@ -86,7 +86,7 @@ class Affilie(models.Model):
 class TemplatesCommuns(models.Model):
      id = models.AutoField(primary_key=True)
      title = models.CharField(max_length=30,null=True)
-     codeHtml= RichTextField(null=True)
+     codeHtml=models.TextField(null=True)
      type=models.CharField(max_length=30,null=True)
      image = models.ImageField(null=True)
      

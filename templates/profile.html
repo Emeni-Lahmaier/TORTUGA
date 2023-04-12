@@ -44,46 +44,35 @@ Profile Page
           <h6 class="m-0 font-weight-bold text-primary">Profile Information</h6>
         </div>
         <div class="card-body">
-          <form method="post" enctype="multipart/form-data" class="post-form" action="{% url 'updatep' utilisateur.id %}">
+          <form method="post" enctype="multipart/form-data" class="post-form" action="/updatep/{{user.id}}">
             {% csrf_token %}
-            <!-- form fields go here -->
-        
-        
-            <div class="form-group">
-              <label for="id_avatar" class="small mb-1">Change Avatar:</label>
-              <input type="file" class="form-control-file" name="avatar" id="id_avatar">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="id_first_name" class="small mb-1">First Name:</label>
-                <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ user.first_name }}">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="id_last_name" class="small mb-1">Last Name:</label>
-                <input type="text" class="form-control" name="last_name" id="id_last_name" required maxlength="100" value="{{ user.last_name }}">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="id_email" class="small mb-1">Email:</label>
-              <input type="email" class="form-control" name="email" id="id_email" required maxlength="100" value="{{ user.email }}">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="date_naissance" class="small mb-1">Date Naissance:</label>
-               
-                <input type="date" class="form-control" name="date_naissance" id="date_naissance" required value="{{ user.profile.date_naissance|date:'Y-m-d' }}">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="telephone" class="small mb-1">Telephone:</label>
-                <input type="text" class="form-control" name="telephone" id="telephone" required maxlength="15" value="{{ user.profile.telephone }}">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="bio" class="small mb-1">Bio:</label>
-              <textarea class="form-control" name="bio" id="bio" maxlength="500">{{ user.profile.bio }}</textarea>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block mt-3">Save Changes</button>
+            <div class="form-row">         
+                <div class="col-md-5">
+                    <label class="small mb-1">Change Avatar:</label>
+
+                    <input type="image" class="form-control" name="avatar" id="id_avatar"  value="{{ utilisateur.avatar }}" />
+                    <div class="form-group">
+                        <label class="small mb-1">First Name:</label>
+                        <input type="text" class="form-control" name="first_name" id="id_first_name" required maxlength="100" value="{{ user.first_name }}" />                   
+                            <label class="small mb-1">Last Name:</label>
+                            <input type="text" class="form-control" name="last_name" id="id_last_name" required maxlength="100" value="{{ user.last_name }}" />
+    
+                        <label class="small mb-1">Email:</label>
+                        <input type="text" class="form-control" name="email" id="id_email" required maxlength="100" value="{{ user.email}}" />
+                    </div>
+                    
+                    <label class="small mb-1">Date Naissance:</label>
+                    <input type="text" class="form-control" name="date_naissance" id="date_naissance" required maxlength="100" value="{{ utilisateur.date_naissance }}" />
+                     
+                    <label class="small mb-1">Numero Telephone:</label> 
+                    <input type="text" class="form-control" name="num_tel" id="num_tel" required maxlength="100" value="{{ utilisateur.num_tel}}" />
+                    <hr>
+                    <div class="form-group">
+                        <a href="{% url 'password_change' %}">Change Password</a>
+                        
+                        
+                    </div>
+                </div>
             </div>
           </form>
         </div>
