@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'myapp',
 ]
-
+MIDDLEWARE = [
+    # Other middleware...
+    'django.middleware.csrf.CsrfViewMiddleware',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -79,7 +81,7 @@ WSGI_APPLICATION = 'devproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
+        'NAME': 'yahia',
         'USER': 'root',
         'PASSWORD': '', 
         'HOST': 'localhost',
@@ -107,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -117,6 +120,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+CSRF_COOKIE_SECURE = False
 
 
 # Static files (CSS, JavaScript, Images)

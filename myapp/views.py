@@ -17,6 +17,16 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.urls import reverse
+from myapp.models import Utilisateur
+from django.http import JsonResponse
+from .models import Utilisateur
+from django.shortcuts import render, get_object_or_404
+from .forms import UtilisateurUpdateForm
+from .forms import TemplatesUpdateForm
+from .forms import TemplatesCreateForm
+from django.contrib.auth.forms import UserChangeForm
+from django.http import Http404
 # Create your views here.
 
 class SignupView(View):
@@ -174,6 +184,79 @@ def destroylanding(request, id):
     landinguser = TemplatesUser.objects.get(id=id)  
     landinguser.delete()  
     return redirect("/landinguser")  
+
+
+
+def user_list(request):
+    utilisateurs = Utilisateur.objects.all()
+    context = {
+        'utilisateurs': utilisateurs
+    }
+    print("Inside user_list function")
+    
+    return render(request, 'adminDashboard.html', context)
+
+def user_delete(request, user_id):
+    utilisateur = Utilisateur.objects.get(id=user_id)
+    utilisateur.delete()
+    return redirect('admin_dashboard')
+
+def update_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user_form = UtilisateurUpdateForm(request.POST, instance=user)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('admin_dashboard')
+    else:
+        user_form = UtilisateurUpdateForm(instance=user)
+    return render(request, 'user_update.html', {'user_form': user_form})
+
+
+def templates_communs(request):
+    templates = TemplatesCommuns.objects.all()
+    context = {
+        'templates': templates
+    }
+    print("inside templates now")
+    return render(request, 'user_templates.html', context)
+
+
+
+
+
+def template_create(request):
+    if request.method == 'POST':
+        form = TemplatesCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            template = form.save(commit=False)
+            template.id = None
+            template.save()
+            return redirect('user_templates')
+    else:
+        form = TemplatesCreateForm()
+    return render(request, 'template_create.html', {'form': form})
+
+
+
+def template_delete(request, id):
+    template = TemplatesCommuns.objects.get(id=id)
+    template.delete()
+    return redirect('user_templates')
+
+def template_update(request, id):
+    template = get_object_or_404(TemplatesCommuns, id=id)
+    if request.method == 'POST':
+        templates_form = TemplatesUpdateForm(request.POST, instance=template)
+        if templates_form.is_valid():
+            templates_form.save()
+            return redirect('user_templates')
+    else:  # move this else block outside the if block
+        templates_form = TemplatesUpdateForm(instance=template)
+    return render(request, 'template_update.html', {'templates_form': templates_form})
+
+
+
 
 @login_required
 def delete_profile(request):

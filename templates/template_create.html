@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Template{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* Style the label tags */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Style the input and select tags */
+        input[type="text"],
+        select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Style the preview container */
+        #html-preview {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="title">Create Template</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="id_title">Title:</label>
+            {{ form.title }}
+        </div>
+        <div>
+            <div>
+                <label for="{{ form.codeHtml.id_for_label }}">HTML Code:</label>
+                {{ form.codeHtml }}
+            </div>
+        </div>
+        <div>
+            <label for="id_type">Type:</label>
+            {{ form.type }}
+        </div>
+        <div>
+            <label for="id_image">Image:</label>
+            {{ form.image }}
+        </div>
+       
+        <button  class="isclawzed" type="submit">Submit</button>
+    </form>
+   
+{% endblock %}
