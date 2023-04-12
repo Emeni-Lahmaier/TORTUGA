@@ -4,17 +4,20 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 from PIL import Image
-
-
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Utilisateur(models.Model):
-         id = models.IntegerField(primary_key = True)
+         id= models.IntegerField(primary_key = True)
          user = models.OneToOneField(User, on_delete=models.CASCADE,default=0)
-         num_tel= models.IntegerField()
-         date_naissance = models.DateField()  
+         num_tel= models.IntegerField(null= True)
+         date_naissance = models.DateField(null= True)
          avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
+         bio=models.CharField(max_length=256,null=True)
          USERNAME_FIELD = 'pseudo'
+    
+   
+    
          
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -76,13 +79,14 @@ class Affilie(models.Model):
      nom_prenom=models.CharField(max_length=60,null=True)
      email = models.EmailField(null=True)  
      contact = models.CharField(max_length=15,null=True)
-     contrat=models.TextField(null=True)
+     contrat=RichTextField(null=True)
      pourcentage=models.CharField(max_length=15,null=True)
 
+
 class TemplatesCommuns(models.Model):
-     id= models.IntegerField(primary_key = True)
+     id = models.AutoField(primary_key=True)
      title = models.CharField(max_length=30,null=True)
-     codeHtml= models.CharField(max_length=30,null=True)
+     codeHtml= RichTextField(null=True)
      type=models.CharField(max_length=30,null=True)
      image = models.ImageField(null=True)
      

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin Dashboard
+{% endblock %}
+
+{% block extra_css %}
+    
+{% endblock %}
+
+{% block content %}
+    <h1>Users</h1>
+    {% if not utilisateurs %}
+        <p>No users found.</p>
+    {% else %}
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for utilisateur in utilisateurs %}
+                    <tr>
+                        <td>{{ utilisateur.user_id }}</td>
+                        <td>{{ utilisateur.user.username }}</td>
+                        <td>{{ utilisateur.user.email }}</td>
+                        <td>
+                            <a href="{% url 'user_delete' user_id=utilisateur.id %}" class="user-button">Delete</a>
+                            <a href="{% url 'update_user' user_id=utilisateur.user_id %}" class="user-button-edit">Edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

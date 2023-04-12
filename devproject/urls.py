@@ -29,11 +29,12 @@ from myapp.views import ResetPasswordView, ChangePasswordView
 from django.urls import include
 from django.urls import URLPattern
 
-urlpatterns = [
 
+
+urlpatterns = [
+    
     path('', home, name='home'),  
     path('acceuil/', acceuil, name='acceuil'), 
-    
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
     path('profile/<int:id>', profile, name='profile'),
@@ -57,6 +58,13 @@ urlpatterns = [
     path('login/',MyloginView.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='home'),name='logout'),
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('adminDashboard/', user_list, name='admin_dashboard'),
+    path('user/<int:user_id>/delete/', user_delete, name='user_delete'),
+    path('user/<int:user_id>/update/', update_user, name='update_user'),
+    path('template_create/', template_create, name='template_create'),
+    path('template_update/<int:id>/', template_update, name='template_update'),
+    path('template_delete/<int:id>/', template_delete, name='template_delete'),
+    path('user_templates/', templates_communs, name='user_templates'),
 
     path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
@@ -70,5 +78,6 @@ urlpatterns = [
 
 ]
 
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

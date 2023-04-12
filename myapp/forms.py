@@ -3,6 +3,7 @@ from myapp.models import *
 from django import forms
 from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField ,PasswordChangeForm ,UserChangeForm
 from django.contrib.auth.models import User
+from ckeditor.widgets import CKEditorWidget
 
 class ContactForm(forms.ModelForm):  
     class Meta:  
@@ -14,6 +15,8 @@ class ContactForm(forms.ModelForm):
       }
 
 class AffilieForm(forms.ModelForm):
+    contrat = forms.CharField(widget=CKEditorWidget(),label="Contrat")
+
     class Meta:
         model = Affilie
         fields = ['nom_prenom','contact', 'email','contrat','pourcentage']
@@ -23,17 +26,48 @@ class AffilieForm(forms.ModelForm):
             'contrat': forms.TextInput(attrs={ 'class': 'form-control' }),
             'pourcentage': forms.TextInput(attrs={ 'class': 'form-control' }),
         }
+class UtilisateurUpdateForm(forms.ModelForm):
+    username = forms.CharField(label='Username')
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    email = forms.EmailField(label='Email')
+    
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+class TemplatesUpdateForm(forms.ModelForm):
+    class Meta:
+        model = TemplatesCommuns
+        fields = ['title', 'codeHtml', 'type', 'image']
+        widgets = {
+            'codeHtml': forms.Textarea(attrs={'rows': 5}),
+        }
+
+class TemplatesCreateForm(forms.ModelForm):
+    class Meta:
+        model = TemplatesCommuns
+        fields = ['title', 'codeHtml', 'type', 'image']
+        widgets = {
+            'codeHtml': forms.Textarea(attrs={'rows': 5}),
+        }
 
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['num_tel','date_naissance']
+        fields = ['num_tel','date_naissance','bio']
         widgets={'user': forms.TextInput(attrs={ 'class': 'form-control' }), 
-            
+
             'num_tel': forms.TextInput(attrs={ 'class': 'form-control' }),
             'date_naissance': forms.DateInput(attrs={ 'class': 'form-control' }),
-        
+            'bio': forms.TextInput(attrs={ 'class': 'form-control' }),
+
         }
+        
+ 
+
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
