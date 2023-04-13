@@ -32,7 +32,7 @@ from django.urls import URLPattern
 
 
 urlpatterns = [
-    
+
     path('', home, name='home'),  
     path('acceuil/', acceuil, name='acceuil'), 
     path('index/', index, name='index'), 
@@ -54,7 +54,7 @@ urlpatterns = [
     path('updatea/<int:id>', updatea, name='updatea'), 
     path('delete/<int:id>', destroy, name='destroy'),
     path('destroya/<int:id>', destroya, name='destroya'),   
-    path('signup/',SignupView.as_view(),name='signup'),
+    path('signup/', SignupView.as_view(), name='signup'),
     path('login/',MyloginView.as_view(),name='login'),
     path('logout/',LogoutView.as_view(next_page='home'),name='logout'),
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
@@ -65,6 +65,7 @@ urlpatterns = [
     path('template_update/<int:id>/', template_update, name='template_update'),
     path('template_delete/<int:id>/', template_delete, name='template_delete'),
     path('user_templates/', templates_communs, name='user_templates'),
+    path('previewtemplate/<int:id>/', previewtemplate, name='preview_template'),
 
     path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),

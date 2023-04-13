@@ -1,40 +1,32 @@
-{% extends 'base.html' %}
-
-{% block title %}
-    Admin Dashboard
-{% endblock %}
-
-{% block extra_css %}
-    
-{% endblock %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admindashboard.css' %}">
+</head>
 
 {% block content %}
-    <h1>Users</h1>
+    <h1 class="user-title">Users List</h1>
     {% if not utilisateurs %}
         <p>No users found.</p>
     {% else %}
-        <table class="user-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for utilisateur in utilisateurs %}
-                    <tr>
-                        <td>{{ utilisateur.user_id }}</td>
-                        <td>{{ utilisateur.user.username }}</td>
-                        <td>{{ utilisateur.user.email }}</td>
-                        <td>
-                            <a href="{% url 'user_delete' user_id=utilisateur.id %}" class="user-button">Delete</a>
-                            <a href="{% url 'update_user' user_id=utilisateur.user_id %}" class="user-button-edit">Edit</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container">
+        {% for utilisateur in utilisateurs %}
+        <div class="grid-7 element-animation">
+            <div class="card color-card">
+               
+                <img class="profile" src="{{ utilisateur.avatar.url }}" alt="{{ utilisateur.user.username }}'s Avatar">
+                <h3 class="label">Name:</h3>
+                <h2 class="title">{{ utilisateur.user.username }}</h2>
+                <h3 class="label">Email:</h3>
+                <h2 class="title">{{ utilisateur.user.email }}</h2>
+                <div class="card-buttons">
+                    <button onclick="window.location.href='{% url 'user_delete' user_id=utilisateur.id %}'" class="btn color-a top">Delete</button>
+                    <button onclick="window.location.href='{% url 'update_user' user_id=utilisateur.user_id %}'" class="btn color-a top">Edit</button>
+                </div>                       
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
     {% endif %}
 {% endblock %}

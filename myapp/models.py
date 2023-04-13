@@ -101,4 +101,10 @@ class TemplatesUser(models.Model):
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
      image = models.ImageField(null=True)
 
-
+class ContactFormSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phonenumber = models.CharField(max_length=20,null=True)
+    subject = models.CharField(max_length=200,null=True)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)

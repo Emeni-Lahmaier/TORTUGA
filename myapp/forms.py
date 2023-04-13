@@ -85,20 +85,14 @@ class ShareForm(forms.ModelForm):
                   'URL': forms.TextInput(attrs={ 'class': 'form-control' }),
                   'description':forms.TextInput(attrs={ 'class': 'form-control' }),}
 
-class SignUpForm(UserCreationForm):
-    password1 = forms.CharField(label="Password",widget=forms.PasswordInput
-    (attrs={'class':'form-control'}))
-    password2 = forms.CharField(label="Password Again ",widget=forms.PasswordInput
-    (attrs={'class':'form-control'}))
-    first_name = forms.CharField(required=True,label=" First Name ",widget=forms.TextInput(attrs={'class':'form-control'}))
-    last_name = forms.CharField(required=True,label=" Last Name ",widget=forms.TextInput(attrs={'class':'form-control'}))
+class SignupForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=254, required=True)
 
-
-    email = forms.CharField(required=True,widget=forms.EmailInput(attrs={'class':'form-control'}))
     class Meta:
         model = User
-        fields =('first_name','last_name','username','email')
-        widgets ={'username':forms.TextInput(attrs={'class':'form-control'})}
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 
 

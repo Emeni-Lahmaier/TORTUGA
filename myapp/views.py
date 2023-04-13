@@ -27,38 +27,67 @@ from .forms import TemplatesUpdateForm
 from .forms import TemplatesCreateForm
 from django.contrib.auth.forms import UserChangeForm
 from django.http import Http404
+import logging
+
 # Create your views here.
 
 class SignupView(View):
     def get(self, request):
-        fm= SignUpForm()
-        return render(request, 'signup.html',{'form':fm} )
+        return render(request, 'signup.html')
+    
     def post(self, request):
-        fm=SignUpForm(request.POST)
-        if fm.is_valid():
-            fm.save()
-            messages.success(request,"Sign Up Success !  ")
-            return redirect('/login')
-        else:
-            return render(request, 'signup.html',{'form':fm} )
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect('/signup')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username is already taken.")
+            return redirect('/signup')
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email is already taken.")
+            return redirect('/signup')
+        
+        user = User.objects.create_user(username=username, email=email, first_name=first_name, last_name=last_name, password=password1)
+        user.save()
+        
+        messages.success(request, "Signup successful!")
+        return redirect('/login')
 
 
+
+
+
+
+
+logger = logging.getLogger(__name__)
 class MyloginView(View):
-   def get(self, request):
-      fm=MyLoginForm()
-      return render(request , 'login.html',{'form':fm})
-   def post(self, request):
-      fm=MyLoginForm(request,data= request.POST)
-      if fm.is_valid():
-         username=fm.cleaned_data['username']
-         password=fm.cleaned_data['password']
-         
-         user = authenticate(request,username=username,password=password)
-         if user is not None:
-            login(request,user)
-            return redirect('/acceuil')
-      else:
+    def get(self, request):
+        fm=MyLoginForm()
         return render(request , 'login.html',{'form':fm})
+
+    def post(self, request):
+        fm=MyLoginForm(request,data= request.POST)
+        if fm.is_valid():
+            username=fm.cleaned_data['username']
+            password=fm.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse_lazy('acceuil'))
+        else:
+            return render(request , 'login.html',{'form':fm})
+
+
+
+
 
 # Create your views here.  
 def addnew(request):  
@@ -131,7 +160,15 @@ def destroya(request, id):
     return redirect("/indexa")  
 
 def home(request):
- return render(request,'home.html')
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phonenumber = request.POST['phonenumber']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
+        submission.save()
+    return render(request, 'home.html')
 
 
 def acceuil(request):
@@ -145,6 +182,11 @@ def landingpage(request):
 def preview(request, id):
     landingpages = TemplatesCommuns.objects.get(id=id)  
     return render(request,"preview.html",{'landingpages':landingpages}) 
+
+def previewtemplate(request, id):
+    template = TemplatesCommuns.objects.get(id=id)
+    context = {'template': template}
+    return render(request, 'previewtemplate.html', context)
 
 
 def sharelandingpage(request):
@@ -254,6 +296,7 @@ def template_update(request, id):
     else:  # move this else block outside the if block
         templates_form = TemplatesUpdateForm(instance=template)
     return render(request, 'template_update.html', {'templates_form': templates_form})
+
 
 
 

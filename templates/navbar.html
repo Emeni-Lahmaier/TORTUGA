@@ -1,41 +1,23 @@
-<nav class="navbar" style="background-color: #a696c8;">
-    <div class="container-fluid">
-      {% load static %}
-      <img src="{% static 'LT.png' %}" style="height:80px">
-      <a class="navbar-brand" href="{% url 'home' %}">La Tortuga </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active"  href="{% url 'home' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#aboutUs">About Us </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#containercc">Contact Us </a>
-          </li>
-         
-          
-        </ul>
-        <ul class="navbar-nav me-autc mb-2 mb-1lg-@">
-          
-          <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-          <li class="nav-item">
-          <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
-        </li>
-
-          
-        </ul>
-        
-        
-            
-         
-      </div>
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'my_style.css' %}">
+</head>
+<body>
+  <nav>
+    <div class="center">
+    <div class="navicon">
     </div>
+      <div></div>
+    </div>
+  
+    <a>This was</a>
+    <a>Made using</a>
+    <a>The clip-path property</a>
+    <a>Transition in</a>
+    <a>CSS only</a>
+  
   </nav>
+</body>
+</html>

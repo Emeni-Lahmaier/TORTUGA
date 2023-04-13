@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Edit template "{{ template.title }}"</h1>
+  <h1 class="user-title">Edit your template{{ template.title }}</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ templates_form.as_p }}
-    <button type="submit">Update</button>
+    <button class="btn-preview" type="submit">Update</button>
   </form>
 {% endblock %}
+
+<!-- {% load static %} -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'my_style.css' %}"> -->
