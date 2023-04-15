@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tortuga - We're available for marketing</title>
+  <title>Tortuga - Tunnel de Vente</title>
 
   <!-- 
     - favicon
@@ -16,7 +16,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" type="text/css" href="{% static 'home_style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'homee.css' %}">
 
   <!-- 
     - google font link
@@ -36,39 +36,39 @@
 
   <header class="header" data-header>
     <div class="container">
-
-      <a href="#" class="logo">Tortuga</a>
-
+      <img src="{% static 'LT.png' %}" style="height:90px">
+      <a href="#" class="logo">La Tortuga</a>
+      
       <nav class="navbar container" data-navbar>
+        
         <ul class="navbar-list">
 
           <li>
-            <a href="#home" class="navbar-link" data-nav-link>Home</a>
+            <a href="#home" class="navbar-link" data-nav-link>Acceuil</a>
           </li>
 
           <li>
-            <a href="#service" class="navbar-link" data-nav-link>Services</a>
+            <a href="#service" class="navbar-link" data-nav-link>Nos Services</a>
           </li>
 
-          <li>
+          <!-- <li>
             <a href="#project" class="navbar-link" data-nav-link>Project</a>
-          </li>
-
+          </li> -->
+          
           <li>
-            <a href="#about" class="navbar-link" data-nav-link>About Us</a>
+            <a href="#about" class="navbar-link" data-nav-link>Qui Somme Nous?</a>
           </li>
-
-          <li>
+          <!-- <li>
             <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
-          </li>
-
+          </li> -->
+         
           <li>
-            <a href="#contact" class="navbar-link" data-nav-link>Contact Us</a>
+            <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
           </li>
 
           <li>
             <div class="wrapper">
-            <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">Se Connecter</a>
           </li>
         </div>
         </ul>
@@ -98,18 +98,23 @@
 
           <div class="hero-content">
 
-            <p class="hero-subtitle">Tortuga Marketing Agency</p>
+            <p class="hero-subtitle">Agence de Marketing La Tortuga</p>
 
-            <h1 class="h1 hero-title">We are available for marketing</h1>
+            <h1 class="h1 hero-title">Plateforme de Marketing pour les Infopreneurs</h1>
 
             <p class="hero-text">
               
             </p>
 
-            <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">Se Connecter</a>
 
           </div>
-
+          <div class="about-banner img-holder" style="--width: 600; --height: 540;">
+            <img src="{% static 'lila.png' %}"  loading="lazy" alt="about banner"
+              class="img-cover">
+              
+            
+          </div>
         
 
         </div>
@@ -126,11 +131,10 @@
       <section class="section service" id="service" aria-label="service">
         <div class="container">
 
-          <h2 class="h2 section-title">Services We Provided</h2>
+          <h2 class="h2 section-title">Nos Services</h2>
 
           <p class="section-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna.
+           
           </p>
 
           <ul class="grid-list">
@@ -143,13 +147,11 @@
                 </div>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">SEO Optimization</a>
+                  <a href="#" class="card-title">Gestion des Affiliés</a>
                 </h3>
 
                 <p class="card-text">
-                  Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque
-                  ipsa quae.
+                Les entreprises peuvent se connecter avec des partenaires affiliés qui permettent de développer leur activité.
                 </p>
 
               </div>
@@ -163,13 +165,13 @@
                 </div>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">Digital Marketing</a>
+                  <a href="#" class="card-title">Landing Page</a>
                 </h3>
 
                 <p class="card-text">
-                  Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque
-                  ipsa quae.
+                  Nos pages de destination vous permettent de développer facilement votre liste 
+                  de courriels avec de nouveaux abonnés. Plus vous transformez de visiteurs en 
+                  prospects.
                 </p>
 
               </div>
@@ -183,13 +185,13 @@
                 </div>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">Market Research</a>
+                  <a href="#" class="card-title">Analyses et Aperçus</a>
                 </h3>
 
                 <p class="card-text">
-                  Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque
-                  ipsa quae.
+                  Sachez si vous êtes sur la bonne voie pour atteindre les jalons et 
+                  les objectifs de votre entreprise! Prévoyez le rendement de votre entreprise en
+                  planifiant et en établissant un budget en conséquence.
                 </p>
 
               </div>
@@ -203,13 +205,12 @@
                 </div>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">Keyword Targeting</a>
+                  <a href="#" class="card-title">Ciblage Form PopUp</a>
                 </h3>
 
                 <p class="card-text">
-                  Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque
-                  ipsa quae.
+                  Créez des fenêtres contextuelles et des formulaires intéressants pour votre site Web en quelques minutes.
+Aucune compétence de codage requise.
                 </p>
 
               </div>
@@ -227,32 +228,28 @@
                 </h3>
 
                 <p class="card-text">
-                  Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque
-                  ipsa quae.
+                  Catégorisez vos clients et envoyez des e-mails personnalisés à des groupes spécifiques et Configurez des séquences d'e-mails automatisées.
                 </p>
 
               </div>
             </li>
 
             <li>
+              <!--
               <div class="service-card">
-
                 <div class="card-icon" style="background-color: #ff612f">
                   <ion-icon name="build"></ion-icon>
                 </div>
-
                 <h3 class="h3">
-                  <a href="#" class="card-title">Marketing & Reporting</a>
+                  <a href="#" class="card-title">Configuration Personalisé</a>
                 </h3>
-
                 <p class="card-text">
                   Sed ut perspiciatis unde omnis iste natus error sit tatem accusantium doloremque laudantium, totam rem
                   aperiam, eaque
                   ipsa quae.
                 </p>
-
               </div>
+               --> 
             </li>
 
           </ul>
@@ -282,7 +279,7 @@
         <div class="container">
 
           <div class="about-banner img-holder" style="--width: 720; --height: 960;">
-            <img src="{% static 'Tortuga.png' %}"  loading="lazy" alt="about banner"
+            <img src="{% static 'funnel1.png' %}"  loading="lazy" alt="about banner"
               class="img-cover">
               
             
@@ -290,23 +287,27 @@
 
           <div class="about-content">
 
-            <h2 class="h2 section-title">About Us</h2>
+            <h2 class="h2 section-title">La Tortuga</h2>
 
             <p class="section-text">
-              Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc
-              tinci dunt nec
-              elei fend et tiram.
-            </p>
+              Tortuga vous aide à démarrer votre entreprise avec une plateforme facile à utiliser
+              et contenant tous les outils nécessaires
+              Nous sommes passionnés par l'optimisation
+              de l'expérience utilisateur et la génération de 
+              leads qualifiés pour nos clients. Nous travaillons avec
+              diligence pour créer des campagnes de marketing numérique efficaces qui
+              convertissent les visiteurs en clients fidèles.            </p>
 
-            <h3 class="h3">Who We Are</h3>
+            <h3 class="h3">A propos</h3>
 
             <p class="section-text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-              rem aperiam,
-              eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              Notre plateforme vous permet de créer des sales funnels personnalisés
+               pour répondre aux besoins uniques de votre entreprise, tout en étant 
+               abordable et facile à utiliser
+
             </p>
 
-            <h3 class="h3">Our Success</h3>
+            <h3 class="h3">Nos Offres</h3>
 
             <ul class="about-list">
 
@@ -314,7 +315,14 @@
                 <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
 
                 <p class="section-text">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Créez des sales funnels avec un éditeur facile à utiliser                </p>
+              </li>
+
+              <li class="about-item">
+                <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+
+                <p class="section-text">
+                  Intégrez votre liste de diffusion, votre système de paiement et vos sites d'adhésion
                 </p>
               </li>
 
@@ -322,30 +330,16 @@
                 <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
 
                 <p class="section-text">
-                  It is a long established fact that a reader will be distracted by the readable content of a page when
-                  looking at its
-                  layout.
-                </p>
-              </li>
-
-              <li class="about-item">
-                <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                <p class="section-text">
-                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-                  classical Latin
-                  literature.
+                  Automatisez les étapes de votre entonnoir. Déclenchez des séquences d'e-mails et donnez un accès instantané à des cours.
                 </p>
               </li>
 
             </ul>
 
-            <h3 class="h3">Our Mission</h3>
+            <h3 class="h3">Notre Mission</h3>
 
             <p class="section-text">
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-              atque corrupti
-              quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in.
+              Que vous soyez une petite entreprise ou une grande entreprise, nous avons la solution parfaite pour vous aider à atteindre vos objectifs de vente et de croissance.
             </p>
 
           </div>
@@ -364,11 +358,11 @@
       <section class="section cta" aria-label="cta" style="background-image: url('./assets/images/cta-bg.jpg')">
         <div class="container">
 
-          <p class="cta-subtitle">So What is Next?</p>
+          <p class="cta-subtitle">Quelle est la prochaine étape?</p>
 
-          <h2 class="h2 section-title">Are You Ready? Let's get to Work!</h2>
+          <h2 class="h2 section-title">Êtes-vous prêt? Mettons-nous au travail!</h2>
 
-          <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+          <a href="{% url 'login' %}" class="btn btn-primary">Commencez dès maintenant !</a>
 
         </div>
       </section>
@@ -390,41 +384,38 @@
       <section class="section contact" id="contact" aria-label="contact">
         <div class="container">
 
-          <h2 class="h2 section-title">Let's Contact With Us</h2>
+          <h2 class="h2 section-title">Contactez-nous</h2>
 
           <p class="section-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna
-            aliqua.
+            
           </p>
 
           <form action="{% url 'home' %}" method="POST">
             <div class="input-wrapper">
-              <input type="text" name="name" aria-label="name" placeholder="Your name*" required class="input-field">
+              <input type="text" name="name" aria-label="name" placeholder="Votre Nom Complet*" required class="input-field">
 
-              <input type="email" name="email" aria-label="email" placeholder="Email address*" required
+              <input type="email" name="email" aria-label="email" placeholder="Addresse Email*" required
                 class="input-field">
             </div>
 
             <div class="input-wrapper">
-              <input type="text" for="subject" name="subject" aria-label="subject" placeholder="Subject" class="input-field">
+              <input type="text" for="subject" name="subject" aria-label="subject" placeholder="Sujet" class="input-field">
 
-              <input type="number" for="phonenumber" name="phonenumber" aria-label="phone" placeholder="Phone number" class="input-field">
+              <input type="number" for="phonenumber" name="phonenumber" aria-label="phone" placeholder="Numéro de Téléphone" class="input-field">
             </div>
 
-            <textarea name="message" aria-label="message" placeholder="Your message...*" required
+            <textarea name="message" aria-label="message" placeholder="Votre message...*" required
               class="input-field"></textarea>
 
             <div class="checkbox-wrapper">
               <input type="checkbox" name="terms_and_policy" id="terms" required class="checkbox">
 
               <label for="terms" class="label">
-                Accept <a href="#" class="label-link">Terms of Services</a> and <a href="#" class="label-link">Privacy
-                  Policy</a>
+                Acceptez <a href="#" class="label-link">Nos termes de Services</a> et <a href="#" class="label-link">Nos Politique de Confidentialité</a>
               </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
 
           </form>
 
@@ -439,7 +430,7 @@
 
                 <div class="card-content">
 
-                  <h3 class="h3 card-title">Mail Here</h3>
+                  <h3 class="h3 card-title">Email</h3>
 
                   <a href="mailto:hello@luaz.com" class="card-link">hello@luaz.com</a>
                   <a href="mailto:info@luaz.com" class="card-link">info@luaz.com</a>
@@ -458,7 +449,7 @@
 
                 <div class="card-content">
 
-                  <h3 class="h3 card-title">Visit Here</h3>
+                  <h3 class="h3 card-title">Visitez-nous sur</h3>
 
                   <address class="card-address">
                     27 Division St, New York,<br>
@@ -479,7 +470,7 @@
 
                 <div class="card-content">
 
-                  <h3 class="h3 card-title">Call Here</h3>
+                  <h3 class="h3 card-title">Pour Plus d'Infos</h3>
 
                   <a href="tel:+1234567890" class="card-link">+123 456 7890</a>
                   <a href="tel:+2414524526" class="card-link">+241 452 4526</a>
@@ -508,9 +499,7 @@
   <footer class="footer">
     <div class="container">
 
-      <p class="copyright">
-        &copy; 2022 All Rights Reserved by <a href="#" class="copyright-link">codewithsadee</a>
-      </p>
+      
 
     </div>
   </footer>

@@ -254,7 +254,6 @@ def update_profile(request, user_id):
 
 
 
-
 def landinguser(request):
     landingusers = TemplatesUser.objects.all()  
     return render(request,"landinguser.html",{'landingusers':landingusers}) 
@@ -374,3 +373,14 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('acceuil')
+
+def home(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phonenumber = request.POST['phonenumber']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
+        submission.save()
+    return render(request, 'home.html')

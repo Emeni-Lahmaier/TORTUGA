@@ -1,23 +1,137 @@
 <!DOCTYPE html>
-<html>
-<head>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'my_style.css' %}">
-</head>
-<body>
-  <nav>
-    <div class="center">
-    <div class="navicon">
-    </div>
-      <div></div>
-    </div>
+  <!-- Created By CodingLab - www.codinglabweb.com -->
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+     <!--------- <title>Responsive Navigation Menu</title>------>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  } 
+  nav{
+    display: flex;
+    height: 80px;
+    width: 100%;
+    background: #7f1c95;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  nav .logo{
+    color: #fff;
+    font-size: 35px;
+    font-weight: 100;
+  }
+  nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+  nav ul li{
+    
+    margin: 0 5px;
+    margin-top:20px;
+  }
+  nav ul li a{
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+  nav ul li a.active,
+  nav ul li a:hover{
+    color: #111;
+    background: #fff;
+  }
+  nav .menu-btn i{
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+  }
+  input[type="checkbox"]{
+    display: none;
+  }
+  @media (max-width: 1000px){
+    nav{
+      padding: 0 40px 0 50px;
+    }
+  }
+  @media (max-width: 920px) {
+    nav .menu-btn i{
+      display: block;
+    }
+    #click:checked ~ .menu-btn i:before{
+      content: "\f00d";
+    }
+    nav ul{
+      position: fixed;
+      top: 80px;
+      left: -100%;
+      background: #111;
+      height: 100vh;
+      width: 100%;
+      text-align: center;
+     
+      transition: all 0.3s ease;
+    }
+    #click:checked ~ ul{
+      left: 0;
+    }
+    nav ul li{
+      width: 100%;
+      margin: 40px 0;
+    }
+    nav ul li a{
+      width: 100%;
+      margin-left: -100%;
+      display: block;
+      font-size: 20px;
+      transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    #click:checked ~ ul li a{
+      margin-left: 0px;
+    }
+   
+    nav ul li a:hover{
+      background: none;
+      color: cyan;
+    }
+  }
   
-    <a>This was</a>
-    <a>Made using</a>
-    <a>The clip-path property</a>
-    <a>Transition in</a>
-    <a>CSS only</a>
+
+      </style>
+    </head>
+    <body>
+      <nav>
+        
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="#aboutUs">About Us</a></li>
+          <li><a href="#containercc">Contact Us</a></li>
+        </ul>
+        <div class="logo">La TorTuga</div>
+        <ul>
+          
+          <li>
+          <a  href="{% url 'login' %}">Login</a>
+          <li>
+          <a href="{% url 'signup' %}">Signup</a>
+
+        </ul>
+      </nav>
+      
   
-  </nav>
-</body>
-</html>
+    </body>
+  </html>
