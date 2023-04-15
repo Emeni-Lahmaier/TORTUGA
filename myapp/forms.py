@@ -55,14 +55,17 @@ class TemplatesCreateForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me',]
+        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me', 'phonenumber', 'date_naissance']
         widgets = {
             'Address': forms.TextInput(attrs={'class': 'form-control'}),
             'City': forms.TextInput(attrs={'class': 'form-control'}),
             'Country': forms.TextInput(attrs={'class': 'form-control'}),
             'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
             'about_me': forms.Textarea(attrs={'class': 'form-control'}),
+            'phonenumber': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_naissance': forms.DateInput(attrs={'class': 'form-control'}),
         }
+
 
 
  

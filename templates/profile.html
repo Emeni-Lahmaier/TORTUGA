@@ -184,9 +184,21 @@
                         <input type="text" id="input-last-name" name="last_name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user.last_name }}">
                       </div>
                     </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-phone-number">Phone Number</label>
+                        <input type="number" id="input-last-name" name="phonenumber" class="form-control form-control-alternative" placeholder="Phone Number" value="{{ utilisateur.phonenumber }}">
                   </div>
                 </div>
-                <hr class="my-4">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="input-date">Date</label>
+                    <input type="date" id="input-date" name="date_naissance" class="form-control form-control-alternative" placeholder="Date" value="{{ request.user.utilisateur.date_naissance }}">
+                    <p>   {{ request.user.utilisateur.date_naissance }}</p>
+                </div>
+                
+
+                
                 <!-- Address -->
                 <h6 class="heading-small text-muted mb-4">Contact information</h6>
                 <div class="pl-lg-4">

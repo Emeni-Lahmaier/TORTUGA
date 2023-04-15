@@ -6,17 +6,21 @@ from datetime import datetime
 from PIL import Image
 from ckeditor.fields import RichTextField
 
+
 # Create your models here.
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
-    Address = models.CharField(max_length=256, null=True)
-    City = models.CharField(max_length=256, null=True)
-    Country = models.CharField(max_length=256, null=True)
+    Address = models.CharField(max_length=255, null=True)
+    City = models.CharField(max_length=255, null=True)
+    Country = models.CharField(max_length=255, null=True)
     postal_code = models.CharField(max_length=20, null=True)
     about_me = models.TextField(null=True)
     avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
-
+    phonenumber = models.CharField(max_length=20, null=True)
+    date_naissance = models.DateField(null=True)
+    
     USERNAME_FIELD = 'pseudo'
+
 
 
     
