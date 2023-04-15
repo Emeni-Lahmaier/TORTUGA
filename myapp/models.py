@@ -24,9 +24,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Utilisateur.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.utilisateur.save()
 
     
 
@@ -102,3 +99,10 @@ class TemplatesUser(models.Model):
      image = models.ImageField(null=True)
 
 
+class ContactFormSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phonenumber = models.CharField(max_length=20,null=True)
+    subject = models.CharField(max_length=200,null=True)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)

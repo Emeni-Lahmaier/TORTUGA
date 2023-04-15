@@ -55,7 +55,7 @@ class TemplatesCreateForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['num_tel','date_naissance','bio']
+        fields = ['num_tel','date_naissance']
         widgets={'user': forms.TextInput(attrs={ 'class': 'form-control' }), 
 
             'num_tel': forms.TextInput(attrs={ 'class': 'form-control' }),

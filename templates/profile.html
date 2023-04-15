@@ -62,13 +62,13 @@ Profile Page
                     </div>
                     
                     <label class="small mb-1">Date Naissance:</label>
-                    <input type="text" class="form-control" name="date_naissance" id="date_naissance" required maxlength="100" value="{{ utilisateur.date_naissance }}" />
+                    <input type="text" class="form-control" name="date_naissance" id="id_date_naissance" required maxlength="100" value="{{ utilisateur.date_naissance }}" />
                      
                     <label class="small mb-1">Numero Telephone:</label> 
-                    <input type="text" class="form-control" name="num_tel" id="num_tel" required maxlength="100" value="{{ utilisateur.num_tel}}" />
+                    <input type="text" class="form-control" name="num_tel" id="id_num_tel" required maxlength="100" value="{{ utilisateur.num_tel}}" />
                     <hr>
                     <div class="form-group">
-                        <a href="{% url 'password_change' %}">Change Password</a>
+                      <button type="submit" class="btn btn-success btn-lg">Save Changes</button>
                         
                         
                     </div>
