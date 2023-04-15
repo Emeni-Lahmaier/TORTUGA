@@ -28,6 +28,9 @@ from .forms import TemplatesCreateForm
 from django.contrib.auth.forms import UserChangeForm
 from django.http import Http404
 import logging
+from .models import ContactGoogle
+from .forms import ContactForm
+
 
 # Create your views here.
 
@@ -202,9 +205,10 @@ def share(request, id):
 
 
 
-def profile(request, id):  
-    utilisateur = Utilisateur.objects.get(id=id)  
-    return render(request,'profile.html', {'utilisateur':utilisateur})  
+def profile(request, user_id):
+    utilisateur = Utilisateur.objects.get(user_id=user_id)
+    context = {'utilisateur': utilisateur, 'user_id': user_id}
+    return render(request, 'profile.html', context)
 
 def updatep(request, id):  
     utilisateur =Utilisateur.objects.get(id=id)  
@@ -217,6 +221,39 @@ def updatep(request, id):
         messages.success(request,"Donnees mis a jours avec Success !  ") 
         return redirect("/acceuil") 
     return render(request, 'profile.html', {'utilisateur':utilisateur}, {'user':user}) 
+
+def update_profile(request, user_id):
+    # Retrieve the utilisateur object or return 404 error if not found
+    utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
+
+    # Retrieve the user object linked to the utilisateur object
+    user = utilisateur.user
+
+    # Populate the utilisateur form with existing utilisateur data
+    utilisateur_form = UtilisateurForm(request.POST or None, request.FILES or None, instance=utilisateur)
+    # Populate the user form with existing user data
+    user_form = UserForm(request.POST or None, instance=user)
+
+    if request.method == 'POST':
+        if utilisateur_form.is_valid() and user_form.is_valid():
+            utilisateur_form.save()
+            user_form.save()
+            return redirect('profile', user_id=utilisateur.user_id)
+
+    context = {
+        'utilisateur_form': utilisateur_form,
+        'user_form': user_form,
+        'utilisateur': utilisateur,
+    }
+    return render(request, 'profile.html', context)
+
+
+
+
+
+
+
+
 
 def landinguser(request):
     landingusers = TemplatesUser.objects.all()  
@@ -298,7 +335,20 @@ def template_update(request, id):
     return render(request, 'template_update.html', {'templates_form': templates_form})
 
 
+def contact_view(request):
+    if request.method == 'POST':
+        form = GoogleDocs(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+    else:
+        form = GoogleDocs()
 
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'contact_form.html', context)
 
 
 @login_required

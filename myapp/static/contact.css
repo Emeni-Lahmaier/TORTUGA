@@ -1,0 +1,245 @@
+#contact-form-wrapper {
+    background-color: #f5f5f5;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+/* CSS for the form container */
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* CSS for the form title */
+  .form-title {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  
+  /* CSS for the form inputs */
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* CSS for the form labels */
+  .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  /* CSS for the form submit button */
+  .form-submit {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* CSS for the form image preview */
+  .form-image-preview {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  /* CSS for the form container */
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* CSS for the form title */
+  .form-title {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  
+  /* CSS for the form inputs */
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* CSS for the form labels */
+  .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  /* CSS for the form submit button */
+  .form-submit {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* CSS for the form image preview */
+  .form-image-preview {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  #color-palette {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.color {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.color:hover {
+  opacity: 0.8;
+}
+
+.image-preview {
+    max-width: 100px;
+    max-height: 100px;
+}
+#color-picker {
+    position: fixed;
+    top: 0;
+    right: -200px;
+    width: 200px;
+    height: 100%;
+    background-color: #f0f0f0;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+#color-picker.show {
+    right: 0;
+}
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.color-circle:hover {
+    transform: scale(1.2);
+}
+
+#color-picker {
+    position: fixed;
+    top: 0;
+    right: -200px;
+    width: 200px;
+    height: 100vh;
+    background-color: #f1f1f1;
+    transition: right 0.3s;
+}
+
+#color-picker.show {
+    right: 0;
+}
+
+#color-palette-icon {
+    position: absolute;
+    top: 5%;
+    transform: translateY(-20%);
+    left: 170vh;
+    font-size: 30px;
+  }
+  
+  #image-preview img {
+    max-width: 400px;
+    max-height: 400px;
+  }
+   

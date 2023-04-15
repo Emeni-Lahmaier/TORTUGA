@@ -37,7 +37,6 @@ urlpatterns = [
     path('acceuil/', acceuil, name='acceuil'), 
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
-    path('profile/<int:id>', profile, name='profile'),
     path('delete_profile/', delete_profile, name='delete_profile'),
     path('updatep/<int:id>', updatep, name='updatep'),
     path('landinguser/', landinguser, name='landinguser'),
@@ -66,6 +65,9 @@ urlpatterns = [
     path('template_delete/<int:id>/', template_delete, name='template_delete'),
     path('user_templates/', templates_communs, name='user_templates'),
     path('previewtemplate/<int:id>/', previewtemplate, name='preview_template'),
+    path('contact/', contact_view, name='contact'),
+    path('profile/<int:user_id>/update/', update_profile, name='update_profile'),
+    path('profile/<int:user_id>/', profile, name='profile'),
 
     path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),

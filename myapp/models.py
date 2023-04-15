@@ -8,13 +8,17 @@ from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Utilisateur(models.Model):
-         id= models.IntegerField(primary_key = True)
-         user = models.OneToOneField(User, on_delete=models.CASCADE,default=0)
-         num_tel= models.IntegerField(null= True)
-         date_naissance = models.DateField(null= True)
-         avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
-         bio=models.CharField(max_length=256,null=True)
-         USERNAME_FIELD = 'pseudo'
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
+    Address = models.CharField(max_length=256, null=True)
+    City = models.CharField(max_length=256, null=True)
+    Country = models.CharField(max_length=256, null=True)
+    postal_code = models.CharField(max_length=20, null=True)
+    about_me = models.TextField(null=True)
+    avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
+
+    USERNAME_FIELD = 'pseudo'
+
+
     
    
     
@@ -108,3 +112,14 @@ class ContactFormSubmission(models.Model):
     subject = models.CharField(max_length=200,null=True)
     message = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
+
+class ContactGoogle(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    content = models.TextField()
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
