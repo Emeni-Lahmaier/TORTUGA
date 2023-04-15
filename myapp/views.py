@@ -27,38 +27,70 @@ from .forms import TemplatesUpdateForm
 from .forms import TemplatesCreateForm
 from django.contrib.auth.forms import UserChangeForm
 from django.http import Http404
+import logging
+from .models import ContactGoogle
+from .forms import ContactForm
+
+
 # Create your views here.
 
 class SignupView(View):
     def get(self, request):
-        fm= SignUpForm()
-        return render(request, 'signup.html',{'form':fm} )
+        return render(request, 'signup.html')
+    
     def post(self, request):
-        fm=SignUpForm(request.POST)
-        if fm.is_valid():
-            fm.save()
-            messages.success(request,"Sign Up Success !  ")
-            return redirect('/login')
-        else:
-            return render(request, 'signup.html',{'form':fm} )
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect('/signup')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username is already taken.")
+            return redirect('/signup')
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email is already taken.")
+            return redirect('/signup')
+        
+        user = User.objects.create_user(username=username, email=email, first_name=first_name, last_name=last_name, password=password1)
+        user.save()
+        
+        messages.success(request, "Signup successful!")
+        return redirect('/login')
 
 
+
+
+
+
+
+logger = logging.getLogger(__name__)
 class MyloginView(View):
-   def get(self, request):
-      fm=MyLoginForm()
-      return render(request , 'login.html',{'form':fm})
-   def post(self, request):
-      fm=MyLoginForm(request,data= request.POST)
-      if fm.is_valid():
-         username=fm.cleaned_data['username']
-         password=fm.cleaned_data['password']
-         
-         user = authenticate(request,username=username,password=password)
-         if user is not None:
-            login(request,user)
-            return redirect('/acceuil')
-      else:
+    def get(self, request):
+        fm=MyLoginForm()
         return render(request , 'login.html',{'form':fm})
+
+    def post(self, request):
+        fm=MyLoginForm(request,data= request.POST)
+        if fm.is_valid():
+            username=fm.cleaned_data['username']
+            password=fm.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse_lazy('acceuil'))
+        else:
+            return render(request , 'login.html',{'form':fm})
+
+
+
+
 
 # Create your views here.  
 def addnew(request):  
@@ -131,7 +163,15 @@ def destroya(request, id):
     return redirect("/indexa")  
 
 def home(request):
- return render(request,'home.html')
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phonenumber = request.POST['phonenumber']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
+        submission.save()
+    return render(request, 'home.html')
 
 
 def acceuil(request):
@@ -145,6 +185,11 @@ def landingpage(request):
 def preview(request, id):
     landingpages = TemplatesCommuns.objects.get(id=id)  
     return render(request,"preview.html",{'landingpages':landingpages}) 
+
+def previewtemplate(request, id):
+    template = TemplatesCommuns.objects.get(id=id)
+    context = {'template': template}
+    return render(request, 'previewtemplate.html', context)
 
 
 def sharelandingpage(request):
@@ -160,9 +205,10 @@ def share(request, id):
 
 
 
-def profile(request, id):  
-    utilisateur = Utilisateur.objects.get(id=id)  
-    return render(request,'profile.html', {'utilisateur':utilisateur})  
+def profile(request, user_id):
+    utilisateur = Utilisateur.objects.get(user_id=user_id)
+    context = {'utilisateur': utilisateur, 'user_id': user_id}
+    return render(request, 'profile.html', context)
 
 def updatep(request, id):  
     utilisateur =Utilisateur.objects.get(id=id)  
@@ -175,6 +221,38 @@ def updatep(request, id):
         messages.success(request,"Donnees mis a jours avec Success !  ") 
         return redirect("/acceuil") 
     return render(request, 'profile.html', {'utilisateur':utilisateur}, {'user':user}) 
+
+def update_profile(request, user_id):
+    # Retrieve the utilisateur object or return 404 error if not found
+    utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
+
+    # Retrieve the user object linked to the utilisateur object
+    user = utilisateur.user
+
+    # Populate the utilisateur form with existing utilisateur data
+    utilisateur_form = UtilisateurForm(request.POST or None, request.FILES or None, instance=utilisateur)
+    # Populate the user form with existing user data
+    user_form = UserForm(request.POST or None, instance=user)
+
+    if request.method == 'POST':
+        if utilisateur_form.is_valid() and user_form.is_valid():
+            utilisateur_form.save()
+            user_form.save()
+            return redirect('profile', user_id=utilisateur.user_id)
+
+    context = {
+        'utilisateur_form': utilisateur_form,
+        'user_form': user_form,
+        'utilisateur': utilisateur,
+    }
+    return render(request, 'profile.html', context)
+
+
+
+
+
+
+
 
 def landinguser(request):
     landingusers = TemplatesUser.objects.all()  
@@ -256,6 +334,20 @@ def template_update(request, id):
     return render(request, 'template_update.html', {'templates_form': templates_form})
 
 
+def contact_view(request):
+    if request.method == 'POST':
+        form = GoogleDocs(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+    else:
+        form = GoogleDocs()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'contact_form.html', context)
 
 
 @login_required

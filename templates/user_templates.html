@@ -21,44 +21,45 @@
       margin-left: auto;
     }
     .template-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   </style>
 {% endblock %}
 
 {% block content %}
-  <h1>User Templates</h1>
-
+<div classname="animation">
+  <h1 class="user-title">User Templates</h1>
+  
   {% if templates %}
     <table class="table">
-      <thead>
+      <thead class="table-head">
         <tr>
           <th>Title</th>
           <th>Type</th>
           <th>Image</th>
           <th>Preview</th>
-          <th>Actions</th>
+          <th class="actions">Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for template in templates %}
-          <tr>
-            <td>{{ template.title }}</td>
-            <td>{{ template.type }}</td>
+          <tr class="template-title">
+            <td class="template-title">{{ template.title }}</td>
+            <td class="template-type">{{ template.type }}</td>
             <td><img src="{{ template.image.url }}" alt="{{ template.title }}" width="300px"></td>
-            <td class="tp">
-                <td><div class="template-preview">{{ template.codeHtml|safe }}</div></td>
+            <td>
+              <a href="{% url 'preview_template' id=template.id %}" class="btn-preview">Preview</a>
             </td>
             <td>
               <div class="template-actions">
-                <a href="{% url 'template_delete' id=template.id %}" class="btn btn-danger btn-sm">Delete</a>
-                <a href="{% url 'template_update' id=template.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'template_delete' id=template.id %}" class="btn-delete">Delete</a>
+                <a href="{% url 'template_update' id=template.id %}" class="btn-edit">Edit</a>
               </div>
             </td>
           </tr>
+        </div>
         {% endfor %}
       </tbody>
     </table>

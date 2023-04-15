@@ -55,27 +55,27 @@ class TemplatesCreateForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['num_tel','date_naissance']
-        widgets={'user': forms.TextInput(attrs={ 'class': 'form-control' }), 
-
-            'num_tel': forms.TextInput(attrs={ 'class': 'form-control' }),
-            'date_naissance': forms.DateInput(attrs={ 'class': 'form-control' }),
-        
+        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me',]
+        widgets = {
+            'Address': forms.TextInput(attrs={'class': 'form-control'}),
+            'City': forms.TextInput(attrs={'class': 'form-control'}),
+            'Country': forms.TextInput(attrs={'class': 'form-control'}),
+            'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'about_me': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+ 
         
  
 
 
 
-class UserForm(forms.ModelForm):
+class UserForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ['first_name','last_name','email']
-        widgets={'first_name': forms.TextInput(attrs={ 'class': 'form-control' }), 
-                 'last_name': forms.TextInput(attrs={ 'class': 'form-control' }), 
-            'email': forms.EmailInput(attrs={ 'class': 'form-control' }),
-        
-        }
+        fields = ('username', 'email', 'first_name', 'last_name')
+        labels = {'email': 'Email Address'}
 
 class ShareForm(forms.ModelForm):
     class Meta:
@@ -85,20 +85,14 @@ class ShareForm(forms.ModelForm):
                   'URL': forms.TextInput(attrs={ 'class': 'form-control' }),
                   'description':forms.TextInput(attrs={ 'class': 'form-control' }),}
 
-class SignUpForm(UserCreationForm):
-    password1 = forms.CharField(label="Password",widget=forms.PasswordInput
-    (attrs={'class':'form-control'}))
-    password2 = forms.CharField(label="Password Again ",widget=forms.PasswordInput
-    (attrs={'class':'form-control'}))
-    first_name = forms.CharField(required=True,label=" First Name ",widget=forms.TextInput(attrs={'class':'form-control'}))
-    last_name = forms.CharField(required=True,label=" Last Name ",widget=forms.TextInput(attrs={'class':'form-control'}))
+class SignupForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=254, required=True)
 
-
-    email = forms.CharField(required=True,widget=forms.EmailInput(attrs={'class':'form-control'}))
     class Meta:
         model = User
-        fields =('first_name','last_name','username','email')
-        widgets ={'username':forms.TextInput(attrs={'class':'form-control'})}
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 
 
@@ -149,3 +143,22 @@ class EditProfileForm(UserChangeForm):
           'email',
         )
         exclude = ('password',)
+
+class GoogleDocs(forms.Form):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    address = forms.CharField(widget=forms.Textarea)
+    content = forms.CharField(widget=forms.Textarea)
+    image = forms.ImageField(required=False)
+
+    def save(self):
+        data = self.cleaned_data
+        contact = ContactGoogle.objects.create(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            email=data['email'],
+            content=data['content'],
+            image=data.get('image')
+        )
+        return contact

@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'devproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
+        'NAME': 'yahia',
         'USER': 'root',
         'PASSWORD': '', 
         'HOST': 'localhost',
