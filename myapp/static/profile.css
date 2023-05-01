@@ -70,7 +70,7 @@
     line-height: 1.5;
     margin: 0;
     text-align: left;
-    color: #525f7f;
+    color: #8965e0;
     background-color: #f8f9fe;
   }
   
@@ -123,14 +123,14 @@
   
   a {
     text-decoration: none;
-    color: #5e72e4;
+    color: #8965e0;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
   }
   
   a:hover {
     text-decoration: none;
-    color: #233dd2;
+    color: #8965e0;
   }
   
   a:not([href]):not([tabindex]) {
@@ -282,10 +282,10 @@
   .h5,
   .h6 {
     font-family: inherit;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.5;
-    margin-bottom: .5rem;
-    color: #32325d;
+    margin-bottom: 30px;
+    color: #8965e0;
   }
   
   h1,
@@ -632,83 +632,18 @@
     box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08), none;
   }
   
-  .btn-primary {
-    color: #fff;
-    border-color: #5e72e4;
-    background-color: #5e72e4;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  }
-  
-  .btn-primary:hover {
-    color: #fff;
-    border-color: #5e72e4;
-    background-color: #5e72e4;
-  }
-  
-  .btn-primary:focus {
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(94, 114, 228, .5);
-  }
-  
-  .btn-primary:disabled {
-    color: #fff;
-    border-color: #5e72e4;
-    background-color: #5e72e4;
-  }
-  
-  .btn-primary:not(:disabled):not(.disabled):active {
-    color: #fff;
-    border-color: #5e72e4;
-    background-color: #324cdd;
-  }
-  
-  .btn-primary:not(:disabled):not(.disabled):active:focus {
-    box-shadow: none, 0 0 0 0 rgba(94, 114, 228, .5);
-  }
-  
-  .btn-info {
-    color: #fff;
-    border-color: #11cdef;
-    background-color: #11cdef;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  }
-  
-  .btn-info:hover {
-    color: #fff;
-    border-color: #11cdef;
-    background-color: #11cdef;
-  }
-  
-  .btn-info:focus {
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(17, 205, 239, .5);
-  }
-  
-  .btn-info:disabled {
-    color: #fff;
-    border-color: #11cdef;
-    background-color: #11cdef;
-  }
-  
-  .btn-info:not(:disabled):not(.disabled):active {
-    color: #fff;
-    border-color: #11cdef;
-    background-color: #0da5c0;
-  }
-  
-  .btn-info:not(:disabled):not(.disabled):active:focus {
-    box-shadow: none, 0 0 0 0 rgba(17, 205, 239, .5);
-  }
-  
+
   .btn-default {
     color: #fff;
-    border-color: #172b4d;
-    background-color: #172b4d;
+    border:none;
+    background:linear-gradient(to top right, #8162CE, #F54BA5);
     box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
   }
   
   .btn-default:hover {
     color: #fff;
-    border-color: #172b4d;
-    background-color: #172b4d;
+    border:none;
+    background: linear-gradient(to top right, #8162CE, #F54BA5);
   }
   
   .btn-default:focus {
@@ -1086,7 +1021,7 @@
   }
   
   .bg-default {
-    background-color: #172b4d !important;
+    background-color: #8965e0 !important;
   }
   
   a.bg-default:hover,
@@ -1348,7 +1283,7 @@
       page-break-after: avoid;
     }
   
-    @ page {
+    @page {
       size: a3;
     }
   
@@ -1386,11 +1321,11 @@
   }
   
   .bg-gradient-default {
-    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+    background: linear-gradient(87deg, #8965e0 0, #8965e0 100%) !important;
   }
   
   .bg-gradient-default {
-    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+    background: linear-gradient(87deg, #8965e0 0, #8965e0 100%) !important;
   }
   
   @keyframes floating-lg {
@@ -1920,7 +1855,7 @@
       left: auto;
     }
   
-    @ keyframes show-navbar-dropdown {
+    @keyframes show-navbar-dropdown {
       0% {
         transition: visibility .25s, opacity .25s, transform .25s;
         transform: translate(0, 10px) perspective(200px) rotateX(-2deg);
@@ -1948,7 +1883,7 @@
   @media (max-width: 767.98px) {
     .navbar-nav .nav-link {
       padding: .625rem 0;
-      color: #172b4d !important;
+      color: #8965e0 !important;
     }
   
     .navbar-nav .dropdown-menu {

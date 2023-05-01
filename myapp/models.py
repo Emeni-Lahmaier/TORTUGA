@@ -5,19 +5,87 @@ from django.dispatch import receiver
 from datetime import datetime
 from PIL import Image
 from ckeditor.fields import RichTextField
-
+from django.forms import ModelForm;
+from django import forms;
 # Create your models here.
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
+    phonenumber = models.CharField(max_length=20, null=True)
+    date_naissance = models.DateField(null=True)
     Address = models.CharField(max_length=256, null=True)
     City = models.CharField(max_length=256, null=True)
     Country = models.CharField(max_length=256, null=True)
     postal_code = models.CharField(max_length=20, null=True)
     about_me = models.TextField(null=True)
-    avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
-
+    avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')    
     USERNAME_FIELD = 'pseudo'
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+class UtilisateurUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Utilisateur
+        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me', 'avatar', 'phonenumber', 'date_naissance']
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Utilisateur
+        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me', 'avatar', 'phonenumber', 'date_naissance']
+        widgets = {
+            'date_naissance': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    # Include User fields
+    username = forms.CharField(max_length=30, required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=254, required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['username'].initial = self.instance.user.username
+        self.fields['first_name'].initial = self.instance.user.first_name
+        self.fields['last_name'].initial = self.instance.user.last_name
+        self.fields['email'].initial = self.instance.user.email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exclude(pk=self.instance.user_id).exists():
+            raise forms.ValidationError('This username is already taken.')
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.user_id).exists():
+            raise forms.ValidationError('This email is already taken.')
+        return email
+
+    def save(self, commit=True):
+        utilisateur = super(UserProfileForm, self).save(commit=False)
+        user = self.instance.user
+
+        # Update User fields
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+
+        # Update Utilisateur fields
+        utilisateur.Address = self.cleaned_data['Address']
+        utilisateur.City = self.cleaned_data['City']
+        utilisateur.Country = self.cleaned_data['Country']
+        utilisateur.postal_code = self.cleaned_data['postal_code']
+        utilisateur.about_me = self.cleaned_data['about_me']
+        utilisateur.avatar = self.cleaned_data['avatar']
+        utilisateur.phonenumber = self.cleaned_data['phonenumber']
+        utilisateur.date_naissance = self.cleaned_data['date_naissance']
+
+        if commit:
+            user.save()
+            utilisateur.save()
+        return utilisateur
 
     
    
@@ -45,7 +113,7 @@ class Contact(models.Model):
     name = models.CharField(max_length=100)  
     email = models.EmailField(null=True)  
     contact = models.CharField(max_length=15)
-   
+    categorie= models.CharField(max_length=100, null=True)
     class Meta:  
         db_table = "Contactt"
 
@@ -74,13 +142,10 @@ class Vente(models.Model):
     quantite= models.IntegerField()
 
 class Affilie(models.Model):
-     
-     id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
-     id_produit =models.ForeignKey(Produit,on_delete=models.CASCADE,default='0')
      nom_prenom=models.CharField(max_length=60,null=True)
-     email = models.EmailField(null=True)  
+     email = models.EmailField(null=True)
      contact = models.CharField(max_length=15,null=True)
-     contrat=RichTextField(null=True)
+     contrat=models.CharField(max_length=15,null=True)
      pourcentage=models.CharField(max_length=15,null=True)
 
 
@@ -102,6 +167,14 @@ class TemplatesUser(models.Model):
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
      image = models.ImageField(null=True)
 
+class FormPopUp(models.Model):
+    id= models.IntegerField(primary_key = True)
+    title = models.CharField(max_length=30,null=True)
+    description=models.TextField(null=True)
+    codeHtml=models.TextField(null=True)
+    image = models.ImageField(null=True)
+    URL=models.TextField(null=True)
+
 class ContactFormSubmission(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -120,3 +193,9 @@ class ContactGoogle(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='post_images/')
+    video = models.FileField(upload_to='post_videos/')

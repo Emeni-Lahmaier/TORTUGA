@@ -3,20 +3,30 @@ from myapp.models import *
 from django import forms
 from django.contrib.auth.forms import UserCreationForm ,AuthenticationForm ,UsernameField ,PasswordChangeForm ,UserChangeForm
 from django.contrib.auth.models import User
-from ckeditor.widgets import CKEditorWidget
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title', 'description', 'image', 'video')
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'video': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
+        }
 
 class ContactForm(forms.ModelForm):  
     class Meta:  
         model = Contact  
-        fields = ['name', 'contact', 'email'] 
+        fields = ['name', 'contact', 'email','categorie'] 
         widgets = { 'name': forms.TextInput(attrs={ 'class': 'form-control' }), 
             'email': forms.EmailInput(attrs={ 'class': 'form-control' }),
+            'categorie': forms.TextInput(attrs={ 'class': 'form-control' }), 
             'contact': forms.TextInput(attrs={ 'class': 'form-control' }),
       }
 
 class AffilieForm(forms.ModelForm):
-    contrat = forms.CharField(widget=CKEditorWidget(),label="Contrat")
-
     class Meta:
         model = Affilie
         fields = ['nom_prenom','contact', 'email','contrat','pourcentage']
@@ -26,6 +36,7 @@ class AffilieForm(forms.ModelForm):
             'contrat': forms.TextInput(attrs={ 'class': 'form-control' }),
             'pourcentage': forms.TextInput(attrs={ 'class': 'form-control' }),
         }
+
 class UtilisateurUpdateForm(forms.ModelForm):
     username = forms.CharField(label='Username')
     first_name = forms.CharField(label='First Name')
@@ -44,6 +55,18 @@ class TemplatesUpdateForm(forms.ModelForm):
             'codeHtml': forms.Textarea(attrs={'rows': 5}),
         }
 
+
+class PopUpdateForm(forms.ModelForm):
+    class Meta:
+        model = FormPopUp
+        fields = ['title', 'codeHtml', 'description', 'image']
+        widgets = {
+            'codeHtml': forms.Textarea(attrs={'rows': 5}),
+        }
+
+class EmailForm(forms.Form):
+    email = forms.EmailField(label='Email')
+
 class TemplatesCreateForm(forms.ModelForm):
     class Meta:
         model = TemplatesCommuns
@@ -52,16 +75,27 @@ class TemplatesCreateForm(forms.ModelForm):
             'codeHtml': forms.Textarea(attrs={'rows': 5}),
         }
 
+class PopCreateForm(forms.ModelForm):
+    class Meta:
+        model = FormPopUp
+        fields = ['title','description' ,'codeHtml','image']
+        widgets = {
+            'codeHtml': forms.Textarea(attrs={'rows': 5}),
+        }
+
+
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me',]
+        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me', 'phonenumber', 'date_naissance']
         widgets = {
             'Address': forms.TextInput(attrs={'class': 'form-control'}),
             'City': forms.TextInput(attrs={'class': 'form-control'}),
             'Country': forms.TextInput(attrs={'class': 'form-control'}),
             'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
             'about_me': forms.Textarea(attrs={'class': 'form-control'}),
+            'phonenumber': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_naissance': forms.DateInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -98,9 +132,10 @@ class SignupForm(UserCreationForm):
 
 
 class MyLoginForm(AuthenticationForm):
-    username = UsernameField(widget=forms.TextInput(attrs={"autofocus": True , 'class':'form-control'}))
+    username = UsernameField(label="Nom Utilisateur",
+        widget=forms.TextInput(attrs={"autofocus": True , 'class':'form-control'}))
     password = forms.CharField(
-        label="Password",
+        label="Mot de Passe",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'current-password','class':'form-control'}),
     )

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+*{margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif;}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background:#fff;
+}
+body::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, #655add, #d84b87);
+  clip-path:circle(10% at left 95%);
+}
+body::after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#c14e993b, #90654b4f);
+  clip-path:circle(5% at right 10%);
+
+}
+
+  
+  .card {
+    position: relative;
+  padding: 20px;
+  
+   text-align:center;
+    justify-content:center;
+    width: 500px;
+    height: 600px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .card h2 {
+    
+    margin: 10px;
+  }
+  .btn {
+    color: #fff;
+    border: none;
+    padding: 8px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn:hover{
+    border:solid 1px #DA59B1;
+  
+    color: #DA59B1;
+    background:#ffffff;
+    
+    border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+   
+  }
+  .color-a{
+    background: linear-gradient(to top right, #8162CE, #F54BA5);
+  }
+ 
+  
+	</style>
+</head>
+<body>
+	
+{% include 'sidebar.html'  %}
+	{%load static%}  
+
+
+  
+{% block content %}
+
+        {% for formpop in formpops %} 
+        <div class="card" >
+          <img src="{{ formpop.image.url }}">
+			<div class="content">				
+				<h2>{{ formpop.title}}</h2>
+				
+				
+							
+				<a href="{% url 'preview' %}" class="btn color-a top">Choisir</a>
+						
+		   </div>
+		
+		</div>
+
+        
+       
+        {%endfor%}
+		
+	
+    {%endblock content%}
+</body>
+</html>

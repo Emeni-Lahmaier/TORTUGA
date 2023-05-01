@@ -1,12 +1,15 @@
 <head>
+    {% include 'navbar.html'  %} 
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'admindashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'infoadminn.css' %}">
 </head>
 
 {% block content %}
-    <h1 class="user-title">Users List</h1>
+
+
+
     {% if not utilisateurs %}
-        <p>No users found.</p>
+        <p>Pas d'utilisateurs.</p>
     {% else %}
     <div class="container">
         {% for utilisateur in utilisateurs %}
@@ -14,18 +17,19 @@
             <div class="card color-card">
                
                 <img class="profile" src="{{ utilisateur.avatar.url }}" alt="{{ utilisateur.user.username }}'s Avatar">
-                <h3 class="label">Name:</h3>
+                <h3 class="label">Nom d'Utilisateur:</h3>
                 <h2 class="title">{{ utilisateur.user.username }}</h2>
                 <h3 class="label">Email:</h3>
                 <h2 class="title">{{ utilisateur.user.email }}</h2>
                 <div class="card-buttons">
-                    <button onclick="window.location.href='{% url 'user_delete' user_id=utilisateur.id %}'" class="btn color-a top">Delete</button>
-                    <button onclick="window.location.href='{% url 'update_user' user_id=utilisateur.user_id %}'" class="btn color-a top">Edit</button>
+                    <button onclick="window.location.href='{% url 'user_delete' user_id=utilisateur.id %}'" class="btn color-a top">Supprimer</button>
+                    <button onclick="window.location.href='{% url 'update_user' user_id=utilisateur.user_id %}'" class="btn color-a top">Modifier</button>
                 </div>                       
             </div>
         </div>
         {% endfor %}
     </div>
+    <a href="{% url 'signup' %}" class="btn color-a top">Ajouter un infopreneur</a>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
     {% endif %}

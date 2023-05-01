@@ -1,21 +1,47 @@
 body{
-  background-color:#31394D;
+ 
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background:#fff;
+}
+body::before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, #655add, #d84b87);
+  clip-path:circle(25% at right 5%);
+}
+body::after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#c14e993b, #90654b4f);
+  clip-path:circle(20% at left 95%);
+
 }
 .color-card{
-  background:#31394D;
+  background:linear-gradient(#c14e993b, #90654b4f);
 }
 
 .color-card-2{
   background:#FDFEFF;
 }
 .title{
-  color:#ffffff;
-  font-family: roboto;
-  weight:300;
+  color:#000000;
+  font-family: Roboto;
+  font-weight:100;
 }
 .title-2{
   color:#2D354A;
-  font-family: roboto;
+  font-family:sans-serif;
   weight:300;
 }
 .followers{
@@ -109,7 +135,6 @@ hr{
   border:none;
   height:40px;
   color:#ffffff;
-  width:35%;
   font-size:16px;
   border-radius:30px;
   box-shadow: 0 13px 26px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
@@ -120,7 +145,6 @@ hr{
   font-family: Roboto;
   color: #DA59B1;
   background:#ffffff;
-  width:35%;
   border-color: linear-gradient(to top right, #8162CE, #F54BA5);;
   border-radius:30px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
@@ -134,7 +158,7 @@ hr{
   color:#ffffff;
   box-shadow: 0 13px 26px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
   
-  }2
+  }
 
 .up{
   margin-top:40px;
@@ -144,8 +168,9 @@ hr{
   width:280px;
 }
 .container {
+  margin-top:70px;
   width: 960px;
-  margin: 0 auto;
+ 
   padding: 0px;
   position: relative;
 }
@@ -188,7 +213,7 @@ hr{
 
 /*cards*/
 body {
-  background: #e2e1e0;
+ 
   text-align: center;
 }
 
@@ -254,7 +279,7 @@ box-shadow: 10px 10px 44px 15px rgba(0,0,0,0.14);
 
 .profile{
   border-radius:100%;
-  margin-top:60px;
+  margin-top:20px;
   width:132px;
   height:128px;
 }
@@ -322,5 +347,5 @@ box-shadow: 10px 10px 44px 15px rgba(0,0,0,0.14);
   width: 90%;
   margin: auto;
   padding: 20px;
-  height: 90%;
+  height: 60%;
 }

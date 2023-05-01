@@ -41,10 +41,34 @@
 }
 
 body{
-    min-height: 100vh;
-    background-color: var(--body-color);
-    transition: var(--tran-05);
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background:#fff;
+  }
+  body::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(45deg, #655add, #d84b87);
+    clip-path:circle(25% at right 70%);
+  }
+  body::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#c14e993b, #90654b4f);
+    clip-path:circle(20% at left 20%);
+  
+  }
 
 ::selection{
     background-color: var(--primary-color);
@@ -386,16 +410,17 @@ body.dark .home .text{
                     </li>
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-home-alt icon' ></i>
+                            <i class='bx bx-line-chart icon' ></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="{% url 'index' %}">
-                            <i class='bx bxs-contact icon' ></i>
-                            <span class="text nav-text">Contact</span>
+                        <a href="{% url 'landingpage' %}">
+                            <i class='bx bx-book-content icon'></i>
+                            <span class="text nav-text">Tunnel de Vente</span>
                         </a>
                     </li>
+
                     <li class="nav-link">
                         <a href="{% url 'indexa' %}">
                             <i class='bx bx-user-voice icon'></i>
@@ -404,26 +429,16 @@ body.dark .home .text{
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-envelope icon' ></i>
-                            <span class="text nav-text">Email</span>
+                        <a href="{% url 'index' %}">
+                            <i class='bx bxs-contact icon' ></i>
+                            <span class="text nav-text">Contact</span>
                         </a>
                     </li>
                     
-
-                   
-
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-file icon'></i>
-                            <span class="text nav-text">Form/PopUp</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="{% url 'landingpage' %}">
-                            <i class='bx bx-book-content icon'></i>
-                            <span class="text nav-text">Landing Page</span>
+                        <a href="{% url 'reclamation' %}">
+                            <i class='bx bxs-cog icon'></i>
+                            <span class="text nav-text">Réclamation</span>
                         </a>
                     </li>
 

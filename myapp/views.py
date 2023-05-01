@@ -177,14 +177,38 @@ def home(request):
 def acceuil(request):
    return render(request,'acceuil.html')
 
+def reclamation(request):
+   return render(request,'reclamation.html')
+
+def homeadmin(request):
+   return render(request,'homeadmin.html')
+def template(request):
+   return render(request,'template.html')
 
 def landingpage(request):
-    landingpages = TemplatesCommuns.objects.all()  
-    return render(request,"landingpage.html",{'landingpages':landingpages}) 
+    post = Post.objects.all()  
+    return render(request,"landingpage.html",{'post':post}) 
+def destroypost(request, id):  
+    post = Post.objects.get(id=id)  
+    post.delete()  
+    return redirect("/landingpage")
 
-def preview(request, id):
-    landingpages = TemplatesCommuns.objects.get(id=id)  
-    return render(request,"preview.html",{'landingpages':landingpages}) 
+def preview(request):
+    
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+              
+    else:
+        form = PostForm()
+    return render(request, 'preview.html', {'form': form})
+
+def template1(request, id):  
+    post = Post.objects.get(id=id)  
+    
+    return render(request,'template1.html', {'post':post})  
+
 
 def previewtemplate(request, id):
     template = TemplatesCommuns.objects.get(id=id)
@@ -226,27 +250,30 @@ def update_profile(request, user_id):
     # Retrieve the utilisateur object or return 404 error if not found
     utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
 
-    # Retrieve the user object linked to the utilisateur object
-    user = utilisateur.user
-
-    # Populate the utilisateur form with existing utilisateur data
-    utilisateur_form = UtilisateurForm(request.POST or None, request.FILES or None, instance=utilisateur)
-    # Populate the user form with existing user data
-    user_form = UserForm(request.POST or None, instance=user)
-
+    # Populate the form with existing data
     if request.method == 'POST':
-        if utilisateur_form.is_valid() and user_form.is_valid():
-            utilisateur_form.save()
-            user_form.save()
-            return redirect('profile', user_id=utilisateur.user_id)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=utilisateur)
 
-    context = {
-        'utilisateur_form': utilisateur_form,
-        'user_form': user_form,
-        'utilisateur': utilisateur,
-    }
-    return render(request, 'profile.html', context)
+        if user_form.is_valid() and profile_form.is_valid():
+            # Check which fields have changed
+            user_has_changed = any(field in user_form.changed_data for field in ['username', 'first_name', 'last_name', 'email'])
+            utilisateur_has_changed = any(field in profile_form.changed_data for field in ['Address', 'City', 'Country', 'postal_code', 'about_me', 'avatar', 'phonenumber', 'date_naissance'])
 
+            # Save the forms only if changes were made
+            if user_has_changed:
+                user_form.save()
+            if utilisateur_has_changed:
+                profile_form.save()
+
+            messages.success(request, 'Your profile has been updated successfully.')
+            return redirect('profile', user_id=user_id)
+
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = UserProfileForm(instance=utilisateur)
+
+    return render(request, 'profile.html', {'user_form': user_form, 'profile_form': profile_form, 'utilisateur': utilisateur})
 
 
 
@@ -258,6 +285,14 @@ def landinguser(request):
     landingusers = TemplatesUser.objects.all()  
     return render(request,"landinguser.html",{'landingusers':landingusers}) 
 
+
+def formpop(request):
+    formpops = FormPopUp.objects.all()  
+    return render(request,"formpop.html",{'formpops':formpops}) 
+def previewform(request, id):
+    formpops = FormPopUp.objects.get(id=id)  
+    return render(request,"previewform.html",{'formpops':formpops})
+ 
 def destroylanding(request, id):  
     landinguser = TemplatesUser.objects.get(id=id)  
     landinguser.delete()  
@@ -299,7 +334,13 @@ def templates_communs(request):
     print("inside templates now")
     return render(request, 'user_templates.html', context)
 
-
+def pop_admin(request):
+    templates = FormPopUp.objects.all()
+    context = {
+        'templates': templates
+    }
+    print("inside templates now")
+    return render(request, 'pop_admin.html', context)
 
 
 
@@ -315,12 +356,27 @@ def template_create(request):
         form = TemplatesCreateForm()
     return render(request, 'template_create.html', {'form': form})
 
-
+def pop_create(request):
+    if request.method == 'POST':
+        form = PopCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            template = form.save(commit=False)
+            template.id = None
+            template.save()
+            return redirect('homeadmin')
+    else:
+        form = PopCreateForm()
+    return render(request, 'pop_template.html', {'form': form})
 
 def template_delete(request, id):
     template = TemplatesCommuns.objects.get(id=id)
     template.delete()
     return redirect('user_templates')
+
+def pop_delete(request, id):
+    template = FormPopUp.objects.get(id=id)
+    template.delete()
+    return redirect('pop_admin')
 
 def template_update(request, id):
     template = get_object_or_404(TemplatesCommuns, id=id)
@@ -333,6 +389,16 @@ def template_update(request, id):
         templates_form = TemplatesUpdateForm(instance=template)
     return render(request, 'template_update.html', {'templates_form': templates_form})
 
+def pop_update(request, id):
+    template = get_object_or_404(FormPopUp, id=id)
+    if request.method == 'POST':
+        templates_form = PopUpdateForm(request.POST, instance=template)
+        if templates_form.is_valid():
+            templates_form.save()
+            return redirect('homeadmin')
+    else:  # move this else block outside the if block
+        templates_form = PopUpdateForm(instance=template)
+    return render(request, 'pop_update.html', {'templates_form': templates_form})
 
 def contact_view(request):
     if request.method == 'POST':
@@ -384,3 +450,55 @@ def home(request):
         submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
         submission.save()
     return render(request, 'home.html')
+
+def share_template(request, id):
+    template = get_object_or_404(TemplatesCommuns, pk=id)
+
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            context = {
+                'title': template.title,
+                'content': template.content,
+            }
+            message = get_template('share_template_email.html').render(context)
+            send_mail(
+                'Sharing Template',
+                message,
+                'noreply@myapp.com',
+                [email],
+                fail_silently=False,
+            )
+            return redirect('share_success')
+    else:
+
+        form = EmailForm()
+
+    return render(request, 'share_template.html', {'form': form, 'template': template})
+
+def send_email(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        # Save the email to the Contact model
+        contact = Contact(email=email)
+        contact.save()
+    return redirect('home')
+
+def template_view(request, id):
+    template = get_object_or_404(TemplatesCommuns, id=id)
+    if request.method == 'POST':
+        email = request.POST['email']
+        # save the email to the database or do something else with it
+        return render(request, 'template_success.html')
+    return render(request, 'template.html', {'template': template})
+
+def generate_link(request, id):
+    print("generate_link function called with id=", id)
+
+    template_obj = get_object_or_404(TemplatesCommuns, id=id)
+    print("template retrieved and html page")
+    
+    link = request.build_absolute_uri(reverse('share_template', kwargs={'id': id}))
+
+    return render(request, 'generate_link.html', {'template': template_obj, 'link': link})

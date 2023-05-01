@@ -1,23 +1,163 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<style>
+{% include 'sidebar.html'  %} 
+
+{% block extra_css %}
+    <style>
+        body{
+			
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			width: 100vw;
+			background:#fff;
+		  }
+          body::before{
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: "";
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(45deg, #655add, #d84b87);
+            clip-path:circle(25% at right 5%);
+          }
+          body::after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: "";
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(#c14e993b, #90654b4f);
+            clip-path:circle(20% at left 95%);
+          
+          }
+		  .btn {
+			color: #fff;
+			border: none;
+			padding: 8px 16px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 14px;
+			margin: 4px 2px;
+			cursor: pointer;
+			border-radius: 4px;
+		  }
 		 
-	</style>
-</head>
-<body>
-    {% extends "basee.html" %} 
-{% block title %}Preview{% endblock title %}
-  
+		  .btn:hover{
+			border:solid 1px #DA59B1;
+		  
+			color: #DA59B1;
+			background:#ffffff;
+			
+			border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+		   
+		  }
+		  .color-a{
+			background: linear-gradient(to top right, #8162CE, #F54BA5);
+		  }
+		  .subscribe-form {
+			background-color:#fff ;
+			border-radius: 5px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			max-width: 500px;
+			margin: auto;
+			margin-top: 30px;
+		  }
+		  .subscribe-form label {
+			display: block;
+			font-size: 18px;
+			margin-bottom: 10px;
+		  }
+		  .subscribe-form input {
+			font-size: 18px;
+			padding: 10px;
+			width: 90%;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		  }
+		  .subscribe-form btn {
+			background-color: #430f58;
+			color: #fff;
+			padding: 10px 20px;
+			font-size: 18px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		  }
+		  .subscribe-form btn:hover {
+			background-color: #d32f2f;
+		  }
+		  .subscribe-result {
+			font-size: 18px;
+			margin-top: 20px;
+			text-align: center;
+		  }
+		h3{
+			font-size:18px;
+		margin-left:150px;
+	margin-top:20px;}
+	.f{
+		margin-left:75%;
+		
+	}
+    </style>
+{% endblock %}
+
 {% block content %}
 
-       
-			<div class="block">
-				<pre>{{landingpages.codeHtml|safe }}</pre>
-	
-			</div>
-	
+	<h3>Etape 1: Ajoutez les données nécessaires pour votre produit</h3>
+  <div class="subscribe-form">
+   
 
-{%endblock content%}
-</body>
-</html>
+	<div class="card bg-light shadow">
+	  <div class="card-body">
+		<h1 class="card-title mb-4">{{ title }}</h1>
+		<form method="post" enctype="multipart/form-data" action="/preview/">  
+		  {% csrf_token %}
+		  <div class="form-group">
+			<label class="mb-2">Title</label>
+			{{ form.title  }}
+			{{ post.title  }}
+		  </div>
+		  <div class="form-group">
+			<label id="description" class="mb-2">Description</label>
+			{{ form.description }}
+			{{ post.description }}
+		  </div>
+		  <div class="form-group">
+			<label class="mb-2">Image</label>
+			{{ form.image }}
+			{{ post.image }}
+		  </div>
+		  <div class="form-group">
+			<label class="mb-2">Video</label>
+			{{ form.video }}
+			{{ post.image }}
+		  </div>
+		  
+		  <center><button type="submit" class="btn color-a top">Enregistrer</button> </center>
+		
+		 
+
+		</form>
+
+        
+	  </div>
+	  
+	</div>
+  
+   
+  </div>
+ 
+ 
+  {{post.title}}
+  <a href="/template1/{{last_post_id}}" class="btn color-a top f">Passer a l'etape suivante</a>
+
+ 
+  {% endblock %}		
+   
+  
+  

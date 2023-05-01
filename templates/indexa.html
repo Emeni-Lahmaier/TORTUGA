@@ -1,17 +1,101 @@
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="base.css">
-
-       
+    {%include 'sidebar.html'%}
+    <style>
+          
+      body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        background:#fff;
+      }
+        body::before{
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "";
+          height: 100%;
+          width: 100%;
+          background: linear-gradient(45deg, #655add, #d84b87);
+          clip-path:circle(25% at right 5%);
+        }
+        body::after{
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "";
+          height: 100%;
+          width: 100%;
+          background: linear-gradient(#c14e993b, #90654b4f);
+          clip-path:circle(20% at left 95%);
+        
+        }
+        .btn {
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 14px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        .btn:hover{
+          border:solid 1px #DA59B1;
+        
+          color: #DA59B1;
+          background:#ffffff;
+          
+          border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+         
+        }
+        .color-a{
+          background: linear-gradient(to top right, #8162CE, #F54BA5);
+        }
+        .card {
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          max-width: 700px;
+          margin-top:30px;
+         
+        }
+        
+        form {
+          
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        h3 {
+          
+          text-align:center;
+          margin-top: 0;
+        }
+        
+        label {
+          font-size:20px;
+          margin-bottom: 5px;
+        }
+        
+        input, textarea {
+          border: 2px solid #ccc;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 20px;
+          width: 100%;
+        }
+        
+        
+            </style>
+        <head/>
 </head>
 <body>
-    
-{% extends "basee.html" %} 
-{% block title %}Ajouter un nouveau Affilie{% endblock title %}
+
   
 {% block content %}
 
@@ -38,17 +122,15 @@
                 {{ form.contact }}   
             </div>
             <div class="mb-3"> 
-                <label>Contrat:</label>
-               {{form.contrat}}
-               {{form.media}}
-
+                <label>Contrat:</label>  
+                {{ form.contrat }}   
             </div>
             <div class="mb-3"> 
                 <label>Pourcentage:</label>  
-                {{ form.pourcentage}}   
+                {{ form.pourcentage }}   
             </div>
             <div class="mb-3"> 
-                <button type="submit" class="btn btn-primary">Valider</button>    
+                <button type="submit" class="btn color-a top">Valider</button>    
             </div> 
         </div>  
     </form>  

@@ -1,80 +1,120 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<style>
-		.container {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-			margin: 0 auto;
-			max-width: 800px;
-			padding: 20px;
-		}
-		.block {
-			width: 300px;
-			height: 150px;
-			margin: 10px;
-			background-color: #f0f0f0;
-			border: 1px solid #ccc;
-			box-sizing: border-box;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			font-size: 24px;
-			color: #333;
-			padding: 10px;
-		}
-		.btn-container {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-		}
-		.btn {
-			display: inline-block;
-			padding: 10px 20px;
-			background-color: #333;
-			color: #fff;
-			border: none;
-			cursor: pointer;
-			font-size: 18px;
-			text-transform: uppercase;
-		}
-        pre {
-            max-height: 500px;
-            height:500px;
-            width:200px;
-            font-size: 16px;
-            line-height: 1.4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            overflow-x: auto;
-            max-width: 300px;
-          }
-	</style>
-</head>
-<body>
-    {% extends "basee.html" %} 
-{% block title %}Landing Page Templates{% endblock title %}
+
+{% include 'sidebar.html'  %}
+
+
+{% block extra_css %}
+  <style>
+    body{
+      margin-top:30px;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      background:#fff;
+    }
+    body::before{
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(45deg, #655add, #d84b87);
+      clip-path:circle(10% at left 95%);
+    }
+    body::after{
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(#c14e993b, #90654b4f);
+      clip-path:circle(5% at right 10%);
+    
+    }
+  table{
+    margin: 0 auto; 
+    margin-top:50px;
+   width:1300px;
+    item-align: center;
   
+  }
+  th{
+    text-decoration:none;
+    text-align: start;
+    font-size:20px;
+  }
+  .btn {
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn:hover{
+    border:solid 1px #DA59B1;
+  
+    color: #DA59B1;
+    background:#ffffff;
+    
+    border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+   
+  }
+  .color-a{
+    background: linear-gradient(to top right, #8162CE, #F54BA5);
+  }
+  h2{
+    margin-left:120px;
+  }
+  </style>
+{% endblock %}
+
 {% block content %}
 
-        {% for landingpage in landingpages %} 
-        
-		<div class="block">
-			{{ landingpage.title}}
-			{{ landingpage.image.url}}		
-			<div class="btn-container">
+<div classname="animation">
+  <h2 class="h2 section-title">Tunnels :</h2>
+  <a href="{% url 'formpop' %}" class="btn color-a top" type="submit" style="margin-left:75%;">Ajouter un nouveau Tunnel</a> 
+  
+  {% if post %}
+    <table class="table" width="100%">
+      <thead class="table-head">
+        <tr>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Image</th>
+          <th>Video</th>
+          
+          <th class="actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in post %}
+          <tr class="template-title" style="width: 100px;">
+            <td class="template-title"style="width: 100px;">{{ post.title }}</td>
+            <td class="template-type"style="width: 100px;">{{ post.description }}</td>
+            <td style="width: 100px;"><img src="{{ post.image.url }}" alt="{{ post.title }}" width="100px"></td>
+            <td style="width: 100px;"><img src="{{ post.video.url }}" alt="{{ post.title }}" width="100px"></td>
+            <td style="width: 100px;">
+              <div class="template-actions">
+                <a href="/template1/{{ post.id }}" class="btn color-a top">Editer</a>
+                <a href="#" class="btn color-a top">Envoyer</a>
+                <a href="/destroypost/{{ post.id }}" class="btn color-a top">Effacer</a>       
                 
-				<a href="/preview/{{ landingpage.id}}" class="btn btn-success">Prévisionner</a>
-				
-			</div>
-		</div>
-       
-        {%endfor%}
-		
-	
-    {%endblock content%}
-</body>
-</html>
+              </div>
+            </td>
+          </tr>
+        </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Draft encore vide? Creer votre Tunnel dès maintenant!</p>
+  {% endif %}
+
+{% endblock %}

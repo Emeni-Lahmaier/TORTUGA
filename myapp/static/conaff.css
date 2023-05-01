@@ -1,0 +1,126 @@
+/* Add thin line under table headers */
+th {
+    border-bottom: 1px solid black;
+    font-weight: bolder;
+    font-display: block;
+
+  }
+  
+  /* Style table data text */
+  td {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    font-weight: bolder;
+  }
+  
+  /* Center table in the mid-low screen */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }
+  
+
+  
+  .title {
+    text-align: center;
+    text-decoration: wavy;
+    text-shadow: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(161, 140, 209);
+}
+
+
+
+  
+  body {
+    font-size: 1.25rem;
+    background-color: #f6f8fa;
+  }
+  
+  td {
+      line-height: 3rem;
+  }
+   td {
+    border-bottom: 1px solid #ddd;
+  }
+
+  thead th:nth-child(1) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(2) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(3) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(4) {
+    width: 20%;
+  }
+  
+  th,
+  td {
+    padding: 20px;
+  }
+
+  .table {
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+
+  .delete {
+    color: red;
+    font-size: 1.2em;
+    text-decoration: none;
+  }
+  
+  .delete:hover {
+    color: darkred;
+  }
+  
+  
+  .btn-outline-primary {
+    color: #007bff;
+    font-size: 1.2em;
+    text-decoration: none;
+  }
+  
+  .btn-outline-primary:hover {
+    
+    color: #007bff;
+  }
+  
+  .btn-outline-primary i {
+    margin-right: 5px;
+  }
+  
+body{
+    margin-top:80px;
+    min-height: 100vh;
+    background: linear-gradient(to top, rgb(161, 140, 209) 0%, rgb(255,255,255)
+    100%);
+    }
+    .Ajouter {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+      margin-left: 1500px !important;
+      border: 2px solid #ccc;
+      padding: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+      
+    .Ajouter:hover {
+      background-color: #ccc;
+      color: #fff;
+      border-color: #ccc;
+      transform: scale(1.1);
+    }

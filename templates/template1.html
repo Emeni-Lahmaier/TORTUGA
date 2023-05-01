@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background:white;
+        }
+
+        body::after{
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "";
+          height: 100%;
+          width: 100%;
+          background: linear-gradient(#c14e993b, #90654b4f);
+          clip-path:circle(20% at left 0%);
+        
+        }
+        
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        img {
+          padding-top:20px;
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 20px;
+            padding-bottom:20px;
+        }
+
+        form {
+          margin-top:20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="email"] {
+            border-radius: 5px;
+            padding: 10px;
+            width: 90%;
+            margin-bottom:20px;
+        }
+
+        .bouton{
+          
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            width: 20%;
+        }
+      
+        .sidebarr {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 300px;
+          height: 100%;
+          background-color: #fff;
+          border-left: 1px solid #ddd;
+          padding: 20px;
+          
+          
+        }
+        .btn {
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 14px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        .btn:hover{
+          border:solid 1px #DA59B1;
+        
+          color: #DA59B1;
+          background:#ffffff;
+          
+          border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+         
+        }
+        .color-a{
+          background: linear-gradient(to top right, #8162CE, #F54BA5);
+        }
+        h3{
+          margin-top:10px;
+          margin-bottom:30px;
+        }
+        .f{
+          margin-top:40px;
+          margin-left:2px;
+        }
+        #t{
+          margin-left:140px;
+        }
+    </style>
+</head>
+<body>
+  {% include 'sidebar.html' %}
+  <h3 id="t">Etape 2: Personnaliser votre page</h3>
+    <div id="myDiv" class="container">
+        
+        <img src="{{post.image.url}}" alt="Blog Image">
+        <h2 id="title">{{post.title}}</h2>
+        <p id="p">  {{post.description}}</p>
+
+        <form id="myForm">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+
+           
+            <center><button id="myB" type="button" class="bouton" value="Submit">Envoyer</button></center>
+
+        </form>
+
+    </div>
+    <div class="sidebarr">
+      <h3><i class='bx bxs-palette' style='color:#8162CE' ></i> Changer le Thème</h3>
+    <div class="form-group mt-4">
+      <label for="colorPicker" class="mb-2">Changer la couleur de l'arriere plan</label>
+      <input type="color" id="inputColorPicker" onchange="changeInputColor()" class="form-control">
+
+      <label for="colorPicker" class="mb-2">Changer la couleur du titre</label>
+    <input type="color" id="colorPicker" onchange="changeColor(document.getElementById('title'))" class="form-control">
+      <label for="colorPicker" class="mb-2">Changer la couleur de la description</label>
+    <input type="color" id="colorPickerr" onchange="changeColorD(document.getElementById('p'))" class="form-control">
+    
+    </div>
+    <div class="form-group">
+      <label class="mb-2">Changer la couleur du formulaire</label>
+      <input type="color" id="inputColorPickerr" onchange="changeInputColorF()" class="form-control">
+      <label class="mb-2">Changer la couleur du Bouton</label>
+      <input type="color" id="inputColorPickerrr" onchange="changeInputColorB()" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="fontPicker" class="mb-2">Changer le style et la taille du Texte</label>
+      <center><select id="fontPicker" class="form-control">
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="Helvetica, sans-serif">Helvetica</option>
+        <option value="Times New Roman, serif">Times New Roman</option>
+        <option value="Georgia, serif">Georgia</option>
+      </select></center>
+    </div>
+    <div class="form-group">
+      <label for="fontSizePicker" class="mb-2">Change Font Size</label>
+      <input type="range" id="fontSizePicker" class="form-control" min="12" max="36" step="2" value="16">
+    </div> 
+    <button type="button" class="btn color-a top" onclick="changeFont()">Change Font</button>
+    <a href="#" class="btn color-a top f ">Sauvegarder</a>
+    <a href="#" class="btn color-a top  ">Passer a l'etape suivante</a>
+
+    </div>
+    <script>
+      function changeColor(element) {
+        const color = document.getElementById('colorPicker').value;
+        element.style.color = color;
+        
+      }
+      function changeColorD(element) {
+        const color = document.getElementById('colorPickerr').value;
+        element.style.color = color;
+        
+      }
+     
+      function changeInputColorF() {
+        var form = document.getElementById('myForm');
+        var colorPicker = document.getElementById('inputColorPickerr');
+        form.style.backgroundColor = colorPicker.value;
+      }
+      function changeInputColorB() {
+        var form = document.getElementById('myB');
+        var colorPicker = document.getElementById('inputColorPickerrr');
+        form.style.backgroundColor = colorPicker.value;
+      }
+      function changeInputColor() {
+        var container = document.getElementById('myDiv');
+        var colorPicker = document.getElementById('inputColorPicker');
+        container.style.backgroundColor = colorPicker.value;
+      }
+    /* Change font and font size on button click */
+    function changeFont() {
+			var font = document.getElementById('fontPicker').value;
+			var fontSize = document.getElementById('fontSizePicker').value;
+			var container = document.getElementById('myDiv');
+			container.style.fontFamily = font;
+			container.style.fontSize = fontSize + 'px';
+		}
+  
+
+   
+
+
+
+    </script>
+    
+          
+    
+    
+</body>
+</html>
