@@ -30,11 +30,64 @@ from django.http import Http404
 import logging
 from .models import ContactGoogle
 from .forms import ContactForm
+from nbconvert import HTMLExporter
+import nbformat
+from rest_framework_simplejwt.tokens import RefreshToken
+def notebook_view(request):
+    with open('chatbot/ChatbotApp.py') as f:
+        code = f.read()
+    notebook = nbformat.reads(code, asversion=4)
+    exporter = HTMLExporter()
+    html,  = exporter.from_notebook_node(notebook)
 
+    return render(request, 'notebook.html', {'html': html})
 
 # Create your views here.
+import requests
+from django.core.files.base import ContentFile
+from django.shortcuts import render
+from .models import Page
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import base64
+import os
+from django.conf import settings
+from django.http import HttpResponseServerError
+@csrf_exempt
+def save_image(request):
+    if request.method == 'POST':
+        # Get the image data from the request
+        image_data = request.FILES['image'].read()
+
+        # Save the image to a file in the media folder
+        media_path = os.path.join(settings.MEDIA_ROOT, 'image.png')
+        with open(media_path, 'wb') as f:
+            f.write(image_data)
+
+        # Return a response
+        return HttpResponse('Modification sauvegardé avec Success.')
+
+def imagedisplay(request):
+   return render(request,'imagedisplay.html')       
+        
+
+
+def download_page(request, page_id):
+    # Récupérer l'instance de la page
+    page = Page.objects.get(id=page_id)
+    
+    # Télécharger le contenu HTML de la page
+    response = requests.get(page.url)
+    if response.status_code == 200:
+        file_name = page.url.split('/')[-1]
+        content = ContentFile(response.content)
+        page.html_file.save(file_name, content, save=True)
+        
+    return render(request, 'page.html', {'page': page})
 
 class SignupView(View):
+
+    
     def get(self, request):
         return render(request, 'signup.html')
     
@@ -62,7 +115,7 @@ class SignupView(View):
         user.save()
         
         messages.success(request, "Signup successful!")
-        return redirect('/login')
+        return redirect('/adminDashboard')
 
 
 
@@ -73,42 +126,59 @@ class SignupView(View):
 logger = logging.getLogger(__name__)
 class MyloginView(View):
     def get(self, request):
-        fm=MyLoginForm()
-        return render(request , 'login.html',{'form':fm})
+        fm = MyLoginForm()  # create an instance of the login form
+        return render(request, 'login.html', {'form': fm})  # render the login page with the login form
 
     def post(self, request):
-        fm=MyLoginForm(request,data= request.POST)
-        if fm.is_valid():
-            username=fm.cleaned_data['username']
-            password=fm.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect(reverse_lazy('acceuil'))
+        fm = MyLoginForm(request, data=request.POST)  # create an instance of the login form with POST data
+        if fm.is_valid():  # check if the form data is valid
+            username = fm.cleaned_data['username']  # get the username from the form data
+            password = fm.cleaned_data['password']  # get the password from the form data
+            user = authenticate(request, username=username, password=password)  # authenticate the user
+            if user is not None:  # if the user is authenticated
+                login(request, user)  # log the user in
+                if user.is_superuser:  # Check if user is an admin
+                    refresh = RefreshToken.for_user(user)  # generate a JWT refresh token
+                    token = str(refresh.access_token)  # get the access token from the refresh token
+                    return redirect(reverse_lazy('homeadmin'), token=token)  # redirect to the admin dashboard with the token in the URL
+                else:
+                    return redirect(reverse_lazy('acceuil'))  # redirect to the home page
         else:
-            return render(request , 'login.html',{'form':fm})
+            return render(request, 'login.html', {'form': fm})  # render the login page with the invalid form data
 
 
 
-
-
-# Create your views here.  
+@login_required
 def addnew(request):  
     if request.method == "POST":  
         form = ContactForm(request.POST)  
         if form.is_valid():  
-            try:  
-                form.save()  
+            try:
+                # Get the ID of the current user
+                user_id = request.user.id
+                
+                # Save the form and set the user ID of the Affilie model
+                contact = form.save(commit=False)
+                contact.id_infopreneur_id = user_id
+                contact.save()
+                
                 return redirect('/index')  
             except:  
                 pass
     else:  
         form = ContactForm()  
-    return render(request,'index.html',{'form':form})  
+    return render(request,'index.html',{'form':form}) 
  
-def index(request):  
-    contacts = Contact.objects.all()  
-    return render(request,"show.html",{'contacts':contacts})  
+ 
+@login_required
+def index(request):
+    # Get the ID of the current user
+    user_id = request.user.id
+    
+    # Filter the Affilie objects by the user ID
+    contacts = Contact.objects.filter(id_infopreneur_id=user_id)
+    
+    return render(request, 'show.html', {'contacts': contacts})
  
 def edit(request, id):  
     contact = Contact.objects.get(id=id)  
@@ -126,23 +196,36 @@ def destroy(request, id):
     contact = Contact.objects.get(id=id)  
     contact.delete()  
     return redirect("/index")  
-
+@login_required
 def addnewa(request):  
     if request.method == "POST":  
         form = AffilieForm(request.POST)  
         if form.is_valid():  
-            try:  
-                form.save()  
+            try:
+                # Get the ID of the current user
+                user_id = request.user.id
+                
+                # Save the form and set the user ID of the Affilie model
+                affilie = form.save(commit=False)
+                affilie.id_infopreneur_id = user_id
+                affilie.save()
+                
                 return redirect('/indexa')  
             except:  
                 pass
     else:  
         form = AffilieForm()  
-    return render(request,'indexa.html',{'form':form}) 
+    return render(request,'indexa.html',{'form':form})
 
-def indexa(request):  
-    affilies = Affilie.objects.all()  
-    return render(request,"showaffilie.html",{'affilies':affilies}) 
+@login_required
+def indexa(request):
+    # Get the ID of the current user
+    user_id = request.user.id
+    
+    # Filter the Affilie objects by the user ID
+    affilies = Affilie.objects.filter(id_infopreneur_id=user_id)
+    
+    return render(request, 'showaffilie.html', {'affilies': affilies})
 
  
 def edita(request, id):  
@@ -199,7 +282,12 @@ def preview(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-              
+
+            messages.success(request, "Sauvegarde effectue avec succes!")
+            last_post_id = Post.objects.latest('id').id
+            post = Post.objects.get(id=last_post_id)  
+            
+            return render(request, 'template1.html', {'post': post})
     else:
         form = PostForm()
     return render(request, 'preview.html', {'form': form})

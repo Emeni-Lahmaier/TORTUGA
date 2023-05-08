@@ -10,6 +10,8 @@
 
     {% if not utilisateurs %}
         <p>Pas d'utilisateurs.</p>
+        <a href="{% url 'signup' %}" class="btn color-a top">Ajouter un infopreneur</a>
+
     {% else %}
     <div class="container">
         {% for utilisateur in utilisateurs %}

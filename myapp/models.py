@@ -7,6 +7,8 @@ from PIL import Image
 from ckeditor.fields import RichTextField
 from django.forms import ModelForm;
 from django import forms;
+from django.core.files.base import ContentFile
+import requests
 # Create your models here.
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
@@ -97,19 +99,12 @@ def create_user_profile(sender, instance, created, **kwargs):
         Utilisateur.objects.create(user=instance)
 
 
-    
-
-class Admin(models.Model):
-    id_admin =models.OneToOneField(Utilisateur,on_delete=models.CASCADE, primary_key = True)
-
-class infopreneur(models.Model):
-    id_infopreneur =models.OneToOneField(Utilisateur,on_delete=models.CASCADE, primary_key = True)
-
 class Contactt(models.Model):
     id_c= models.IntegerField(primary_key = True)
-    id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE)
+    
 
 class Contact(models.Model):
+    id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default=0)
     name = models.CharField(max_length=100)  
     email = models.EmailField(null=True)  
     contact = models.CharField(max_length=15)
@@ -120,7 +115,7 @@ class Contact(models.Model):
    
 class Produit(models.Model):
     id= models.IntegerField(primary_key = True)
-    id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE)
+    id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
     nom = models.CharField(max_length=25)    
     prix = models.DecimalField(max_digits=6, decimal_places=2)             
     description = models.CharField(max_length=500) 
@@ -133,21 +128,13 @@ class Produit(models.Model):
                 ]
 
 
-class Vente(models.Model):
-    reference=models.IntegerField(primary_key = True)
-    id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE)
-    id_produit =models.ForeignKey(Produit,on_delete=models.CASCADE)
-    id_contact =models.ForeignKey(Contact,on_delete=models.CASCADE)
-    date_vente=models.DateField()
-    quantite= models.IntegerField()
-
 class Affilie(models.Model):
      nom_prenom=models.CharField(max_length=60,null=True)
      email = models.EmailField(null=True)
      contact = models.CharField(max_length=15,null=True)
      contrat=models.CharField(max_length=15,null=True)
      pourcentage=models.CharField(max_length=15,null=True)
-
+     id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
 
 class TemplatesCommuns(models.Model):
      id = models.AutoField(primary_key=True)
@@ -163,7 +150,7 @@ class TemplatesUser(models.Model):
      type=models.CharField(max_length=30,null=True)
      URL=models.TextField(null=True)
      description=models.TextField(null=True)
-     id_infopreneur =models.ForeignKey(infopreneur,on_delete=models.CASCADE,default='0')
+     id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
      id_Commun =models.ForeignKey(TemplatesCommuns,on_delete=models.CASCADE,default='0')
      image = models.ImageField(null=True)
 
@@ -199,3 +186,14 @@ class Post(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='post_images/')
     video = models.FileField(upload_to='post_videos/')
+
+class Page(models.Model):
+    url = models.URLField()
+    html_file = models.FileField(upload_to='html_files', null=True, blank=True)
+
+    def download_html(self):
+        response = requests.get(self.url)
+        if response.status_code == 200:
+            file_name = self.url.split('/')[-1]
+            content = ContentFile(response.content)
+            self.html_file.save(file_name, content, save=True)

@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://127.0.0.1:8000/template1/30/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background:white;
+        }
+
+        body::after{
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "";
+          height: 100%;
+          width: 100%;
+          background: linear-gradient(#c14e993b, #90654b4f);
+          clip-path:circle(20% at left 0%);
+        
+        }
+        
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        img {
+          padding-top:20px;
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 20px;
+            padding-bottom:20px;
+        }
+
+        form {
+          margin-top:20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="email"] {
+            border-radius: 5px;
+            padding: 10px;
+            width: 90%;
+            margin-bottom:20px;
+        }
+
+        .bouton{
+          
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            width: 20%;
+        }
+      
+        .sidebarr {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 300px;
+          height: 100%;
+          background-color: #fff;
+          border-left: 1px solid #ddd;
+          padding: 20px;
+          
+          
+        }
+        .btn {
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 14px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        .btn:hover{
+          border:solid 1px #DA59B1;
+        
+          color: #DA59B1;
+          background:#ffffff;
+          
+          border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+         
+        }
+        .color-a{
+          background: linear-gradient(to top right, #8162CE, #F54BA5);
+        }
+        h3{
+          margin-top:10px;
+          margin-bottom:30px;
+        }
+        .f{
+          margin-top:40px;
+          margin-left:2px;
+        }
+        #t{
+          margin-left:140px;
+        }
+    </style>
+<style type="text/css">@font-face { font-family: Roboto; src: url("chrome-extension://mcgbeeipkmelnpldkobichboakdfaeon/css/Roboto-Regular.ttf"); }</style></head>
+<body>
+  
+  <!-- Coding by CodingLab | www.codinglabweb.com -->
+
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="./My Blog_files/style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+    <link href="./My Blog_files/boxicons.min.css" rel="stylesheet">
+    
+    <!--<title>Dashboard Sidebar Menu</title>--> 
+    <style>
+        /* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    /* ===== Colors ===== */
+    
+
+    --sidebar-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+
+
+ 
+
+::selection{
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+body.dark{
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #3a3b3c;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #fff;
+    --text-color: #ccc;
+}
+.color-a{
+    background: linear-gradient(to top right, #8162CE, #F54BA5);
+  }
+
+/* ===== Sidebar ===== */
+ .sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 350px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;  
+}
+.sidebar.close{
+    width: 88px;
+}
+
+/* ===== Reusable code - Here ===== */
+.sidebar li{
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.sidebar header .image,
+.sidebar .icon{
+    min-width: 60px;
+    border-radius: 6px;
+}
+
+.sidebar .icon{
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon{
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.sidebar .text{
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+}
+.sidebar.close .text{
+    opacity: 0;
+}
+/* =========================== */
+
+.sidebar header{
+    position: relative;
+    
+}
+
+.sidebar header .image-text{
+    display: flex;
+    align-items: center;
+}
+.sidebar header .logo-text{
+    display: flex;
+    flex-direction: column;
+}
+header .image-text .name {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+header .image-text .profession{
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
+}
+
+.sidebar header .image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar header .image img{
+    width: 40px;
+    border-radius: 6px;
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+body.dark .sidebar header .toggle{
+    color: var(--text-color);
+}
+
+.sidebar.close .toggle{
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebar .menu{
+    margin-top: 40px;
+}
+
+.sidebar li.search-box{
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+.sidebar li.search-box input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color-light);
+    color: var(--text-color);
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 500;
+    transition: var(--tran-05);
+}
+.sidebar li a{
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+.nav-link {
+   
+    color: linear-gradient(to top right, #8162CE, #F54BA5);}
+.sidebar li a:hover{
+    background-color: var(--primary-color);
+}
+.sidebar li a#user:hover{
+    background-color: white;
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text{
+    color: var(--sidebar-color);
+}
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text{
+    color: var(--text-color);
+}
+
+.sidebar .menu-bar{
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar{
+    display: none;
+}
+.sidebar .menu-bar .mode{
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    position: relative;
+    transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon{
+    height: 50px;
+    width: 60px;
+}
+
+.mode .sun-moon i{
+    position: absolute;
+}
+.mode .sun-moon i.sun{
+    opacity: 0;
+}
+body.dark .mode .sun-moon i.sun{
+    opacity: 1;
+}
+body.dark .mode .sun-moon i.moon{
+    opacity: 0;
+}
+
+.menu-bar .bottom-content .toggle-switch{
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.toggle-switch .switch{
+    position: relative;
+    height: 22px;
+    width: 40px;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
+    transition: var(--tran-05);
+}
+
+.switch::before{
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: var(--sidebar-color);
+    transition: var(--tran-04);
+}
+
+body.dark .switch::before{
+    left: 20px;
+}
+
+.home{
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+.home .text{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 12px 60px;
+}
+
+.sidebar.close ~ .home{
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+}
+body.dark .home .text{
+    color: var(--text-color);
+}
+#user{
+    font-size : 30px ;
+    
+}
+
+    </style>
+
+
+    
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <!--<img src="logo.png" alt="">-->
+                </span>
+
+                <div class="text logo-text">
+                    
+                    <li>
+
+                        <i class="bx bx-user icon"></i>
+                        <a class="nav-link " id="user" href="http://127.0.0.1:8000/profile/2/">Eva</a>
+                        
+                        
+                        
+                    
+                </li>
+
+                </div>
+            </div>
+
+            <i class="bx bx-chevron-right toggle"></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                    <i class="bx bx-search icon"></i>
+                    <input type="text" placeholder="Search..." fdprocessedid="fnide5">
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/template1/30/#">
+                            <i class="bx bx-bell icon"></i>
+                            <span class="text nav-text">Notifications</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/template1/30/#">
+                            <i class="bx bx-line-chart icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/landingpage/">
+                            <i class="bx bx-book-content icon"></i>
+                            <span class="text nav-text">Tunnel de Vente</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/indexa/">
+                            <i class="bx bx-user-voice icon"></i>
+                            <span class="text nav-text">Affilie</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/index/">
+                            <i class="bx bxs-contact icon"></i>
+                            <span class="text nav-text">Contact</span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-link">
+                        <a href="http://127.0.0.1:8000/reclamation/">
+                            <i class="bx bxs-cog icon"></i>
+                            <span class="text nav-text">Réclamation</span>
+                        </a>
+                    </li>
+
+                   
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    
+                        
+                        
+                        </li><li class="nav-link">
+                            <a class="nav-link text nav-text " href="http://127.0.0.1:8000/logout/">
+                                <i class="bx bx-log-out icon"><span>Logout</span></i>
+                              
+                            </a>
+                        </li>
+                        
+                        
+                        
+                    
+                
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class="bx bx-moon icon moon"></i>
+                        <i class="bx bx-sun icon sun"></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+
+    </nav>
+
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+    
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+    }else{
+        modeText.innerText = "Dark mode";
+        
+    }
+});
+    </script>
+
+
+
+  <h3 id="t">Etape 2: Personnaliser votre page</h3>
+    <div id="myDiv" class="container" style="background-color: rgb(194, 168, 168); font-family: Arial, sans-serif; font-size: 24px;">
+        
+        <img src="./My Blog_files/waku_waku_WKBtlcm.png" alt="Blog Image">
+        <h2 id="title" style="color: rgb(186, 105, 105);">aisnaDK</h2>
+        <p id="p" style="color: rgb(143, 50, 50);">  DAjhof</p>
+
+        <form id="myForm">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" fdprocessedid="n76mva">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" fdprocessedid="5hjaglq">
+
+           
+            <center><button id="myB" type="button" class="bouton" value="Submit" fdprocessedid="whkex5">Envoyer</button></center>
+
+        </form>
+
+    </div>
+    <div class="sidebarr">
+      <h3><i class="bx bxs-palette" style="color:#8162CE"></i> Changer le Thème</h3>
+    <div class="form-group mt-4">
+      <label for="colorPicker" class="mb-2">Changer la couleur de l'arriere plan</label>
+      <input type="color" id="inputColorPicker" onchange="changeInputColor()" class="form-control">
+
+      <label for="colorPicker" class="mb-2">Changer la couleur du titre</label>
+    <input type="color" id="colorPicker" onchange="changeColor(document.getElementById(&#39;title&#39;))" class="form-control">
+      <label for="colorPicker" class="mb-2">Changer la couleur de la description</label>
+    <input type="color" id="colorPickerr" onchange="changeColorD(document.getElementById(&#39;p&#39;))" class="form-control">
+    
+    </div>
+    <div class="form-group">
+      <label class="mb-2">Changer la couleur du formulaire</label>
+      <input type="color" id="inputColorPickerr" onchange="changeInputColorF()" class="form-control">
+      <label class="mb-2">Changer la couleur du Bouton</label>
+      <input type="color" id="inputColorPickerrr" onchange="changeInputColorB()" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="fontPicker" class="mb-2">Changer le style et la taille du Texte</label>
+      <center><select id="fontPicker" class="form-control" fdprocessedid="6cezb4">
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="Helvetica, sans-serif">Helvetica</option>
+        <option value="Times New Roman, serif">Times New Roman</option>
+        <option value="Georgia, serif">Georgia</option>
+      </select></center>
+    </div>
+    <div class="form-group">
+      <label for="fontSizePicker" class="mb-2">Change Font Size</label>
+      <input type="range" id="fontSizePicker" class="form-control" min="12" max="36" step="2" value="16">
+    </div> 
+    <button type="button" class="btn color-a top" onclick="changeFont()" fdprocessedid="bwazyn">Change Font</button>
+    <a href="http://127.0.0.1:8000/template1/30/#" class="btn color-a top f ">Sauvegarder</a>
+    <a href="http://127.0.0.1:8000/template1/30/#" class="btn color-a top  ">Passer a l'etape suivante</a>
+
+    </div>
+    <script>
+      function changeColor(element) {
+        const color = document.getElementById('colorPicker').value;
+        element.style.color = color;
+        
+      }
+      function changeColorD(element) {
+        const color = document.getElementById('colorPickerr').value;
+        element.style.color = color;
+        
+      }
+     
+      function changeInputColorF() {
+        var form = document.getElementById('myForm');
+        var colorPicker = document.getElementById('inputColorPickerr');
+        form.style.backgroundColor = colorPicker.value;
+      }
+      function changeInputColorB() {
+        var form = document.getElementById('myB');
+        var colorPicker = document.getElementById('inputColorPickerrr');
+        form.style.backgroundColor = colorPicker.value;
+      }
+      function changeInputColor() {
+        var container = document.getElementById('myDiv');
+        var colorPicker = document.getElementById('inputColorPicker');
+        container.style.backgroundColor = colorPicker.value;
+      }
+    /* Change font and font size on button click */
+    function changeFont() {
+			var font = document.getElementById('fontPicker').value;
+			var fontSize = document.getElementById('fontSizePicker').value;
+			var container = document.getElementById('myDiv');
+			container.style.fontFamily = font;
+			container.style.fontSize = fontSize + 'px';
+		}
+  
+
+   
+
+
+
+    </script>
+    
+          
+    
+    
+
+
+<script>
+		function returnCommentSymbol(language = "javascript") {
+			const languageObject = {
+				bat: "@REM",
+				c: "//",
+				csharp: "//",
+				cpp: "//",
+				closure: ";;",
+				coffeescript: "#",
+				dockercompose: "#",
+				css: "/*DELIMITER*/",
+				"cuda-cpp": "//",
+				dart: "//",
+				diff: "#",
+				dockerfile: "#",
+				fsharp: "//",
+				"git-commit": "//",
+				"git-rebase": "#",
+				go: "//",
+				groovy: "//",
+				handlebars: "{{!--DELIMITER--}}",
+				hlsl: "//",
+				html: "<!--DELIMITER-->",
+				ignore: "#",
+				ini: ";",
+				java: "//",
+				javascript: "//",
+				javascriptreact: "//",
+				json: "//",
+				jsonc: "//",
+				julia: "#",
+				latex: "%",
+				less: "//",
+				lua: "--",
+				makefile: "#",
+				markdown: "<!--DELIMITER-->",
+				"objective-c": "//",
+				"objective-cpp": "//",
+				perl: "#",
+				perl6: "#",
+				php: "<!--DELIMITER-->",
+				powershell: "#",
+				properties: ";",
+				jade: "//-",
+				python: "#",
+				r: "#",
+				razor: "<!--DELIMITER-->",
+				restructuredtext: "..",
+				ruby: "#",
+				rust: "//",
+				scss: "//",
+				shaderlab: "//",
+				shellscript: "#",
+				sql: "--",
+				svg: "<!--DELIMITER-->",
+				swift: "//",
+				tex: "%",
+				typescript: "//",
+				typescriptreact: "//",
+				vb: "'",
+				xml: "<!--DELIMITER-->",
+				xsl: "<!--DELIMITER-->",
+				yaml: "#"
+			}
+			if(!languageObject[language]){
+				return languageObject["python"].split("DELIMITER")
+			}
+			return languageObject[language].split("DELIMITER")
+		}
+		var savedChPos = 0
+		var returnedSuggestion = ''
+		let editor, doc, cursor, line, pos
+		pos = {line: 0, ch: 0}
+		var suggestionsStatus = false
+		var docLang = "python"
+		var suggestionDisplayed = false
+		var isReturningSuggestion = false
+		document.addEventListener("keydown", (event) => {
+		setTimeout(()=>{
+			editor = event.target.closest('.CodeMirror');
+			if (editor){
+				const codeEditor = editor.CodeMirror
+				if(!editor.classList.contains("added-tab-function")){
+					editor.classList.add("added-tab-function")
+					codeEditor.removeKeyMap("Tab")
+					codeEditor.setOption("extraKeys", {Tab: (cm)=>{
+
+						if(returnedSuggestion){
+							acceptTab(returnedSuggestion)
+						}
+						else{
+							cm.execCommand("defaultTab")
+						}
+					}})
+				}
+				doc = editor.CodeMirror.getDoc()
+				cursor = doc.getCursor()
+				line = doc.getLine(cursor.line)
+				pos = {line: cursor.line, ch: line.length}
+
+				if(cursor.ch > 0){
+					savedChPos = cursor.ch
+				}
+
+				const fileLang = doc.getMode().name
+				docLang = fileLang
+				const commentSymbol = returnCommentSymbol(fileLang)
+				if (event.key == "?"){
+					var lastLine = line
+					lastLine = lastLine.slice(0, savedChPos - 1)
+
+					if(lastLine.trim().startsWith(commentSymbol[0])){
+						if(fileLang !== "null"){
+							lastLine += " "+ fileLang
+						}
+						
+						lastLine = lastLine.split(commentSymbol[0])[1]
+						window.postMessage({source: 'getQuery', payload: { data: lastLine } } )
+						isReturningSuggestion = true
+						displayGrey("\nBlackbox loading...")
+					}
+				}else if(event.key === "Enter" && suggestionsStatus && !isReturningSuggestion){
+					var query = doc.getRange({ line: Math.max(0,cursor.line-50), ch: 0 }, { line: cursor.line, ch: line.length })
+					window.postMessage({source: 'getSuggestion', payload: { data: query, language: docLang, cursorPos: pos } } )
+					displayGrey("Blackbox loading...")
+				}else if(event.key === "ArrowRight" && returnedSuggestion){
+					acceptTab(returnedSuggestion)
+				}else if(event.key === "Enter" && isReturningSuggestion){
+					displayGrey("\nBlackbox loading...")
+				}else if(event.key === "Escape"){
+					displayGrey("")
+				}
+			}
+		}, 0)
+		})
+
+		function acceptTab(text){
+		if (suggestionDisplayed){
+			displayGrey("")
+			doc.replaceRange(text, pos)
+			returnedSuggestion = ""
+			updateSuggestionStatus(false)
+		}
+		}
+		function acceptSuggestion(text){
+			displayGrey("")
+			doc.replaceRange(text, pos)
+			returnedSuggestion = ""
+			updateSuggestionStatus(false)
+		}
+		function displayGrey(text){
+			if(!text){
+				document.querySelector(".blackbox-suggestion").remove()
+				return
+			}
+			var el = document.querySelector(".blackbox-suggestion")
+			if(!el){
+				el = document.createElement('span')
+				el.classList.add("blackbox-suggestion")
+				el.style = 'color:grey'
+				el.innerText = text
+			}
+			else{
+				el.innerText = text
+			}
+			
+			var lineIndex = pos.line;
+			editor.getElementsByClassName('CodeMirror-line')[lineIndex].appendChild(el)
+		}
+		function updateSuggestionStatus(s){
+			suggestionDisplayed = s
+			window.postMessage({source: 'updateSuggestionStatus', status: suggestionDisplayed, suggestion: returnedSuggestion})
+		}
+		window.addEventListener('message', (event)=>{
+		if (event.source !== window ) return
+		if (event.data.source == 'return'){
+			isReturningSuggestion = false
+			const formattedCode = formatCode(event.data.payload.data)
+			returnedSuggestion = formattedCode
+			displayGrey(formattedCode)
+			updateSuggestionStatus(true)
+		}
+		if(event.data.source == 'suggestReturn'){
+			const prePos = event.data.payload.cursorPos
+			if(pos.line == prePos.line && pos.ch == prePos.ch){
+				returnedSuggestion = event.data.payload.data
+				displayGrey(event.data.payload.data)
+				updateSuggestionStatus(true)
+			}
+			else{
+				displayGrey()
+			}
+		}
+		if(event.data.source == 'codeSearchReturn'){
+			isReturningSuggestion = false
+			displayGrey()
+		}
+		if(event.data.source == 'suggestionsStatus'){
+			suggestionsStatus = event.data.payload.enabled
+		}
+		if(event.data.source == 'acceptSuggestion'){
+			
+			acceptSuggestion(event.data.suggestion)
+		}
+		})
+		document.addEventListener("keyup", function(){
+			returnedSuggestion = ""
+			updateSuggestionStatus(false)
+		})
+		function formatCode(data) {
+			if (Array.isArray(data)) {
+				var finalCode = ""
+				var pairs = []
+		
+				const commentSymbol = returnCommentSymbol(docLang)
+				data.forEach((codeArr, idx) => {
+					const code = codeArr[0]
+					var desc = codeArr[1]
+					const descArr = desc.split("\n")
+					var finalDesc = ""
+					descArr.forEach((descLine, idx) => {
+						const whiteSpace = descLine.search(/\S/)
+						if (commentSymbol.length < 2 || idx === 0) {
+							finalDesc += insert(descLine, whiteSpace, commentSymbol[0])
+						}
+						if (commentSymbol.length > 1 && idx === descArr.length - 1) {
+							finalDesc = finalDesc + commentSymbol[1] + "\n"
+						}
+					})
+		
+					finalCode += finalDesc + "\n\n" + code
+					pairs.push(finalCode)
+				})
+				return "\n"+pairs.join("\n")
+			}
+		
+			return "\n"+data
+		}
+		
+		function insert(str, index, value) {
+			return str.substr(0, index) + value + str.substr(index)
+		}
+	</script></body></html>

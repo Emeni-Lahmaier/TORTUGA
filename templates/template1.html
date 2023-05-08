@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>My Blog</title>
     <style>
         body {
@@ -175,11 +177,41 @@
       <input type="range" id="fontSizePicker" class="form-control" min="12" max="36" step="2" value="16">
     </div> 
     <button type="button" class="btn color-a top" onclick="changeFont()">Change Font</button>
-    <a href="#" class="btn color-a top f ">Sauvegarder</a>
-    <a href="#" class="btn color-a top  ">Passer a l'etape suivante</a>
-
+    
+    <button class="btn color-a top"  onclick="captureScreen()">Enregistrer les modifications</button>
+    <a href="{% url 'imagedisplay' %}" class="btn color-a top  ">Passer a l'etape suivante</a>
     </div>
     <script>
+      function captureScreen() {
+        // Get the element that you want to capture
+        var element = document.getElementById("myDiv");
+    
+        // Use html2canvas to capture the screen
+        html2canvas(element).then(function(canvas) {
+            // Convert the canvas to a blob
+            canvas.toBlob(function(blob) {
+                // Create a new FormData object and append the blob to it
+                var formData = new FormData();
+                formData.append('image', blob, 'image.png');
+    
+                // Send the data to the server using an AJAX request
+                $.ajax({
+                    url: '/save-image/',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }, 'image/png');
+        });
+    }
+    
       function changeColor(element) {
         const color = document.getElementById('colorPicker').value;
         element.style.color = color;

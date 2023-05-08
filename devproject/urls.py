@@ -28,7 +28,7 @@ from django.contrib.auth import views as auth_views
 from myapp.views import ResetPasswordView, ChangePasswordView
 from django.urls import include
 from django.urls import URLPattern
-
+from myapp.views import save_image
 
 
 urlpatterns = [
@@ -37,6 +37,8 @@ urlpatterns = [
     path('acceuil/', acceuil, name='acceuil'), 
     path('homeadmin/', homeadmin, name='homeadmin'), 
     path('template/', template, name='template'),
+    path('save-image/', save_image, name='save_image'),
+    path('imagedisplay/', imagedisplay, name='imagedisplay'),
     path('index/', index, name='index'), 
     path('indexa/', indexa, name='indexa'),
     path('delete_profile/', delete_profile, name='delete_profile'),
@@ -84,19 +86,18 @@ urlpatterns = [
     path('template/view/<int:id>/', template_view, name='template_view'),
     path('template/share/<int:id>/', share_template, name='share_template'),
     path('send_email/', send_email, name='send_email'),
-    
+    path('notebook/', notebook_view, name='notebook'),
     path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
          name='password_reset_confirm'),
-
+    
     path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),
          name='password_reset_complete'),
 
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 
-]
-
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
