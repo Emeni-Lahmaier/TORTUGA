@@ -1,6 +1,6 @@
 
 {% include 'navbar.html'  %} 
-
+{%load static%} 
 
 {% block extra_css %}
   <style>
@@ -10,7 +10,10 @@
       justify-content: center;
       height: 100vh;
       width: 100vw;
-      background:#fff;
+      background-image: url("./../static/5-min.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      
     }
     body::before{
       position: absolute;
@@ -64,38 +67,38 @@
   .color-a{
     background: linear-gradient(to top right, #8162CE, #F54BA5);
   }
+  
   </style>
 {% endblock %}
 
 {% block content %}
 <div classname="animation">
-  
+
   
   {% if templates %}
     <table class="table" width="100%">
       <thead class="table-head">
         <tr>
-          <th>Titre</th>
-          <th>Description</th>
-          <th>Image</th>
+          <th>Nom du Client</th>
+          <th>Email</th>
+          <th>Numéro de Téléphone</th>
+          <th>Sujet</th>
+          <th>Message</th>
+          <th>Reçu à</th>
           
-          <th class="actions">Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for template in templates %}
           <tr class="template-title" style="width: 100px;">
-            <td class="template-title"style="width: 100px;">{{ template.title }}</td>
-            <td class="template-type"style="width: 200px;">{{ template.description }}</td>
-            <td style="width: 100px;"><img src="{{ template.image.url }}" alt="{{ template.title }}" width="100px"></td>
+            <td class="template-title"style="width: 100px; ">{{ template.name }}</td>
+            <td class="template-type"style="width: 100px;">{{ template.email }}</td>
+            <td class="template-type"style="width: 100px;">{{ template.phonenumber }}</td>
+            <td class="template-type"style="width: 100px;">{{ template.subject }}</td>
+            <td class="template-type"style="width: 100px;">{{ template.message }}</td>
+            <td class="template-type"style="width: 100px;">{{ template.submitted_at }}</td>
             
-            <td style="width: 100px;">
-              <div class="template-actions">
-                <a href="{% url 'pop_delete' id=template.id %}" class="btn color-a top">Effacer</a>
-                <a href="{% url 'pop_update' id=template.id %}" class="btn color-a top">Editer</a>
-                
-              </div>
-            </td>
+        
           </tr>
         </div>
         {% endfor %}
@@ -104,5 +107,4 @@
   {% else %}
     <p>Pas de templates trouvées.</p>
   {% endif %}
-  <a href="{% url 'pop_template' %}" class="btn color-a top" type="submit" style="margin-left:75%;">Ajouter une nouvelle Template</a> 
 {% endblock %}

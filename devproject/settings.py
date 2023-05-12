@@ -39,12 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'meta',
     'ckeditor_uploader',
     'myapp',
 ]
 MIDDLEWARE = [
     # Other middleware...
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'meta.middleware.MetaMiddleware',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,7 +90,7 @@ WSGI_APPLICATION = 'devproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pfe',
+        'NAME': 'latortuga',
         'USER': 'root',
         'PASSWORD': '', 
         'HOST': 'localhost',

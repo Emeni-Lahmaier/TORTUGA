@@ -53,6 +53,7 @@ import base64
 import os
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.http import HttpResponseBadRequest
 @csrf_exempt
 def save_image(request):
     if request.method == 'POST':
@@ -64,11 +65,22 @@ def save_image(request):
         with open(media_path, 'wb') as f:
             f.write(image_data)
 
-        # Return a response
-        return HttpResponse('Modification sauvegardé avec Success.')
+        # Generate the URL of the saved image
+        image_url = request.build_absolute_uri(reverse('imagedisplay')) + '?path=image.png'
+
+        # Return the URL of the saved image in a JSON response
+        return JsonResponse({'image_url': image_url})
+
+    return HttpResponseBadRequest('Invalid request method')
 
 def imagedisplay(request):
-   return render(request,'imagedisplay.html')       
+    image_url = None
+    try:
+        with open(os.path.join(settings.MEDIA_ROOT, 'image.png'), 'rb') as f:
+            image_url = request.build_absolute_uri(settings.MEDIA_URL + 'image.png')
+    except IOError:
+        pass
+    return render(request, 'imagedisplay.html', {'image_url': image_url})      
         
 
 
@@ -247,6 +259,19 @@ def destroya(request, id):
 
 def home(request):
     if request.method == 'POST':
+        message = request.POST.get('message')
+        response = requests.post('http://localhost:5000/message', json={'message': message}).json()
+        bot_response = response['response']
+        return JsonResponse({'bot_response': bot_response})
+    else:
+        return render(request, 'home.html')
+
+
+def acceuil(request):
+   return render(request,'acceuil.html')
+
+def reclamation(request):
+    if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
         phonenumber = request.POST['phonenumber']
@@ -254,14 +279,9 @@ def home(request):
         message = request.POST['message']
         submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
         submission.save()
-    return render(request, 'home.html')
-
-
-def acceuil(request):
-   return render(request,'acceuil.html')
-
-def reclamation(request):
-   return render(request,'reclamation.html')
+        # Return a response
+        return HttpResponse('Reclamation Envoyé avec succes!')
+    return render(request, 'reclamation.html')
 
 def homeadmin(request):
    return render(request,'homeadmin.html')
@@ -269,7 +289,11 @@ def template(request):
    return render(request,'template.html')
 
 def landingpage(request):
-    post = Post.objects.all()  
+    # Get the ID of the current user
+    user_id = request.user.id
+   
+     # Filter the Affilie objects by the user ID
+    post= Post.objects.filter(id_infopreneur_id=user_id)
     return render(request,"landingpage.html",{'post':post}) 
 def destroypost(request, id):  
     post = Post.objects.get(id=id)  
@@ -281,7 +305,14 @@ def preview(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            # Get the ID of the current user
+            user_id = request.user.id
+                
+            # Save the form and set the user ID of the Affilie model
+            post = form.save(commit=False)
+            post.id_infopreneur_id = user_id
+            post.save()
+           
 
             messages.success(request, "Sauvegarde effectue avec succes!")
             last_post_id = Post.objects.latest('id').id
@@ -346,24 +377,29 @@ def update_profile(request, user_id):
         if user_form.is_valid() and profile_form.is_valid():
             # Check which fields have changed
             user_has_changed = any(field in user_form.changed_data for field in ['username', 'first_name', 'last_name', 'email'])
-            utilisateur_has_changed = any(field in profile_form.changed_data for field in ['Address', 'City', 'Country', 'postal_code', 'about_me', 'avatar', 'phonenumber', 'date_naissance'])
+            utilisateur_has_changed = any(field in profile_form.changed_data for field in ['Address', 'City', 'Country', 'postal_code', 'about_me', 'phonenumber', 'date_naissance'])
 
             # Save the forms only if changes were made
             if user_has_changed:
                 user_form.save()
             if utilisateur_has_changed:
-                profile_form.save()
-
-            messages.success(request, 'Your profile has been updated successfully.')
+                profile = profile_form.save(commit=False)
+                if 'avatar' in request.FILES:
+                    profile.avatar = request.FILES['avatar']
+                profile.save()
+              # Return a response
+                return HttpResponse('Votre profil a ete mis a jours avec succes.')
+            
             return redirect('profile', user_id=user_id)
+        else:
+            print('Profile form errors:', profile_form.errors)
+            print('User form errors:', user_form.errors)
 
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UserProfileForm(instance=utilisateur)
 
     return render(request, 'profile.html', {'user_form': user_form, 'profile_form': profile_form, 'utilisateur': utilisateur})
-
-
 
 
 
@@ -427,9 +463,14 @@ def pop_admin(request):
     context = {
         'templates': templates
     }
-    print("inside templates now")
     return render(request, 'pop_admin.html', context)
 
+def rec_admin(request):
+    templates = ContactFormSubmission.objects.all()
+    context = {
+        'templates': templates
+    }
+    return render(request, 'rec_admin.html', context)
 
 
 def template_create(request):
@@ -528,16 +569,7 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('acceuil')
 
-def home(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        email = request.POST['email']
-        phonenumber = request.POST['phonenumber']
-        subject = request.POST['subject']
-        message = request.POST['message']
-        submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
-        submission.save()
-    return render(request, 'home.html')
+
 
 def share_template(request, id):
     template = get_object_or_404(TemplatesCommuns, pk=id)
@@ -581,12 +613,10 @@ def template_view(request, id):
         return render(request, 'template_success.html')
     return render(request, 'template.html', {'template': template})
 
-def generate_link(request, id):
-    print("generate_link function called with id=", id)
-
-    template_obj = get_object_or_404(TemplatesCommuns, id=id)
-    print("template retrieved and html page")
+def generate_link(request):
+    # Generate your link here
+    link = 'http://example.com/link'
     
-    link = request.build_absolute_uri(reverse('share_template', kwargs={'id': id}))
+    # Render a template that displays the link
+    return render(request, 'generate_link.html', {'link': link})
 
-    return render(request, 'generate_link.html', {'template': template_obj, 'link': link})

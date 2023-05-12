@@ -1,11 +1,6 @@
-{% extends 'basee.html' %}
+{% extends "basee.html" %}
 
 {% block content %}
-  <h1 class="user-title">Lien genere:</h1>
-  {% if link %}
-    <p>Partager ce lien:</p>
+    <h1>Generated Link:</h1>
     <p>{{ link }}</p>
-  {% else %}
-    <p>Oops, Quelque chose a mal tourné! Veuillez réessayer plus tard.</p>
-  {% endif %}
 {% endblock %}

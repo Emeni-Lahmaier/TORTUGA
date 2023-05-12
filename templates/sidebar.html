@@ -15,12 +15,18 @@
     <!--<title>Dashboard Sidebar Menu</title>--> 
     <style>
         /* Google Font Import - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        @import url(//fonts.googleapis.com/css?family=Lato:300:400);
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family:  Cursive;
+    font-weight:300;
+    letter-spacing: 2px;
+    font-size:15px;
+    
 }
 
 :root{
@@ -28,7 +34,7 @@
     
 
     --sidebar-color: #FFF;
-    --primary-color: #695CFE;
+    --primary-color: #DA59B1;
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
     --text-color: #707070;
@@ -62,6 +68,7 @@ body.dark{
 
 /* ===== Sidebar ===== */
  .sidebar{
+    
     position: fixed;
     top: 0;
     left: 0;
@@ -108,8 +115,11 @@ body.dark{
 }
 
 .sidebar .text{
-    font-size: 17px;
-    font-weight: 500;
+    font-family: sans-serif;
+    font-weight:500;
+    letter-spacing: 2px;
+    font-size:18px;
+    
     white-space: nowrap;
     opacity: 1;
 }
@@ -346,11 +356,11 @@ body.dark .home .text{
                 <span class="image">
                     <!--<img src="logo.png" alt="">-->
                 </span>
-
+                
                 <div class="text logo-text">
                     {% if request.user.is_authenticated %}
                     <li>
-
+                    
                         <i class='bx bx-user icon' ></i>
                         <a class="nav-link " id="user" href="{% url 'profile' user.id %}">{{request.user}}</a>
                         
@@ -373,21 +383,23 @@ body.dark .home .text{
 
         <div class="menu-bar">
             <div class="menu">
-
+                <!--
                 <li class="search-box">
                     <i class='bx bx-search icon'></i>
                     <input type="text" placeholder="Search...">
-                </li>
+                </li>-->
 
                 <ul class="menu-links">
-                    <li class="nav-link">
+                    <!--<li class="nav-link">
                         <a href="#">
                             <i class='bx bx-bell icon'></i>
                             <span class="text nav-text">Notifications</span>
                         </a>
-                    </li>
+                    </li>-->
+                    <hr>
+                <br>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="{% url 'acceuil' %}">
                             <i class='bx bx-line-chart icon' ></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>

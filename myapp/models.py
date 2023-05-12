@@ -19,8 +19,14 @@ class Utilisateur(models.Model):
     Country = models.CharField(max_length=256, null=True)
     postal_code = models.CharField(max_length=20, null=True)
     about_me = models.TextField(null=True)
-    avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')    
+    avatar = models.ImageField(default='Tortuga.png', upload_to='profile_images')
     USERNAME_FIELD = 'pseudo'
+    subscription_type_choices = (
+        ('explorateur', 'Explorateur'),
+        ('infopreneur', 'Infopreneur'),
+        ('business', 'Business'),
+    )
+    subscription_type = models.CharField(max_length=20, choices=subscription_type_choices, default='explorateur', null=True)
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
@@ -44,14 +50,15 @@ class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(max_length=254, required=True)
-
+    
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].initial = self.instance.user.username
         self.fields['first_name'].initial = self.instance.user.first_name
         self.fields['last_name'].initial = self.instance.user.last_name
         self.fields['email'].initial = self.instance.user.email
-
+        self.fields['date_naissance'].required = False
+        
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exclude(pk=self.instance.user_id).exists():
@@ -186,7 +193,8 @@ class Post(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='post_images/')
     video = models.FileField(upload_to='post_videos/')
-
+    id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
+    
 class Page(models.Model):
     url = models.URLField()
     html_file = models.FileField(upload_to='html_files', null=True, blank=True)
