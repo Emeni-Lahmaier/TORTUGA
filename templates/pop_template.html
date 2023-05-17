@@ -31,91 +31,125 @@
             clip-path:circle(20% at left 95%);
           
           }
-          .btn{
-            
-            display:flex;
-            border:none;
-            height:40px;
-            color:#fff;
-            font-size:16px;
-            border-radius:30px;
-            box-shadow: 0 13px 26px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
-          }
-          .btn:hover{
-            border:solid 1px #DA59B1;
-            height:40px;
-            color: #DA59B1;
-            background:#ffffff;
-            
-            border-color: linear-gradient(to top right, #8162CE, #F54BA5);
-            border-radius:30px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
-          }
-          .color-a{
-            background: linear-gradient(to top right, #8162CE, #F54BA5);
-          }
-          .card {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 700px;
-            margin-top:30px;
-            margin-left:400px;
-          }
-          
-          form {
-            
+          .form_main {
+            margin: 3% 30%;
+            width: 40%;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            background-color: #fafafa;
+            padding: 30px 30px 30px 30px;
+            border-radius: 30px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
           }
           
-          h2 {
-            
-            text-align:center;
-            margin-top: 0;
-          }
-          
-          label {
-            font-size:20px;
-            margin-bottom: 5px;
-          }
-          
-          input, textarea {
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 20px;
+          .inputContainer {
             width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
+          
+          .inputIcon {
+            position: absolute;
+            left: 10px;
+          }
+          
+          .inputField {
+            width: 400px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgb(173, 173, 173);
+            border-radius: 30px;
+            margin: 10px 0;
+            color: black;
+            font-size: 0.8em;
+            font-weight: 500;
+            box-sizing: border-box;
+            padding-left: 30px;
+          }
+          
+          .inputField:focus {
+            outline: none;
+            border-bottom: 2px solid rgb(199, 114, 255);
+          }
+          
+          .inputField::placeholder {
+            color: rgb(80, 80, 80);
+            font-size: 1em;
+            font-weight: 500;
+          }
+          
+          .btn {
+            position: relative;
+            width: 100%;
+            border: 2px solid #8000ff;
+            background-color: #8000ff;
+            height: 40px;
+            color: white;
+            font-size: 0.8em;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            margin: 10px;
+            cursor: pointer;
+            overflow: hidden;
+          }
+          
+          .btn::after {
+            content: "";
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.253);
+            height: 100%;
+            width: 150px;
+            top: 0;
+            left: -200px;
+            border-bottom-right-radius: 100px;
+            border-top-left-radius: 100px;
+            filter: blur(10px);
+            transition-duration: 0.5s;
+          }
+          
+          .btn:hover::after {
+            transform: translateX(600px);
+            transition-duration: 0.5s;
+          }
+    h2{
+      font-family:georgia;
+      margin: 3%;
+    }
     </style>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <center><h3 class="user-title">Creer une nouvelle Form/Pop Up</h3> </center>
+<h2 class="user-title">Creer une Template</h2>
+<div class="form_main">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div>
-            <label for="id_title">Titre:</label>
-            {{ form.title }}
+        <div class="inputContainer">
+          <label for="id_title" class="inputIcon"><i class="fa fa-user"></i></label>
+          <input type="text" name="title" maxlength="150" required id="id_title" class="inputField" placeholder="Titre">
         </div>
-        <div>
-            <div>
-                <label for="{{ form.codeHtml.id_for_label }}">Code HTML:</label>
-                {{ form.codeHtml }}
-            </div>
+        
+        <div class="inputContainer">
+          <label for="id_codeHtml" class="inputIcon"><i class="fa fa-user"></i></label>
+          <input type="textarea" name="codeHtml"  required id="id_codeHtml" class="inputField" placeholder="Code HTML">
         </div>
-        <div>
-            <label for="id_type">Description:</label>
-            {{ form.description}}
+        
+        <div class="inputContainer">
+          <label for="id_description" class="inputIcon"><i class="fa fa-user"></i></label>
+          <input type="description" name="description" required id="id_description" class="inputField" placeholder="Description">
         </div>
-        <div>
+        <div class="inputContainer">
             <label for="id_image">Image:</label>
             {{ form.image }}
         </div>
-       
+       <div>
         <center><button  class="btn color-a top" type="submit">Submit</button> </center>
-    </form>
+       </div>
+      </form>
 </div>
 {% endblock %}

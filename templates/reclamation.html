@@ -16,10 +16,10 @@
 
   <!-- 
     - custom css link
+  
     
   -->
-  <link rel="stylesheet" type="text/css" href="{% static 'rec.css' %}">
-
+  <link rel="stylesheet" type="text/css" href="{% static 'recc.css' %}">
   <!-- 
     - google font link
   -->
@@ -41,9 +41,11 @@
         font-size:48px;
       }
       p {
+        text-align: center;
+        margin:5%;
         font-family: 'Lato', sans-serif;
         letter-spacing: 1px;
-        font-size:14px;
+        font-size:20px;
         color: #333333;
       }
       
@@ -132,14 +134,7 @@
         h1 {
           font-size:24px;
         }
-        body{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          width: 100vw;
-          background:#fff;
-        }
+       
     
     </style>
     <div class="header">
@@ -176,8 +171,8 @@
 <div class="container">
 
 
-    <p class="section-text">
-      
+    <p>
+     N'hesitez pas à nous contacter si vous avez des questions !
     </p>
 
     <form action="{% url 'reclamation' %}" method="POST">

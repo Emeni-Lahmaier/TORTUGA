@@ -1189,7 +1189,7 @@
     }
   
     .pt-md-4 {
-      padding-top: 1.5rem !important;
+      padding-top: 0px !important;
     }
   
     .pb-md-4 {
@@ -1321,12 +1321,10 @@
   }
   
   .bg-gradient-default {
-    background: linear-gradient(87deg, #8965e0 0, #8965e0 100%) !important;
+    background: linear-gradient(87deg, #eb52bf 0, #8965e0 100%) !important;
   }
   
-  .bg-gradient-default {
-    background: linear-gradient(87deg, #8965e0 0, #8965e0 100%) !important;
-  }
+ 
   
   @keyframes floating-lg {
     0% {

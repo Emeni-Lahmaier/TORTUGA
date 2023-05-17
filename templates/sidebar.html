@@ -22,12 +22,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:  Cursive;
+    
     font-weight:300;
     letter-spacing: 2px;
-    font-size:15px;
+    
     
 }
+
 
 :root{
     /* ===== Colors ===== */
@@ -115,7 +116,7 @@ body.dark{
 }
 
 .sidebar .text{
-    font-family: sans-serif;
+    font-family: Cursive;
     font-weight:500;
     letter-spacing: 2px;
     font-size:18px;
@@ -444,7 +445,7 @@ body.dark .home .text{
                         
                         <li class="nav-link">
                             <a class="nav-link text nav-text " href="{% url 'logout' %}">
-                                <i class='bx bx-log-out icon'><span>Logout</span></i>
+                                <i class='bx bx-log-out icon'><span>Se Déconnecter</span></i>
                               
                             </a>
                         </li>
@@ -459,8 +460,8 @@ body.dark .home .text{
                         
                     
                 </li>
-
-                <li class="mode">
+                <!-- 
+                    <li class="mode">
                     <div class="sun-moon">
                         <i class='bx bx-moon icon moon'></i>
                         <i class='bx bx-sun icon sun'></i>
@@ -471,6 +472,8 @@ body.dark .home .text{
                         <span class="switch"></span>
                     </div>
                 </li>
+                -->
+                
                 
             </div>
         </div>

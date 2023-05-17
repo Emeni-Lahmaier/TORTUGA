@@ -5,15 +5,24 @@
 	<style>
 		@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 *{margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif;}
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background:#fff;
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
 }
-body::before{
+
+html {
+  height: 100%;
+  background: #f2f2f2; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #6441A5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+}
+
+body {
+  font-family: Rockwell;
+  background: transparent;
+}
+
+body::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -21,9 +30,10 @@ body::before{
   height: 100%;
   width: 100%;
   background: linear-gradient(45deg, #655add, #d84b87);
-  clip-path:circle(10% at left 95%);
+  clip-path: circle(25% at right 5%);
 }
-body::after{
+
+body::after {
   position: absolute;
   top: 0;
   left: 0;
@@ -31,24 +41,22 @@ body::after{
   height: 100%;
   width: 100%;
   background: linear-gradient(#c14e993b, #90654b4f);
-  clip-path:circle(5% at right 10%);
-
+  clip-path: circle(20% at left 95%);
 }
 
   
-  .card {
-    position: relative;
-  padding: 20px;
-  
-   text-align:center;
-    justify-content:center;
-    width: 500px;
-    height: 600px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    overflow: hidden;
-  }
+.card {
+  background: white;
+  border: 0 none;
+  border-radius: 30px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 30%;
+  margin: 5% 25%;
+  /* Stacking fieldsets above each other */
+  position: relative;
+}
   
   .card img {
     width: 100%;
@@ -56,10 +64,7 @@ body::after{
     object-fit: cover;
   }
   
-  .card h2 {
-    
-    margin: 10px;
-  }
+ 
   .btn {
     color: #fff;
     border: none;
@@ -68,7 +73,7 @@ body::after{
     text-decoration: none;
     display: inline-block;
     font-size: 18px;
-    margin: 4px 2px;
+    margin: 4px 35%;
     cursor: pointer;
     border-radius: 4px;
   }
@@ -84,7 +89,9 @@ body::after{
   .color-a{
     background: linear-gradient(to top right, #8162CE, #F54BA5);
   }
- 
+ h3{
+  margin: 3% 10%;
+ }
   
 	</style>
 </head>
@@ -96,15 +103,14 @@ body::after{
 
   
 {% block content %}
-
+<h3>Choisir votre Template et passer à la personalisation</h3>
         {% for formpop in formpops %} 
+        
         <div class="card" >
+          <center><h2>{{ formpop.title}}</h2></center>
           <img src="{{ formpop.image.url }}">
 			<div class="content">				
-				<h2>{{ formpop.title}}</h2>
-				
-				
-							
+						
 				<a href="{% url 'preview' %}" class="btn color-a top">Choisir</a>
 						
 		   </div>

@@ -1,145 +1,260 @@
-<head>
+<html>
+  <head>
     {%include 'sidebar.html'%}
     <style>
-          
-      body{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-        background:#fff;
-      }
-        body::before{
-          position: absolute;
-          top: 0;
-          left: 0;
-          content: "";
-          height: 100%;
-          width: 100%;
-          background: linear-gradient(45deg, #655add, #d84b87);
-          clip-path:circle(25% at right 5%);
-        }
-        body::after{
-          position: absolute;
-          top: 0;
-          left: 0;
-          content: "";
-          height: 100%;
-          width: 100%;
-          background: linear-gradient(#c14e993b, #90654b4f);
-          clip-path:circle(20% at left 95%);
-        
-        }
-        .btn {
-          color: #fff;
-          border: none;
-          padding: 8px 16px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 14px;
-          margin: 4px 2px;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-        .btn:hover{
-          border:solid 1px #DA59B1;
-        
-          color: #DA59B1;
-          background:#ffffff;
-          
-          border-color: linear-gradient(to top right, #8162CE, #F54BA5);
-         
-        }
-        .color-a{
-          background: linear-gradient(to top right, #8162CE, #F54BA5);
-        }
-        .card {
-          background-color: #fff;
-          border-radius: 5px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          padding: 20px;
-          max-width: 700px;
-          margin-top:30px;
-         
-        }
-        
-        form {
-          
-          flex-direction: column;
-          align-items: center;
-        }
-        
-        h3 {
-          
-          text-align:center;
-          margin-top: 0;
-        }
-        
-        label {
-          font-size:20px;
-          margin-bottom: 5px;
-        }
-        
-        input, textarea {
-          border: 2px solid #ccc;
-          border-radius: 5px;
-          padding: 10px;
-          margin-bottom: 20px;
-          width: 100%;
-        }
-        
+      /* Custom font */
+    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+    
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      height: 100%;
+      background: #f2f2f2; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to left, #6441A5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+    }
+    
+    body {
+      font-family: Rockwell;
+      background: transparent;
+    }
+    
+    body::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(45deg, #655add, #d84b87);
+      clip-path: circle(25% at right 5%);
+    }
+    
+    body::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(#c14e993b, #90654b4f);
+      clip-path: circle(20% at left 95%);
+    }
+    
+    /* Form styles */
+    .subscribe-form {
+      text-align: center;
+      position: relative;
+      margin-top: 30px;
+    }
+    
+    .card {
+      background: white;
+      border: 0 none;
+      border-radius: 30px;
+      box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+      padding: 20px 30px;
+      box-sizing: border-box;
+      width: 50%;
+      margin: 5% 25%;
+      /* Stacking fieldsets above each other */
+      position: relative;
+    }
+    
+    /* Inputs */
+    .card input,
+    .card textarea {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: montserrat;
+      color: #2C3E50;
+      font-size: 13px;
+    }
+    
+    .card input:focus,
+    .card textarea:focus {
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      border: 1px solid #ee0979;
+      outline-width: 0;
+      transition: all 0.5s ease-in;
+      -webkit-transition: all 0.5s ease-in;
+      -moz-transition: all 0.5s ease-in;
+      -o-transition: all 0.5s ease-in;
+    }
+    
+    /* Buttons */
+    .card button {
+      width: 60%;
+      background: #ee0979;
+      color: white;
+      border: 0 none;
+      border-radius: 25px;
+      cursor: pointer;
+      padding: 10px 5px;
+      margin: 10px 5px;
+    }
+    
+    .card button:hover,
+    .card button:focus {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+    }
+    
+    /* Headings */
+    .card h1 {
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #2C3E50;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+    
+    .card label {
+      font-weight: normal;
+      font-size: 15px;
+      color: black
+    ;
+    margin-bottom: 2px;
+    }
+    
+    /* Progressbar /
+    #progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    / CSS counters to number the steps */
+    counter-reset: step;
+    }
+    
+    #progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+    letter-spacing: 1px;
+    }
+    
+    #progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 24px;
+    height: 24px;
+    line-height: 26px;
+    display: block;
+    font-size: 12px;
+    color: #333;
+    background: white;
+    border-radius: 25px;
+    margin: 0 auto 10px auto;
+    }
+    
+    /* Progressbar connectors /
+    #progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; / Put it behind the numbers */
+    }
+    
+    #progressbar li:first-child:after {
+    /* Connector not needed before the first step */
+    content: none;
+    }
+    
+    /* Marking active/completed steps green /
+    / The number of the step and the connector before it = green */
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+    background: #ee0979;
+    color: white;
+    }
+    
+    /* Not relevant to this form */
+    .dme_link {
+    margin-top: 30px;
+    text-align: center;
+    }
+    
+    .dme_link a {
+    background: #FFF;
+    font-weight: bold;
+    color: #ee0979;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px 25px;
+    font-size: 12px;
+    }
+    
+    .dme_link a:hover,
+    .dme_link a:focus {
+    background: #C5C5F1;
+    text-decoration: none;
+    }
+    
+    h3 {
+    margin: 3% 15%;
+    }
         
             </style>
+          
         <head/>
-</head>
+
 <body>
 
   
-{% block content %}
+  <h3>Entrer Les Détails de votre Affilié:</h3> 
+  <div class="subscribe-form">
+   
 
-  
-  
-<div class="col-md-12">    
+    <div class="card bg-light shadow">
+      <div class="card-body">
     <form method="POST" class="post-form" action="/addnewa">  
+      
         {% csrf_token %}  
-        <div class="container">  
-            <div class="col-12">  
-            <h3>Entrer Les Détails </h3>  
-            </div>    
-        
-            <div class="mb-3"> 
+        <div class="form-group"> 
                 <label>Nom&Prénom: </label>  
                 {{ form.nom_prenom }}   
             </div> 
-            <div class="mb-3"> 
+            <div class="form-group"> 
                 <label>Email:</label>  
                 {{ form.email }}   
             </div>  
-            <div class="mb-3"> 
+            <div class="form-group"> 
                 <label>Numéro de Télephone:</label>  
                 {{ form.contact }}   
             </div>
-            <div class="mb-3"> 
+            <div class="form-group">  
                 <label>Contrat:</label>  
                 {{ form.contrat }}   
             </div>
-            <div class="mb-3"> 
+            <div class="form-group">  
                 <label>Pourcentage:</label>  
                 {{ form.pourcentage }}   
             </div>
-            <div class="mb-3"> 
+           
                 <button type="submit" class="btn color-a top">Valider</button>    
-            </div> 
+            
         </div>  
     </form>  
-</div> 
+ 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src = "https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script> 
-{% endblock content %} 
+
 
 </body>
 </html>

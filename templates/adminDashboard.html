@@ -6,11 +6,11 @@
 
 {% block content %}
 
+<a href="{% url 'signup' %}" class="btn color-a top" style="float:left; margin-left:3%">Ajouter un infopreneur</a>
 
 
     {% if not utilisateurs %}
         <p>Pas d'utilisateurs.</p>
-        <a href="{% url 'signup' %}" class="btn color-a top">Ajouter un infopreneur</a>
 
     {% else %}
     <div class="container">
@@ -20,18 +20,19 @@
                
                 <img class="profile" src="{{ utilisateur.avatar.url }}" alt="{{ utilisateur.user.username }}'s Avatar">
                 <h3 class="label">Nom d'Utilisateur:</h3>
-                <h2 class="title">{{ utilisateur.user.username }}</h2>
+                <h2 class="title">{{ user.username }}</h2>
                 <h3 class="label">Email:</h3>
-                <h2 class="title">{{ utilisateur.user.email }}</h2>
+                <h2 class="title">{{ user.email }}</h2>
+                <h3 class="label">Abonnement:</h3>
+                <h2 class="title">{{ utilisateur.subscription_type }}</h2>
                 <div class="card-buttons">
-                    <button onclick="window.location.href='{% url 'user_delete' user_id=utilisateur.id %}'" class="btn color-a top">Supprimer</button>
-                    <button onclick="window.location.href='{% url 'update_user' user_id=utilisateur.user_id %}'" class="btn color-a top">Modifier</button>
+                    <button onclick="window.location.href='{% url 'user_delete' user_id=user.id %}'" class="btn color-a top">Supprimer</button>
+                    <button onclick="window.location.href='{% url 'update_user' user_id=user.id %}'" class="btn color-a top">Modifier</button>
                 </div>                       
             </div>
         </div>
         {% endfor %}
     </div>
-    <a href="{% url 'signup' %}" class="btn color-a top">Ajouter un infopreneur</a>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
     {% endif %}

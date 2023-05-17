@@ -49,6 +49,7 @@ urlpatterns = [
     path('destroypost/<int:id>', destroypost, name='destroypost'),
     path('formpop/', formpop, name='formpop'),
     path('reclamation/', reclamation, name='reclamation'),
+    path('reclamationSucc/', reclamationSucc, name='reclamationSucc'),
     path('preview/', preview, name='preview'),  
     path('template1/<int:id>/',template1, name='template1'),
     path('previewform/<int:id>', previewform, name='previewform'), 

@@ -280,8 +280,11 @@ def reclamation(request):
         submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
         submission.save()
         # Return a response
-        return HttpResponse('Reclamation Envoyé avec succes!')
+        return redirect("/reclamationSucc") 
     return render(request, 'reclamation.html')
+
+def reclamationSucc(request):
+   return render(request,'reclamationSucc.html')
 
 def homeadmin(request):
    return render(request,'homeadmin.html')
@@ -348,9 +351,26 @@ def share(request, id):
 
 
 
+from datetime import datetime, timedelta
+
 def profile(request, user_id):
     utilisateur = Utilisateur.objects.get(user_id=user_id)
-    context = {'utilisateur': utilisateur, 'user_id': user_id}
+    user = User.objects.get(id=user_id)
+    date_joined = user.date_joined
+
+    # Check if date_joined is not None
+    if date_joined is not None:
+        # Format date_joined to "yyyy-MM-dd HH:mm:ss" format
+        date_joined_formatted = date_joined.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Calculate the countdown date as 30 days from the date joined
+        countdown_date = date_joined + timedelta(days=30)
+    else:
+        # Handle the case where date_joined is None
+        date_joined_formatted = None
+        countdown_date = None
+
+    context = {'utilisateur': utilisateur, 'user_id': user_id, 'date_joined_formatted': date_joined_formatted, 'countdown_date': countdown_date}
     return render(request, 'profile.html', context)
 
 def updatep(request, id):  
@@ -465,12 +485,17 @@ def pop_admin(request):
     }
     return render(request, 'pop_admin.html', context)
 
+from django.db.models import F
 def rec_admin(request):
-    templates = ContactFormSubmission.objects.all()
+    sort_by = request.GET.get('sort_by', 'submitted_at')  # Get the sorting parameter from the request query parameters, defaulting to 'date_submitted'
+    templates = ContactFormSubmission.objects.all().order_by(F(sort_by).desc())  # Sort the objects based on the selected parameter
     context = {
-        'templates': templates
+        'templates': templates,
+        'sort_by': sort_by  # Pass the selected sort parameter to the template for rendering
     }
     return render(request, 'rec_admin.html', context)
+
+
 
 
 def template_create(request):
@@ -492,7 +517,7 @@ def pop_create(request):
             template = form.save(commit=False)
             template.id = None
             template.save()
-            return redirect('homeadmin')
+            return redirect('pop_admin')
     else:
         form = PopCreateForm()
     return render(request, 'pop_template.html', {'form': form})
@@ -566,9 +591,8 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
-    success_message = "Successfully Changed Your Password"
+    success_message = "Mot de passe changé"
     success_url = reverse_lazy('acceuil')
-
 
 
 def share_template(request, id):

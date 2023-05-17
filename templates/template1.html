@@ -6,7 +6,7 @@
     <title>My Blog</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+          font-family:sans-serif;
             margin: 0;
             padding: 0;
             background:white;
@@ -26,17 +26,26 @@
         
 
         h1 {
-            font-size: 36px;
+          text-align:center;
+            font-size: 30px;
             margin-bottom: 10px;
+            margin-top:10px;
         }
 
         img {
           padding-top:20px;
             display: block;
             margin: 0 auto;
-            max-width: 100%;
+            max-width: 70%;
         }
-
+        .form-controll{
+          margin-bottom:5%;
+          margin-left:40%;
+        }
+        .form-control{
+          margin-bottom:5%;
+         
+        }
         .container {
             margin: 20px auto;
             max-width: 800px;
@@ -111,6 +120,7 @@
           background: linear-gradient(to top right, #8162CE, #F54BA5);
         }
         h3{
+          font-size:20px;
           margin-top:10px;
           margin-bottom:30px;
         }
@@ -119,28 +129,28 @@
           margin-left:2px;
         }
         #t{
-          margin-left:140px;
+		
+          
+          margin-left:150px;
+          margin-top:20px;
         }
+       
     </style>
 </head>
 <body>
   {% include 'sidebar.html' %}
   <h3 id="t">Etape 2: Personnaliser votre page</h3>
     <div id="myDiv" class="container">
-        
+      <br>
+      <h1 id="title">{{post.title}}</h1>
         <img src="{{post.image.url}}" alt="Blog Image">
-        <h2 id="title">{{post.title}}</h2>
-        <p id="p">  {{post.description}}</p>
-
+        
+        
+       
         <form id="myForm">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name">
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email">
-
            
-            <center><button id="myB" type="button" class="bouton" value="Submit">Envoyer</button></center>
+          
+          <p id="p">  {{post.description}}</p>
 
         </form>
 
@@ -148,20 +158,23 @@
     <div class="sidebarr">
       <h3><i class='bx bxs-palette' style='color:#8162CE' ></i> Changer le Thème</h3>
     <div class="form-group mt-4">
-      <label for="colorPicker" class="mb-2">Changer la couleur de l'arriere plan</label>
-      <input type="color" id="inputColorPicker" onchange="changeInputColor()" class="form-control">
+      <label for="colorPicker" class="mb-2">Changer la couleur de l'arriere plan :</label>
+      <input type="color" id="inputColorPicker" onchange="changeInputColor()" class="form-controll">
 
-      <label for="colorPicker" class="mb-2">Changer la couleur du titre</label>
-    <input type="color" id="colorPicker" onchange="changeColor(document.getElementById('title'))" class="form-control">
-      <label for="colorPicker" class="mb-2">Changer la couleur de la description</label>
-    <input type="color" id="colorPickerr" onchange="changeColorD(document.getElementById('p'))" class="form-control">
+      <label for="colorPicker" class="mb-2">Changer la couleur du titre :</label>
+    <input type="color" id="colorPicker" onchange="changeColor(document.getElementById('title'))" class="form-controll">
+      <label for="colorPicker" class="mb-2">Changer la couleur de la description :</label>
+    <input type="color" id="colorPickerr" onchange="changeColorD(document.getElementById('p'))" class="form-controll">
     
     </div>
     <div class="form-group">
-      <label class="mb-2">Changer la couleur du formulaire</label>
-      <input type="color" id="inputColorPickerr" onchange="changeInputColorF()" class="form-control">
-      <label class="mb-2">Changer la couleur du Bouton</label>
+      <label class="mb-2">Changer la couleur du fond de la description :</label>
+      <input type="color" id="inputColorPickerr" onchange="changeInputColorF()" class="form-controll">
+      <!-- 
+        <label class="mb-2">Changer la couleur du Bouton</label>
       <input type="color" id="inputColorPickerrr" onchange="changeInputColorB()" class="form-control">
+      -->
+      
     </div>
     <div class="form-group">
       <label for="fontPicker" class="mb-2">Changer le style et la taille du Texte</label>
@@ -173,14 +186,17 @@
       </select></center>
     </div>
     <div class="form-group">
-      <label for="fontSizePicker" class="mb-2">Change Font Size</label>
+      <label for="fontSizePicker" class="mb-2">Changer la taille du texte</label>
       <input type="range" id="fontSizePicker" class="form-control" min="12" max="36" step="2" value="16">
     </div> 
-    <button type="button" class="btn color-a top" onclick="changeFont()">Change Font</button>
-    
+    <button type="button" class="btn color-a top" onclick="changeFont()">Appliquer la modification</button>
+    <br>
+    <hr>
+    <br>
+    <br>
     <button class="btn color-a top"  onclick="captureScreen()">Enregistrer les modifications</button>
-    <a href="{% url 'imagedisplay' %}" class="btn color-a top  ">Passer a l'etape suivante</a>
-    </div>
+    <a id="nextButton" href="{% url 'imagedisplay' %}" class="btn color-a top" style="display: none;">Passer à l'étape suivante</a>
+  </div>
     <script>
       function captureScreen() {
         // Get the element that you want to capture
@@ -210,6 +226,8 @@
                 });
             }, 'image/png');
         });
+        // Show the second button
+        document.getElementById("nextButton").style.display = "inline-block";
     }
     
       function changeColor(element) {

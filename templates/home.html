@@ -17,7 +17,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" type="text/css" href="{% static 'homeee.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
 
   <!-- 
     - google font link
@@ -444,18 +444,24 @@
   
 <button class="open-button" onclick="openForm()"><i class="material-icons">chat</i></button>
 
+<div class="chat-popup" id="myForm">
 
-  <div class="chat-popup" id="myForm">
-    <form id="chat-form" method="POST" class="form-container">
-      {% csrf_token %}
-      <div id="chat-messages"></div>
-      <div>
-        <textarea id="chat-input" placeholder="Type message.." name="message" required></textarea>
-        <button type="submit" class="btn" style="">Send</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-      </div>
-    </form>
-  </div>
+  <div id="buttonContainer">
+  <button type="button" id="down" onclick="closeForm()">-</button>
+  <button type="button" id="chat">La Tortuga Bot</button>
+  <button type="button" id="cancel" onclick="closeForm()">X</button>
+</div>
+  <form id="chat-form" method="POST" class="form-container">
+    {% csrf_token %}
+    <div id="chat-messages"></div>
+    <div id="lolo">
+      <textarea id="chat-input" placeholder="Ecrivez votre message.." name="message" required></textarea><button type="submit" id="send">Envoyer</button>
+      
+        
+    </div>
+  </form>
+</div>
+
 
 
 
@@ -537,6 +543,7 @@ chatForm.addEventListener('submit', (event) => {
   .catch(error => console.error(error));
 });
     </script>
+ 
 </body>
 
 </html>

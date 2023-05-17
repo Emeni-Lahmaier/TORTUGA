@@ -8,12 +8,12 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'description', 'image', 'video')
+        fields = ('title', 'description', 'image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'video': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
+            
         }
 
 class ContactForm(forms.ModelForm):  
@@ -33,7 +33,7 @@ class AffilieForm(forms.ModelForm):
         widgets={'nom_prenom': forms.TextInput(attrs={ 'class': 'form-control' }), 
             'email': forms.EmailInput(attrs={ 'class': 'form-control' }),
             'contact': forms.TextInput(attrs={ 'class': 'form-control' }),
-            'contrat': forms.TextInput(attrs={ 'class': 'form-control' }),
+            'contrat': forms.Textarea(attrs={'rows': 5}),
             'pourcentage': forms.TextInput(attrs={ 'class': 'form-control' }),
         }
 
@@ -153,17 +153,17 @@ class MyAffForm():
 
 class MyChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(
-        label= "Old password",
+        label= "Mot de Passe Actuel :",
         strip= False,
         widget=forms.PasswordInput(attrs={'autocomplete' : 'current-password', 'autofocus':True,'class':'form-control'}),
     )
     new_password1 = forms.CharField(
-        label= "New password",
+        label= "Nouveau Mot de Passe :",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete' : 'current-password', 'autofocus':True,'class':'form-control'}),
     )
     new_password2 = forms.CharField(
-        label= "New password Again",
+        label= "Confirmer le nouveau Mot de Passe :",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete' : 'current-password', 'autofocus':True,'class':'form-control'}),
     )

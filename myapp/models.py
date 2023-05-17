@@ -139,7 +139,7 @@ class Affilie(models.Model):
      nom_prenom=models.CharField(max_length=60,null=True)
      email = models.EmailField(null=True)
      contact = models.CharField(max_length=15,null=True)
-     contrat=models.CharField(max_length=15,null=True)
+     contrat=models.CharField(max_length=256,null=True)
      pourcentage=models.CharField(max_length=15,null=True)
      id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
 
@@ -191,8 +191,7 @@ class ContactGoogle(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='post_images/')
-    video = models.FileField(upload_to='post_videos/')
+    image = models.ImageField(upload_to='post_images/')    
     id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default='0')
     
 class Page(models.Model):

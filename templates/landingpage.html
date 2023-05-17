@@ -5,7 +5,7 @@
 
     body {
       margin:0;
-      
+      font-family:sans-serif;
     }
     h1 {
       font-family: 'Lato', sans-serif;
@@ -254,7 +254,7 @@
           <th>Titre</th>
           <th>Description</th>
           <th>Image</th>
-          <th>Video</th>
+        
           
           <th class="actions">Actions</th>
         </tr>
@@ -265,11 +265,10 @@
             <td class="template-title"style="width: 100px;">{{ post.title }}</td>
             <td class="template-type"style="width: 100px;">{{ post.description }}</td>
             <td style="width: 100px;"><img src="{{ post.image.url }}" alt="{{ post.title }}" width="100px"></td>
-            <td style="width: 100px;"><img src="{{ post.video.url }}" alt="{{ post.title }}" width="100px"></td>
-            <td style="width: 100px;">
+            <td style="width: 140px;">
               <div class="template-actions">
                 <a href="/template1/{{ post.id }}" class="btn color-a top">Editer</a>
-                <a href="#" class="btn color-a top">Envoyer</a>
+                
                 <a href="/destroypost/{{ post.id }}" class="btn color-a top">Effacer</a>       
                 
               </div>

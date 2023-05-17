@@ -1,130 +1,161 @@
 {% include 'navbar.html' %}
 {% block extra_css %}
     <style>
-      
-body{
+      body{
  
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background:#fff;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        background:#fff;
+      }
+      body::before{
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(45deg, #655add, #d84b87);
+        clip-path:circle(25% at right 5%);
+      }
+      body::after{
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(#c14e993b, #90654b4f);
+        clip-path:circle(20% at left 95%);
+      
+      }
+      .form_main {
+        margin: 3% 30%;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fafafa;
+        padding: 30px 30px 30px 30px;
+        border-radius: 30px;
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
+      }
+      
+      .inputContainer {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .inputIcon {
+        position: absolute;
+        left: 10px;
+      }
+      
+      .inputField {
+        width: 400px;
+        height: 40px;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid rgb(173, 173, 173);
+        border-radius: 30px;
+        margin: 10px 0;
+        color: black;
+        font-size: 0.8em;
+        font-weight: 500;
+        box-sizing: border-box;
+        padding-left: 30px;
+      }
+      
+      .inputField:focus {
+        outline: none;
+        border-bottom: 2px solid rgb(199, 114, 255);
+      }
+      
+      .inputField::placeholder {
+        color: rgb(80, 80, 80);
+        font-size: 1em;
+        font-weight: 500;
+      }
+      
+      .btn {
+        position: relative;
+        width: 100%;
+        border: 2px solid #8000ff;
+        background-color: #8000ff;
+        height: 40px;
+        color: white;
+        font-size: 0.8em;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border-radius: 30px;
+        margin: 10px;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      
+      .btn::after {
+        content: "";
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.253);
+        height: 100%;
+        width: 150px;
+        top: 0;
+        left: -200px;
+        border-bottom-right-radius: 100px;
+        border-top-left-radius: 100px;
+        filter: blur(10px);
+        transition-duration: 0.5s;
+      }
+      
+      .btn:hover::after {
+        transform: translateX(600px);
+        transition-duration: 0.5s;
+      }
+h2{
+  font-family:georgia;
+  margin: 3%;
 }
-body::before{
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(45deg, #655add, #d84b87);
-  clip-path:circle(25% at right 5%);
-}
-body::after{
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(#c14e993b, #90654b4f);
-  clip-path:circle(20% at left 95%);
-
-}
-.btn{
-  
-  display:flex;
-  border:none;
-  height:40px;
-  color:#fff;
-  font-size:16px;
-  border-radius:30px;
-  box-shadow: 0 13px 26px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
-}
-.btn:hover{
-  border:solid 1px #DA59B1;
-  height:40px;
-  color: #DA59B1;
-  background:#ffffff;
-  
-  border-color: linear-gradient(to top right, #8162CE, #F54BA5);
-  border-radius:30px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
-}
-.color-a{
-  background: linear-gradient(to top right, #8162CE, #F54BA5);
-}
-.card {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 500px;
-  margin-top:30px;
-  margin-left:500px;
-}
-
-form {
-  
-  flex-direction: column;
-  align-items: center;
-}
-
-h2 {
-  
-  text-align:center;
-  margin-top: 0;
-}
-
-label {
-  font-size:20px;
-  margin-bottom: 5px;
-}
-
-input, textarea {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-
-    </style>
+ 
   </style>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-<form method="post">
-  {% csrf_token %}
-  <div>
-      <label for="id_username">Username:</label>
-      <input type="text" name="username" maxlength="150" required id="id_username">
-  </div>
-  <div>
-      <label for="id_first_name">First name:</label>
-      <input type="text" name="first_name" maxlength="30" required id="id_first_name">
-  </div>
-  <div>
-      <label for="id_last_name">Last name:</label>
-      <input type="text" name="last_name" maxlength="30" required id="id_last_name">
-  </div>
-  <div>
-      <label for="id_email">Email:</label>
-      <input type="email" name="email" maxlength="254" required id="id_email">
-  </div>
-  <div>
-      <label for="id_password1">Password:</label>
-      <input type="password" name="password1" required id="id_password1">
-  </div>
-  <div>
-      <label for="id_password2">Confirm password:</label>
-      <input type="password" name="password2" required id="id_password2">
-  </div>
-  <div>
-    <center><button class="btn color-a top" type="submit">Creer Un Infopreneur</button></center>
-  </div>
-</form>
+<h2>Ajouter un nouveau Infopreneur :</h2>
+<div class="form_main">
+  <form method="post">
+    {% csrf_token %}
+    <div class="inputContainer">
+      <label for="id_username" class="inputIcon"><i class="fa fa-user"></i></label>
+      <input type="text" name="username" maxlength="150" required id="id_username" class="inputField" placeholder="Nom d'utilisateur">
+    </div>
+    <div class="inputContainer">
+      <label for="id_first_name" class="inputIcon"><i class="fa fa-user"></i></label>
+      <input type="text" name="first_name" maxlength="30" required id="id_first_name" class="inputField" placeholder="Prénom">
+    </div>
+    <div class="inputContainer">
+      <label for="id_last_name" class="inputIcon"><i class="fa fa-user"></i></label>
+      <input type="text" name="last_name" maxlength="30" required id="id_last_name" class="inputField" placeholder="Nom">
+    </div>
+    <div class="inputContainer">
+      <label for="id_email" class="inputIcon"><i class="fa fa-envelope"></i></label>
+      <input type="email" name="email" maxlength="254" required id="id_email" class="inputField" placeholder="Email">
+    </div>
+    <div class="inputContainer">
+      <label for="id_password1" class="inputIcon"><i class="fa fa-lock"></i></label>
+      <input type="password" name="password1" required id="id_password1" class="inputField" placeholder="Mot de passe">
+    </div>
+    <div class="inputContainer">
+      <label for="id_password2" class="inputIcon"><i class="fa fa-lock"></i></label>
+      <input type="password" name="password2" required id="id_password2" class="inputField" placeholder="Confirmer votre mot de passe">
+    </div>
+    <div>
+      <center><button class="btn color-a top" type="submit">Creer Un Infopreneur</button></center>
+    </div>
+  </form>
 </div>
 {% endblock %}
