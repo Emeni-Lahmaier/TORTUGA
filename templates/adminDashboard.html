@@ -1,39 +1,304 @@
 <head>
     {% include 'navbar.html'  %} 
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'infoadminn.css' %}">
+   
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+    <style>
+        *{
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+        body{
+            font-family: Helvetica;
+            -webkit-font-smoothing: antialiased;
+            background: white;
+        }
+       
+        h2{
+            text-align: center;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            padding: 30px 0;
+        }
+        
+        /* Table Styles */
+        
+        .table-wrapper{
+            margin: 50px 70px 70px;
+            box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+        }
+        
+        .fl-table {
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: normal;
+            border: none;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            background-color: white;
+        }
+        
+        .fl-table td, .fl-table th {
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .fl-table td {
+            border-right: 1px solid #f8f8f8;
+            font-size: 12px;
+        }
+        
+        .fl-table thead th {
+            color: #ffffff;
+            background: #4FC3A1;
+        }
+        
+        
+        .fl-table thead th:nth-child(odd) {
+            color: #ffffff;
+            background: #324960;
+        }
+        
+        .fl-table tr:nth-child(even) {
+            background: #F8F8F8;
+        }
+        
+        /* Responsive */
+        
+        @media (max-width: 767px) {
+            .fl-table {
+                display: block;
+                width: 100%;
+            }
+            .table-wrapper:before{
+                content: "Scroll horizontally >";
+                display: block;
+                text-align: right;
+                font-size: 11px;
+                color: white;
+                padding: 0 0 10px;
+            }
+            .fl-table thead, .fl-table tbody, .fl-table thead th {
+                display: block;
+            }
+            .fl-table thead th:last-child{
+                border-bottom: none;
+            }
+            .fl-table thead {
+                float: left;
+            }
+            .fl-table tbody {
+                width: auto;
+                position: relative;
+                overflow-x: auto;
+            }
+            .fl-table td, .fl-table th {
+                padding: 20px .625em .625em .625em;
+                height: 60px;
+                vertical-align: middle;
+                box-sizing: border-box;
+                overflow-x: hidden;
+                overflow-y: auto;
+                width: 120px;
+                font-size: 13px;
+                text-overflow: ellipsis;
+            }
+            .fl-table thead th {
+                text-align: left;
+                border-bottom: 1px solid #f7f7f9;
+            }
+            .fl-table tbody tr {
+                display: table-cell;
+            }
+            .fl-table tbody tr:nth-child(odd) {
+                background: none;
+            }
+            .fl-table tr:nth-child(even) {
+                background: transparent;
+            }
+            .fl-table tr td:nth-child(odd) {
+                background: #F8F8F8;
+                border-right: 1px solid #E6E4E4;
+            }
+            .fl-table tr td:nth-child(even) {
+                border-right: 1px solid #E6E4E4;
+            }
+            .fl-table tbody td {
+                display: block;
+                text-align: center;
+            }
+            .btn {
+                width: 140px;
+                height: 50px;
+                background: linear-gradient(to top, #00154c, #12376e, #23487f);
+                color: #fff;
+                border-radius: 50px;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                position: relative;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+              }
+              
+              .btn span {
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                transition: top 0.5s;
+              }
+              
+              .btn-text-one {
+                position: absolute;
+                width: 100%;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+              }
+              
+              .btn-text-two {
+                position: absolute;
+                width: 100%;
+                top: 150%;
+                left: 0;
+                transform: translateY(-50%);
+              }
+              
+              .btn:hover .btn-text-one {
+                top: -100%;
+              }
+              
+              .btn:hover .btn-text-two {
+                top: 50%;
+              }
+    </style>
 </head>
 
 {% block content %}
 
-<a href="{% url 'signup' %}" class="btn color-a top" style="float:left; margin-left:3%">Ajouter un infopreneur</a>
-
-
-    {% if not utilisateurs %}
-        <p>Pas d'utilisateurs.</p>
+    {% if not users %}
+        <p>Pas d'utilisateurs trouvables.</p>
+        <button onclick="window.location.href='{% url 'signup' %}'" style="  width: 9em;
+        width:10%;
+        margin-top:2%;
+        margin-left:85%;
+        height: 3em;
+        border-radius: 30em;
+        font-size: 15px;
+        font-family: inherit;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 6px 6px 12px #c5c5c5,
+                    -6px -6px 12px #ffffff;">Ajouter un infopreneur</button>
 
     {% else %}
-    <div class="container">
-        {% for utilisateur in utilisateurs %}
+    <button onclick="window.location.href='{% url 'signup' %}'" style="  width: 9em;
+    margin-top:2%;
+    margin-left:85%;
+    width:10%;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;">Ajouter un infopreneur</button>
+
+    <div class="table-wrapper">
+   
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>Nom & Prénom</th>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Type d'Abonnement</th>
+                <th>Photo de Profile</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+        {% for user in users %}
         <div class="grid-7 element-animation">
-            <div class="card color-card">
-               
-                <img class="profile" src="{{ utilisateur.avatar.url }}" alt="{{ utilisateur.user.username }}'s Avatar">
-                <h3 class="label">Nom d'Utilisateur:</h3>
-                <h2 class="title">{{ user.username }}</h2>
-                <h3 class="label">Email:</h3>
-                <h2 class="title">{{ user.email }}</h2>
-                <h3 class="label">Abonnement:</h3>
-                <h2 class="title">{{ utilisateur.subscription_type }}</h2>
-                <div class="card-buttons">
-                    <button onclick="window.location.href='{% url 'user_delete' user_id=user.id %}'" class="btn color-a top">Supprimer</button>
-                    <button onclick="window.location.href='{% url 'update_user' user_id=user.id %}'" class="btn color-a top">Modifier</button>
-                </div>                       
+            <div class="card color-card">  
+                <tr class="template-row">
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.utilisateur.Abonnement }}</td>
+                    <td> <img class="profile" src="{{ user.utilisateur.avatar.url }}" alt="{{ user.username }}'s Avatar" style="width:100px"></td>
+                    <td>
+                    {% if user.utilisateur %}
+                    <button onclick="window.location.href='{% url 'user_delete' user_id=user.utilisateur.id %}'" class="btn">Supprimer</button>
+                    {% endif %}
+
+                    <button onclick="window.location.href='{% url 'update_user' user_id=user.id %}'" class="btn ">Modifier</button>
+                    </td>
+        
+                </tr>
+                {% endfor %}
+                <tbody>
+                </table>
+                <div class="pagination" style=" display: flex;
+                justify-content: center;
+                margin-top: 20px;">
+                  <button class="btn color-a top" id="previous-btn" style=" margin: 0 5px">Précédent</button>
+                  
+                  <button class="btn color-a top" id="next-btn" style=" margin: 0 5px">Suivant</button>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-    </div>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
-    {% endif %}
-{% endblock %}
+      
+            {% endif %}
+
+            <script>
+  
+                const rows = document.querySelectorAll('.template-row');
+                const previousBtn = document.getElementById('previous-btn');
+                const nextBtn = document.getElementById('next-btn');
+              
+                let currentPage = 0;
+                const rowsPerPage = 4;
+              
+                showPage(currentPage);
+              
+                previousBtn.addEventListener('click', () => {
+                  if (currentPage > 0) {
+                    currentPage--;
+                    showPage(currentPage);
+                  }
+                });
+              
+                nextBtn.addEventListener('click', () => {
+                  const totalPages = Math.ceil(rows.length / rowsPerPage);
+                  if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    showPage(currentPage);
+                  }
+                });
+              
+                function showPage(page) {
+                  const start = page * rowsPerPage;
+                  const end = start + rowsPerPage;
+              
+                  rows.forEach((row, index) => {
+                    if (index >= start && index < end) {
+                      row.style.display = 'table-row';
+                    } else {
+                      row.style.display = 'none';
+                    }
+                  });
+              
+                }
+              </script>
+        {% endblock %}

@@ -13,101 +13,232 @@ body{
   width: 100vw;
   background:#fff;
 }
-body::before{
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(45deg, #655add, #d84b87);
-  clip-path:circle(25% at right 70%);
-}
-body::after{
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(#c14e993b, #90654b4f);
-  clip-path:circle(20% at left 45%);
 
-}
-.container{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  min-width: 1200px;
-}
-.container .card{
+.cardmain{
   position: relative;
   padding: 20px;
-  margin: 30px;
-  height: 400px;
-  width: 280px;
-  background: rgb(255 255 255 / 10%);
+  margin-left:10%;
+  margin-top:2%;
+  width:80%;
+  background-color:#b09edb;
+  
   border-top:1px solid rgba(255, 255, 255, 0.3);
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   z-index: 1;
   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
 }
-.container .card .content{
+
+ .card{
  
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
+  margin:30px;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  color: white;
-  text-align: center;
-  transform: translateY(100px);
-  opacity: 0;
-  transition: 0.5s;
+  
+  background: rgb(255 255 255 / 10%);
+  border-top:1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  z-index: 1;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+ .card .content{
+
+
 }
 .container .card:hover .content{
   transform: translateY(0px); opacity: 1;
 }
-.container .card .content h2{
-  position: absolute;
-  top: -40px;
-  right: 0;
-  color: rgba(255, 255, 255, 0.1);
-  font-size: 8em;
+
+
+
+.upper-section {
+
+  
 }
-.container .card .content h3{
-	color:black;
-	font-size: 1.8em;
-	margin: 5px;}
-.container .card .content a{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(45deg,  #c3038e, #b2427ef2);
-  color: black;
-  text-decoration: none;
+
+.lower-section {
+  position: relative;
+  padding: 20px;
+  margin-left:5%;
+  margin-top:2%;
+ 
+  border-top:1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
-  height: 40px;
-  width: 160px;
-  margin: 15px;
-} 
+  z-index: 1;
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+}
 
 	</style>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     {% include 'navbar.html'  %} 
 	{%load static%}  
 
-{% block title %}{% endblock title %}
-  
 {% block content %}
-<img src="{% static 'admin.jpg' %}" style="height: 600px; margin-left: 300px;">
+<div class="cardmain">
+<div class="upper-section">
+  <div class="card " style="background-color:#f4eeff; width:30%; margin-top:5%;
+  float: left;">
+    <center><h4>Nombre d'infopreneurs pour chaque abonnement</h4></center>
+     <canvas id="myChart" class="content"></canvas>
+     <script>
+       var ctx = document.getElementById('myChart').getContext('2d');
+ 
+       // Filter distinct subscription types
+       var distinctSubscriptionTypes = Array.from(new Set([{% for utilisateur in utilisateurs %}'{{ utilisateur.Abonnement }}',{% endfor %}]));
+ 
+       // Count number of users for each subscription type
+       var userCounts = [];
+       for (var i = 0; i < distinctSubscriptionTypes.length; i++) {
+         var count = 0;
+         {% for utilisateur in utilisateurs %}
+         if ('{{ utilisateur.Abonnement }}' === distinctSubscriptionTypes[i]) {
+           count++;
+         }
+         {% endfor %}
+         userCounts.push(count);
+       }
+ 
+       var myChart = new Chart(ctx, {
+         type: 'doughnut',
+         data: {
+           labels: distinctSubscriptionTypes,
+           datasets: [{
+             label: '# of Users',
+             data: userCounts,
+             backgroundColor: [
+               'rgba(255, 99, 132, 0.5)',
+               'rgba(54, 162, 235, 0.5)',
+               'rgba(255, 206, 86, 0.5)'
+             ],
+             borderColor: [
+               'rgba(255, 99, 132, 1)',
+               'rgba(54, 162, 235, 1)',
+               'rgba(255, 206, 86, 1)'
+             ],
+             borderWidth: 1
+           }]
+         },
+ 
+       });
+     </script>
+  
+  </div>
+  
+</div>
 
-        
-		
-	
-    {%endblock content%}
+<div class="lower-section"  style="background-color:#f4eeff;width: 25%;height:5%;margin-left:55%; ">
+  <center><h4>Nombre d'infopreneurs par ville</h4></center>
+  <canvas id="myChart2" class="content" ></canvas>
+     <script>
+       var ctx = document.getElementById('myChart2').getContext('2d');
+ 
+       // Filter distinct cities
+       var distinctCities = Array.from(new Set([{% for utilisateur in utilisateurs %}'{{ utilisateur.City }}',{% endfor %}]));
+ 
+       // Count number of users for each city
+       var userCounts = [];
+       for (var i = 0; i < distinctCities.length; i++) {
+         var count = 0;
+         {% for utilisateur in utilisateurs %}
+         if ('{{ utilisateur.City }}' === distinctCities[i]) {
+           count++;
+         }
+         {% endfor %}
+         userCounts.push(count);
+       }
+ 
+       var myChart = new Chart(ctx, {
+         type: 'polarArea',
+         data: {
+           labels: distinctCities,
+           datasets: [{
+             label: '# of Users',
+             data: userCounts,
+             backgroundColor: [
+               'rgba(255, 99, 132, 0.5)',
+               'rgba(54, 162, 235, 0.5)',
+               'rgba(255, 206, 86, 0.5)'
+               // Add more colors if needed
+             ],
+             borderColor: [
+               'rgba(255, 99, 132, 1)',
+               'rgba(54, 162, 235, 1)',
+               'rgba(255, 206, 86, 1)'
+               // Add more colors if needed
+             ],
+             borderWidth: 1
+           }]
+         },
+         // Add any other chart options as needed
+       });
+     </script>
+  </div>
+  <div class="card " style="background-color:#f4eeff;margin-left:30%;">
+    
+    <center><h4>Nombre de Tunnels réalisés par chaque infopreneur</h4></center>
+      <canvas id="postChart" class="content" ></canvas>
+      <script>
+        // Retrieve the data from the view
+        var data = {
+          {% for username, post_count in chart_data.items %}
+          '{{ username }}': {{ post_count }},
+          {% endfor %}
+        };
+  
+        // Extract the labels (user names) and data values (post counts)
+        var labels = Object.keys(data);
+        var values = Object.values(data);
+  
+        // Create the chart
+        var ctx = document.getElementById('postChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Number of Posts',
+              data: values,
+              backgroundColor: [
+           'rgba(255, 99, 132, 0.5)',
+           'rgba(54, 162, 235, 0.5)',
+           'rgba(255, 206, 86, 0.5)'
+           // Add more colors if needed
+         ],
+         borderColor: [
+           'rgba(255, 99, 132, 1)',
+           'rgba(54, 162, 235, 1)',
+           'rgba(255, 206, 86, 1)'
+           // Add more colors if needed
+         ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }
+          }
+        });
+      </script>
+     </div>
+    
+
+
+</div>
+</div>
+{% endblock content %}
+
+
+
+
 </body>
 </html>

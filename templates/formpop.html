@@ -53,14 +53,14 @@ body::after {
   padding: 20px 30px;
   box-sizing: border-box;
   width: 30%;
-  margin: 5% 25%;
+  margin: 3% 0% 0% 10%;
   /* Stacking fieldsets above each other */
   position: relative;
 }
   
   .card img {
     width: 100%;
-    height: 450px;
+    height: 350px;
     object-fit: cover;
   }
   
@@ -92,7 +92,9 @@ body::after {
  h3{
   margin: 3% 10%;
  }
-  
+.la{
+  display: flex;
+}
 	</style>
 </head>
 <body>
@@ -104,11 +106,11 @@ body::after {
   
 {% block content %}
 <h3>Choisir votre Template et passer à la personalisation</h3>
-        {% for formpop in formpops %} 
         
+  <div class="la"> 
         <div class="card" >
-          <center><h2>{{ formpop.title}}</h2></center>
-          <img src="{{ formpop.image.url }}">
+         
+          <img src="{% static 'T1.png' %}" >
 			<div class="content">				
 						
 				<a href="{% url 'preview' %}" class="btn color-a top">Choisir</a>
@@ -117,9 +119,18 @@ body::after {
 		
 		</div>
 
+    <div class="card" >
+         
+      <img src="{% static 'T2.png' %}" >
+  <div class="content">				
         
+    <a href="{% url 'preview2' %}" class="btn color-a top">Choisir</a>
+        
+   </div>
+
+</div> 
+</div>      
        
-        {%endfor%}
 		
 	
     {%endblock content%}

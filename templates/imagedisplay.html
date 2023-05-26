@@ -1,4 +1,3 @@
-{% load meta %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +51,7 @@
             max-width:50%;
         }
         section {
-            padding: 130px 0;
+            padding: 100px 0;
         }
         
         .shadow3 {
@@ -373,6 +372,33 @@
             line-height: 28px;
           }
         }
+        button {
+          margin-top:5%;
+          border-radius: .25rem;
+          text-transform: uppercase;
+          font-style: normal;
+          font-weight: 400;
+          padding-left: 25px;
+          padding-right: 25px;
+          color: #fff;
+          -webkit-clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+          clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+          height: 40px;
+          font-size: 0.7rem;
+          line-height: 14px;
+          letter-spacing: 1.2px;
+          transition: .2s .1s;
+          background-image: linear-gradient(90deg,#e6cdcd,#7a41ff);
+          border: 0 solid;
+          overflow: hidden;
+        }
+        
+        button:hover {
+          cursor: pointer;
+          transition: all .3s ease-in;
+          padding-right: 30px;
+          padding-left: 30px;
+        } 
         
     </style>
 </head>
@@ -385,6 +411,8 @@
     {% if image_url %}
     <h2>URL du Tunnel crée:</h2> 
     <p>{{ image_url }}</p>
+    <button onclick="copyURL()">Copy URL</button>
+
     <section class="trial-block shadow3" id="ContactUs">
         <div class="height450">
            <div class="section-title text-center">
@@ -418,5 +446,30 @@
     <p>Error_404</p>
 {% endif %}
     </div>
+
+    <script>
+      function copyURL() {
+        // Create a temporary input element
+        var tempInput = document.createElement("input");
+        
+        // Assign the generated URL to the input's value
+        tempInput.value = "{{ image_url }}";
+        
+        // Append the input element to the document
+        document.body.appendChild(tempInput);
+        
+        // Select the input's content
+        tempInput.select();
+        
+        // Copy the selected content to the clipboard
+        document.execCommand("copy");
+        
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+        
+        // Alert the user that the URL has been copied
+        alert("URL copied to clipboard!");
+      }
+      </script>
 </body>
 </html>

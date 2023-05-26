@@ -50,8 +50,10 @@ urlpatterns = [
     path('formpop/', formpop, name='formpop'),
     path('reclamation/', reclamation, name='reclamation'),
     path('reclamationSucc/', reclamationSucc, name='reclamationSucc'),
-    path('preview/', preview, name='preview'),  
+    path('preview/', preview, name='preview'),
+    path('preview2/', preview2, name='preview2'),   
     path('template1/<int:id>/',template1, name='template1'),
+    path('template2/<int:id>/',template2, name='template2'),
     path('previewform/<int:id>', previewform, name='previewform'), 
     path('sharelandingpage/', sharelandingpage, name='sharelandingpage'),
     path('share/<int:id>', share, name='share'),
@@ -76,6 +78,7 @@ urlpatterns = [
     path('template_update/<int:id>/', template_update, name='template_update'),
     path('pop_update/<int:id>/', pop_update, name='pop_update'),
     path('template_delete/<int:id>/', template_delete, name='template_delete'),
+    path('destroyadmin/<int:id>/', destroyadmin, name='destroyadmin'),
     path('pop_delete/<int:id>/', pop_delete, name='pop_delete'),
     path('user_templates/', templates_communs, name='user_templates'),
     path('pop_admin/', pop_admin, name='pop_admin'),
@@ -84,6 +87,8 @@ urlpatterns = [
     path('contact/', contact_view, name='contact'),
     path('profile/<int:user_id>/update/', update_profile, name='update_profile'),
     path('profile/<int:user_id>/', profile, name='profile'),
+    path('profiladmin/<int:user_id>/update/', update_profiladmin, name='update_profiladmin'),
+    path('profiladmin/<int:user_id>/', profiladmin, name='profiladmin'),
     path('link-generator/', generate_link, name='generate-link'),
     path('template/view/<int:id>/', template_view, name='template_view'),
     path('template/share/<int:id>/', share_template, name='share_template'),
@@ -98,6 +103,7 @@ urlpatterns = [
          name='password_reset_complete'),
 
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
+    path('change_passwordadmin/', ChangePasswordViewAdmin.as_view(), name='change_passwordadmin'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

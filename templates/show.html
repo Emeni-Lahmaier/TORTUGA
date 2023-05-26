@@ -1,206 +1,202 @@
 {% include 'sidebar.html'  %}
 {% block extra_css %}
-  <style>
-    @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+<style>
+  @import url(//fonts.googleapis.com/css?family=Lato:300:400);
 
-    body {
-      margin:0;
-      font-family:sans-serif;
+  body {
+    margin:0;
+    font-family:sans-serif;
+  }
+  h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight:300;
+    letter-spacing: 2px;
+    font-size:48px;
+  }
+  p {
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 1px;
+    font-size:14px;
+    color: #333333;
+  }
+  
+  .header {
+    position:relative;
+    text-align:center;
+    background: linear-gradient(to top right, #8162CE, #F54BA5);
+    color:white;
+  }
+  .logo {
+    width:50px;
+    fill:white;
+    padding-right:15px;
+    display:inline-block;
+    vertical-align: middle;
+  }
+  
+  .inner-header {
+    height:10vh;
+    width:100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .flex { /*Flexbox for containers*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .waves {
+    position:relative;
+    width: 100%;
+    height:15vh;
+    margin-bottom:-7px; /*Fix for safari gap*/
+    min-height:100px;
+    max-height:150px;
+  }
+  
+  .content {
+    position:relative;
+    height:20vh;
+    text-align:center;
+    background-color: white;
+  }
+  
+  /* Animation */
+  
+  .parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+  .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+  .parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+  @keyframes move-forever {
+    0% {
+     transform: translate3d(-90px,0,0);
+    }
+    100% { 
+      transform: translate3d(85px,0,0);
+    }
+  }
+  /*Shrinking for mobile*/
+  @media (max-width: 768px) {
+    .waves {
+      height:40px;
+      min-height:40px;
+    }
+    .content {
+      height:30vh;
     }
     h1 {
-      font-family: 'Lato', sans-serif;
-      font-weight:300;
-      letter-spacing: 2px;
-      font-size:48px;
+      font-size:24px;
     }
-    p {
-      font-family: 'Lato', sans-serif;
-      letter-spacing: 1px;
-      font-size:14px;
-      color: #333333;
-    }
-    
-    .header {
-      position:relative;
-      text-align:center;
-      background: linear-gradient(to top right, #8162CE, #F54BA5);
-      color:white;
-    }
-    .logo {
-      width:50px;
-      fill:white;
-      padding-right:15px;
-      display:inline-block;
-      vertical-align: middle;
-    }
-    
-    .inner-header {
-      height:10vh;
-      width:100%;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .flex { /*Flexbox for containers*/
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .waves {
-      position:relative;
-      width: 100%;
-      height:15vh;
-      margin-bottom:-7px; /*Fix for safari gap*/
-      min-height:100px;
-      max-height:150px;
-    }
-    
-    .content {
-      position:relative;
-      height:20vh;
-      text-align:center;
-      background-color: white;
-    }
-    
-    /* Animation */
-    
-    .parallax > use {
-      animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
-    }
-    .parallax > use:nth-child(1) {
-      animation-delay: -2s;
-      animation-duration: 7s;
-    }
-    .parallax > use:nth-child(2) {
-      animation-delay: -3s;
-      animation-duration: 10s;
-    }
-    .parallax > use:nth-child(3) {
-      animation-delay: -4s;
-      animation-duration: 13s;
-    }
-    .parallax > use:nth-child(4) {
-      animation-delay: -5s;
-      animation-duration: 20s;
-    }
-    @keyframes move-forever {
-      0% {
-       transform: translate3d(-90px,0,0);
-      }
-      100% { 
-        transform: translate3d(85px,0,0);
-      }
-    }
-    /*Shrinking for mobile*/
-    @media (max-width: 768px) {
-      .waves {
-        height:40px;
-        min-height:40px;
-      }
-      .content {
-        height:30vh;
-      }
-      h1 {
-        font-size:24px;
-      }
-    }
-    body{
-      margin-top:30px;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      background:#fff;
-    }
-   
-  
-  .btn {
-    color: #fff;
-    border: none;
-    padding: 8px 14px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
   }
-  .btn:hover{
-    border:solid 1px #DA59B1;
-  
-    color: #DA59B1;
-    background:#ffffff;
-    
-    border-color: linear-gradient(to top right, #8162CE, #F54BA5);
-   
+  body{
+    margin-top:30px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background:#fff;
   }
-  .color-a{
-   
-    background: linear-gradient(to top right, #8162CE, #F54BA5);
-  }
-  h2{
-    margin-left:120px;
-  }
-  .table-responsive {
-    overflow-x: auto;
-  }
-  
-  .table {
-    margin-top:3%;
-    margin-left:13%;
-    width: 80%;
-    border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .table-bordered th,
-  .table-bordered td {
-    border: 1px solid #ddd;
-  }
-  
-  .table-hover tbody tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  
-  .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0069d9;
-    border-color: #0062cc;
-  }
-  
-  .btn-danger {
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-  }
-  
-  
-  
+ 
 
+.btn {
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.btn:hover{
+  border:solid 1px #DA59B1;
+
+  color: #DA59B1;
+  background:#ffffff;
+  
+  border-color: linear-gradient(to top right, #8162CE, #F54BA5);
+ 
+}
+.color-a{
+ 
+  background: linear-gradient(to top right, #8162CE, #F54BA5);
+}
+h2{
+  margin-left:120px;
+}
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-top:3%;
+  margin-left:13%;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #ddd;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
 </style>
 {% endblock %}
 
@@ -232,15 +228,12 @@
   
   </div>
   <!--Header ends-->
-  
-
-  <div class="col-md-12">
-        
-    <a href="/addnew" class="btn color-a top" style="margin-left:77%">Ajouter un nouveau Contact</a>
-
-         <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead class="thead-dark">
+  <div classname="animation">
+  <button type="button" onclick="window.location.href='/addnew'" class="btn color-a top" style="margin-left:77%">Ajouter un nouveau Contact</button>
+      
+  <div class="table-wrapper">   
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
               <tr>
                 <th>Nom &amp; Prénom</th>
                 <th>Email</th>
@@ -251,21 +244,23 @@
             </thead>
             <tbody>
               {% for contact in contacts %}
+              <div class="grid-7 element-animation">
+                <div class="card color-card"> 
               <tr>
                 <td>{{ contact.name }}</td>
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.contact }}</td>
                 <td>{{ contact.categorie }}</td>
                 <td>
-                  <a href="/edit/{{ contact.id }}" class=" btn color-a top">Editer</a>
-                  <a href="/delete/{{ contact.id }}" class="btn color-a top">Supprimer</a>
+                  <button type="button" onclick="window.location.href='/edit/{{ contact.id }}'" class="btn color-a top">Editer</button>
+                  <button type="button" onclick="window.location.href='/delete/{{ contact.id }}'" class="btn color-a top">Supprimer</button>
                 </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
           
-        </div>
+
         
   {% endblock content %}
   

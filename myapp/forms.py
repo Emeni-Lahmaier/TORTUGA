@@ -46,6 +46,10 @@ class UtilisateurUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+class UserUpdateForm(forms.ModelForm):  
+    class Meta:
+        model = Utilisateur
+        fields = ('Abonnement',)
 
 class TemplatesUpdateForm(forms.ModelForm):
     class Meta:

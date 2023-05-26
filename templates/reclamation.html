@@ -135,7 +135,55 @@
           font-size:24px;
         }
        
-    
+        #alert-container {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          z-index: 9999;
+      }
+  
+      .alert {
+          width: 300px;
+          padding: 10px;
+          margin-bottom: 10px;
+          border-radius: 4px;
+          background-color: #dff0d8;
+          color: #3c763d;
+      }
+      .flash-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+      }
+      
+      .flash-message ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .flash-message li {
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+      
+      .success {
+        background-color: #4caf50;
+        color: white;
+      }
+      
+      .error {
+        background-color: #f44336;
+        color: white;
+      }
+      
+      .warning {
+        background-color: #ff9800;
+        color: white;
+      }
+      
     </style>
     <div class="header">
 
@@ -167,42 +215,74 @@
 </head>
 
 <body id="top">
-  
-<div class="container">
-
-
+  <div class="container">
     <p>
-     N'hesitez pas à nous contacter si vous avez des questions !
+      N'hesitez pas à nous contacter si vous avez des questions!
     </p>
 
-    <form action="{% url 'reclamation' %}" method="POST">
-      <div class="input-wrapper">
-        <input type="text" name="name" aria-label="name" placeholder="Votre Nom Complet*" required class="input-field">
+    <!-- Add a div to display the flash message -->
+    <div id="flash-message"></div>
 
-        <input type="email" name="email" aria-label="email" placeholder="Addresse Email*" required
-          class="input-field">
-      </div>
-
-      <div class="input-wrapper">
-        <input type="text" for="subject" name="subject" aria-label="subject" placeholder="Sujet" class="input-field">
-
-        <input type="number" for="phonenumber" name="phonenumber" aria-label="phone" placeholder="Numéro de Téléphone" class="input-field">
-      </div>
-
-      <textarea name="message" aria-label="message" placeholder="Votre message...*" required
-        class="input-field"></textarea>
-
-      <div class="checkbox-wrapper">
-        <input type="checkbox" name="terms_and_policy" id="terms" required class="checkbox">
-
-        <label for="terms" class="label">
-          Acceptez <a href="#" class="label-link">Nos termes de Services</a> et <a href="#" class="label-link">Nos Politique de Confidentialité</a>
-        </label>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Envoyer</button>
-
+    <form action="{% url 'reclamation' %}" method="POST" id="reclamation-form">
+        <div class="input-wrapper">
+          <input type="text" name="name" aria-label="name" placeholder="Votre Nom Complet*" required class="input-field">
+  
+          <input type="email" name="email" aria-label="email" placeholder="Addresse Email*" required
+            class="input-field">
+        </div>
+  
+        <div class="input-wrapper">
+          <input type="text" for="subject" name="subject" aria-label="subject" placeholder="Sujet" class="input-field">
+  
+          <input type="number" for="phonenumber" name="phonenumber" aria-label="phone" placeholder="Numéro de Téléphone" class="input-field">
+        </div>
+  
+        <textarea name="message" aria-label="message" placeholder="Votre message...*" required
+          class="input-field"></textarea>
+  
+       
+    
+      <button type="submit" class="btn btn-primary" id="submit-btn">Envoyer</button>
     </form>
-</div>
+  </div>
+
+  <!-- Add the JavaScript code -->
+  <script>
+    document.getElementById('reclamation-form').addEventListener('submit', function (event) {
+      // Prevent the form from submitting immediately
+      event.preventDefault();
+  
+      // Get the flash message element
+      const flashMessage = document.getElementById('flash-message');
+  
+      // Check if the flash message exists (indicating a successful submission)
+      if (flashMessage) {
+        // Set the flash message content
+        flashMessage.textContent = "Reclamation envoyée avec succès";
+  
+        // Add CSS styles to the flash message element
+        flashMessage.style.position = "fixed";
+        flashMessage.style.top = "10px";
+        flashMessage.style.right = "10px";
+        flashMessage.style.backgroundColor = "#4CAF50";
+        flashMessage.style.color = "#FFF";
+        flashMessage.style.padding = "10px";
+        flashMessage.style.borderRadius = "5px";
+        flashMessage.style.zIndex = "9999";
+  
+        // Remove the flash message after a certain time (e.g., 10 seconds)
+        setTimeout(function () {
+          flashMessage.style.display = "none";
+        }, 12000);
+      }
+  
+      // Submit the form after displaying the flash message
+      setTimeout(function () {
+        event.target.submit();
+      }, 1000);
+    });
+  </script>
+  
 </body>
+
 </html>

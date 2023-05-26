@@ -128,29 +128,21 @@
 {% endblock %}
 
 {% block content %}
-<h2>Modifier Les Données de l'infopreneur :</h2>
-  <div class="form_main" action="/update_user/{{user.id}}">
-    <form method="post">
+<div class="card">
+    <form method="post" class="form_main">
         {% csrf_token %}
-        <div class="inputContainer" >
+        <h2>Modifier Les Données </h2>
         <label for="username" class="form-label">Nom d'utilisateur:</label>
-        <input type="text" id="username" name="username" value="{{ user.username }}" class="inputField"><br>
-        </div>
-        <div class="inputContainer">
+        <input type="text" id="username" name="username" value="{{ user_form.instance.username }}" class="form-control"><br>
         <label for="first_name" class="form-label">Prénom:</label>
-        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="inputField"><br>
-        </div>
-        <div class="inputContainer">
+        <input type="text" id="first_name" name="first_name" value="{{ user_form.instance.first_name }}" class="form-control"><br>
         <label for="last_name" class="form-label">Nom:</label>
-        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="inputField"><br>
-        </div>
-        <div class="inputContainer">
+        <input type="text" id="last_name" name="last_name" value="{{ user_form.instance.last_name }}" class="form-control"><br>
         <label for="email" class="form-label">Email:</label>
-        <input type="email" id="email" name="email" value="{{ user.email }}" class="inputField"><br>
-        </div>
-        <div>
-          <center><button class="btn color-a top"  type="submit">Sauvgarder</button></center>
-        </div>
-      </form>
+        <input type="email" id="email" name="email" value="{{ user_form.instance.email }}" class="form-control"><br>
+        {{ utilisateur_form.as_p }}
+
+        <center><button class="btn color-a top"  type="submit">Sauvgarder</button></center>
+    </form>
 </div>
 {% endblock %}

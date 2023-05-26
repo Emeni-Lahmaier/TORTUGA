@@ -280,14 +280,32 @@ def reclamation(request):
         submission = ContactFormSubmission(name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
         submission.save()
         # Return a response
-        return redirect("/reclamationSucc") 
+
     return render(request, 'reclamation.html')
+
+def destroyadmin(request, id):  
+    template = ContactFormSubmission.objects.get(id=id)  
+    template.delete()  
+    return redirect("/rec_admin") 
 
 def reclamationSucc(request):
    return render(request,'reclamationSucc.html')
 
 def homeadmin(request):
-   return render(request,'homeadmin.html')
+    utilisateurs=Utilisateur.objects.all()
+    posts = Post.objects.all()
+    chart_data = {}
+
+    for post in posts:
+        username = post.id_infopreneur.username
+        chart_data[username] = chart_data.get(username, 0) + 1
+
+    context = {
+        'chart_data': chart_data,
+        'utilisateurs':utilisateurs,
+    }
+    return render(request,'homeadmin.html',context)
+
 def template(request):
    return render(request,'template.html')
 
@@ -316,8 +334,6 @@ def preview(request):
             post.id_infopreneur_id = user_id
             post.save()
            
-
-            messages.success(request, "Sauvegarde effectue avec succes!")
             last_post_id = Post.objects.latest('id').id
             post = Post.objects.get(id=last_post_id)  
             
@@ -325,12 +341,33 @@ def preview(request):
     else:
         form = PostForm()
     return render(request, 'preview.html', {'form': form})
-
-def template1(request, id):  
-    post = Post.objects.get(id=id)  
+def preview2(request):
     
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Get the ID of the current user
+            user_id = request.user.id
+                
+            # Save the form and set the user ID of the Affilie model
+            post = form.save(commit=False)
+            post.id_infopreneur_id = user_id
+            post.save()
+           
+            last_post_id = Post.objects.latest('id').id
+            post = Post.objects.get(id=last_post_id)  
+            
+            return render(request, 'template2.html', {'post': post})
+    else:
+        form = PostForm()
+    return render(request, 'preview2.html', {'form': form})
+def template1(request, id):  
+    post = Post.objects.get(id=id)      
     return render(request,'template1.html', {'post':post})  
 
+def template2(request, id):  
+    post = Post.objects.get(id=id)     
+    return render(request,'template2.html', {'post':post}) 
 
 def previewtemplate(request, id):
     template = TemplatesCommuns.objects.get(id=id)
@@ -373,6 +410,26 @@ def profile(request, user_id):
     context = {'utilisateur': utilisateur, 'user_id': user_id, 'date_joined_formatted': date_joined_formatted, 'countdown_date': countdown_date}
     return render(request, 'profile.html', context)
 
+def profiladmin(request, user_id):
+    utilisateur = Utilisateur.objects.get(user_id=user_id)
+    user = User.objects.get(id=user_id)
+    date_joined = user.date_joined
+
+    # Check if date_joined is not None
+    if date_joined is not None:
+        # Format date_joined to "yyyy-MM-dd HH:mm:ss" format
+        date_joined_formatted = date_joined.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Calculate the countdown date as 30 days from the date joined
+        countdown_date = date_joined + timedelta(days=30)
+    else:
+        # Handle the case where date_joined is None
+        date_joined_formatted = None
+        countdown_date = None
+
+    context = {'utilisateur': utilisateur, 'user_id': user_id, 'date_joined_formatted': date_joined_formatted, 'countdown_date': countdown_date}
+    return render(request, 'profiladmin.html', context)
+
 def updatep(request, id):  
     utilisateur =Utilisateur.objects.get(id=id)  
     form = UtilisateurForm(request.POST, instance = utilisateur)  
@@ -383,7 +440,7 @@ def updatep(request, id):
         formm.save() 
         messages.success(request,"Donnees mis a jours avec Success !  ") 
         return redirect("/acceuil") 
-    return render(request, 'profile.html', {'utilisateur':utilisateur}, {'user':user}) 
+    return render(request, 'profil.html', {'utilisateur':utilisateur}, {'user':user}) 
 
 def update_profile(request, user_id):
     # Retrieve the utilisateur object or return 404 error if not found
@@ -407,8 +464,9 @@ def update_profile(request, user_id):
                 if 'avatar' in request.FILES:
                     profile.avatar = request.FILES['avatar']
                 profile.save()
+                
               # Return a response
-                return HttpResponse('Votre profil a ete mis a jours avec succes.')
+               # return HttpResponse('Votre profil a ete mis a jours avec succes.')
             
             return redirect('profile', user_id=user_id)
         else:
@@ -422,6 +480,40 @@ def update_profile(request, user_id):
     return render(request, 'profile.html', {'user_form': user_form, 'profile_form': profile_form, 'utilisateur': utilisateur})
 
 
+def update_profiladmin(request, user_id):
+    # Retrieve the utilisateur object or return 404 error if not found
+    utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
+
+    # Populate the form with existing data
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = AdminProfileForm(request.POST, request.FILES, instance=utilisateur)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            # Check which fields have changed
+            user_has_changed = any(field in user_form.changed_data for field in ['username', 'first_name', 'last_name', 'email'])
+            utilisateur_has_changed = any(field in profile_form.changed_data for field in ['phonenumber'])
+
+            # Save the forms only if changes were made
+            if user_has_changed:
+                user_form.save()
+            if utilisateur_has_changed:
+                profile = profile_form.save(commit=False)
+                if 'avatar' in request.FILES:
+                    profile.avatar = request.FILES['avatar']
+                profile.save()
+
+            return redirect('profiladmin', user_id=user_id)
+        else:
+            print('Profile form errors:', profile_form.errors)
+            print('User form errors:', user_form.errors)
+
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = AdminProfileForm(instance=utilisateur)
+
+    return render(request, 'profiladmin.html', {'user_form': user_form, 'profile_form': profile_form, 'utilisateur': utilisateur})
+   
 
 
 
@@ -445,29 +537,37 @@ def destroylanding(request, id):
 
 
 def user_list(request):
-    utilisateurs = Utilisateur.objects.all()
+    users = User.objects.all()
     context = {
-        'utilisateurs': utilisateurs
+        'users': users
     }
     print("Inside user_list function")
-    
+
     return render(request, 'adminDashboard.html', context)
 
 def user_delete(request, user_id):
-    utilisateur = Utilisateur.objects.get(id=user_id)
-    utilisateur.delete()
+    user = get_object_or_404(User, id=user_id)
+    user.utilisateur.delete()
+    user.delete()
     return redirect('admin_dashboard')
 
 def update_user(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+    utilisateur = get_object_or_404(Utilisateur, id=user_id)
+    
     if request.method == 'POST':
-        user_form = UtilisateurUpdateForm(request.POST, instance=user)
-        if user_form.is_valid():
+        user_form = UtilisateurUpdateForm(request.POST, instance=utilisateur.user)
+        utilisateur_form = UserUpdateForm(request.POST, instance=utilisateur)
+        
+        if user_form.is_valid() and utilisateur_form.is_valid():
+            utilisateur_form.save()
             user_form.save()
             return redirect('admin_dashboard')
     else:
-        user_form = UtilisateurUpdateForm(instance=user)
-    return render(request, 'user_update.html', {'user_form': user_form})
+        user_form = UtilisateurUpdateForm(instance=utilisateur.user)
+        utilisateur_form = UserUpdateForm(instance=utilisateur)
+        
+    return render(request, 'user_update.html', {'user_form': user_form, 'utilisateur_form': utilisateur_form})
+
 
 
 def templates_communs(request):
@@ -594,6 +694,10 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Mot de passe changé"
     success_url = reverse_lazy('acceuil')
 
+class ChangePasswordViewAdmin(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'change_passwordadmin.html'
+    success_message = "Mot de passe changé"
+    success_url = reverse_lazy('profiladmin')
 
 def share_template(request, id):
     template = get_object_or_404(TemplatesCommuns, pk=id)
