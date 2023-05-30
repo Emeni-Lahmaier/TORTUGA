@@ -267,8 +267,7 @@ def home(request):
         return render(request, 'home.html')
 
 
-def acceuil(request):
-   return render(request,'acceuil.html')
+
 
 def reclamation(request):
     if request.method == 'POST':
@@ -290,6 +289,21 @@ def destroyadmin(request, id):
 
 def reclamationSucc(request):
    return render(request,'reclamationSucc.html')
+
+def acceuil(request):
+    # Get the ID of the current user
+    user_id = request.user.id
+    # Filter the model objects by the user ID
+    contacts = Contact.objects.filter(id_infopreneur_id=user_id)
+    tunnels=Post.objects.filter(id_infopreneur_id=user_id)
+    affilies=Affilie.objects.filter(id_infopreneur_id=user_id)
+    context = {
+        'contacts': contacts,
+        'affilies':affilies,
+        'tunnels':tunnels,
+    }
+
+    return render(request,'acceuil.html',context)
 
 def homeadmin(request):
     utilisateurs=Utilisateur.objects.all()

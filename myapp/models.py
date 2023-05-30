@@ -243,6 +243,12 @@ class Post(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='post_images/')    
     id_infopreneur =models.ForeignKey(User,on_delete=models.CASCADE,default=0)
+    categorie_type = (
+        ('bien-être corps cœur esprit', 'Bien-être Corps Cœur Esprit'),
+        ('développement personnel et spirituel', 'Développement Personnel et Spirituel'),
+        ('coaching professionnel et relationnel', 'Coaching Professionnel et Relationnel'),
+    )
+    Categorie = models.CharField(max_length=80, choices=categorie_type, default='bien-être corps cœur esprit', null=True)
     
 class Page(models.Model):
     url = models.URLField()
