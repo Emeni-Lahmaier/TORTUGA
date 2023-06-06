@@ -25,8 +25,8 @@
     </div>
     <!-- Page content -->
     {% block content %}
-    <form method="POST" action="{% url 'update_profile' user_id=utilisateur.user_id %}" enctype="multipart/form-data">
-      {% csrf_token %}
+    
+     
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -101,6 +101,7 @@
                   <h3 class="mb-0">Mon compte</h3>
                 </div>
                 <div class="col-4 text-right">
+                  <a href="/updateprofile1/{{ user_id }}" class="btn btn-sm btn-default">Editer</a>
                   <a href="{% url 'acceuil' %}" class="btn btn-sm btn-default">Retourner</a>
                 </div>
               </div>
@@ -113,13 +114,13 @@
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username">Nom d'utilisateur</label>
-                        <input type="text" name="username" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="{{ user.username }}">
+                        <p>{{ user.username }}</p>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email</label>
-                        <input type="email" name="email" id="input-email" class="form-control form-control-alternative" value="{{ user.email }}">
+                        <p>{{ user.email }}</p>
                       </div>
                     </div>
                   </div>
@@ -127,29 +128,29 @@
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">Prénom</label>
-                        <input type="text" id="input-first-name" name="first_name" class="form-control form-control-alternative" placeholder="First name" value="{{ user.first_name }}">
+                        <p>{{ user.first_name }}</p>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-last-name">Nom</label>
-                        <input type="text" id="input-last-name" name="last_name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user.last_name }}">
+                        <p>{{ user.last_name }}</p>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-phone-number">Numéro de Téléphone</label>
-                        <input type="number" id="input-last-name" name="phonenumber" class="form-control form-control-alternative" placeholder="Phone Number" value="{{ utilisateur.phonenumber }}">
+                        <p>{{ utilisateur.phonenumber }}</p>
                   </div>
                   <label class="form-control-label" for="subscription_type_choices">Abonnement </label>
-                  <input type="text" id="input-last-name" name="subscription" class="form-control form-control-alternative" placeholder="Subscription" value="{{ utilisateur.Abonnement}}">
+                  <p> {{utilisateur.Abonnement}}</p>
                   <div id="countdown">Abonnement expire dans :</div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-date">Date de Naissance</label>
-                    <input type="date" id="input-date" name="date_naissance" class="form-control form-control-alternative" placeholder="Date" value="{{ request.user.utilisateur.date_naissance }}">
-                    <p>   {{ request.user.utilisateur.date_naissance }}</p>
+                    <p>{{utilisateur.date_naissance }}</p>
+                    
                 </div>
                 
 
@@ -161,7 +162,7 @@
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">Addresse</label>
-                        <input id="input-address" class="form-control form-control-alternative" name="Address" placeholder="Home Address" value="{{ utilisateur.Address }}" type="text">
+                        <p>{{ utilisateur.Address }}</p>
                       </div>
                     </div>
                   </div>
@@ -169,36 +170,27 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">Ville</label>
-                        <input type="text" name="City" id="input-city" class="form-control form-control-alternative" placeholder="City" value="{{ utilisateur.City }}">
+                        <p>{{ utilisateur.City }}</p>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Pays</label>
-                        <input type="text" name="Country" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="{{ utilisateur.Country }}">
+                        <p>{{ utilisateur.Country }}</p>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Code Postal</label>
-                        <input type="number" name="postal_code" id="input-postal-code" class="form-control form-control-alternative"  value="{{ utilisateur.postal_code }}">
+                        <p>{{ utilisateur.postal_code }}</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr class="my-4">
                 <!-- Description -->
-                <h6 class="heading-small text-muted mb-4">Autre</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group focused">
-                    <label>Bio</label>
-                    <textarea rows="4" name="about_me" class="form-control form-control-alternative" placeholder="Quelques mot sur vous ...">{{ utilisateur.about_me }}</textarea>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-sm btn-default">Sauvegarder</button>
-
-              
-            </form>
+    
+                
             {% endblock %}
             </div>
           </div>
@@ -206,14 +198,7 @@
       </div>
     </div>
   </div>
-  <footer class="footer">
-    <div class="row align-items-center justify-content-xl-between">
-      <div class="col-xl-6 m-auto text-center">
-        <div class="copyright">
-        </div>
-      </div>
-    </div>
-  </footer>
+
   <script>
     document.getElementById("avatar").addEventListener("click", function() {
       document.getElementById("avatar-input").click();

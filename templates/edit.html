@@ -239,6 +239,16 @@
             <label>Catégorie:</label>  
             <input type="text" class="form-control" name="categorie" id="id_categorie" required maxlength="100" value="{{ contact.categorie }}" />  
         </div>
+        <div class="form-group">
+          <label for="id_Sexe">Sexe:</label>
+          <select class="form-control" name="Sexe" id="id_Sexe" required>
+            <option value="femme" {% if contact.Sexe == 'femme' %}selected{% endif %}>Femme</option>
+            <option value="homme" {% if contact.Sexe == 'homme' %}selected{% endif %}>Homme</option>
+            <option value="autre" {% if contact.Sexe == 'autre' %}selected{% endif %}>Autre</option>
+          </select>
+        </div>
+        
+         
       
            <center> <button type="submit" class="btn color-a top">Mettre a jours</button>  </center>
         

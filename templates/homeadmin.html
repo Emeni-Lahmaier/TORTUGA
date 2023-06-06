@@ -17,11 +17,11 @@ body{
 .cardmain{
   position: relative;
   padding: 20px;
-  margin-left:10%;
-  margin-top:2%;
-  width:80%;
-  background-color:#b09edb;
-  
+  margin-left:3%;
+  margin-top:4%;
+  width:95%;
+  background-color:#f4eeff;
+  height:75vh;
   border-top:1px solid rgba(255, 255, 255, 0.3);
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
@@ -52,25 +52,17 @@ body{
 }
 
 
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-.upper-section {
-
+.left {
   
+  display:flex;
+  margin-right: 20px; /* Add some space between the first two cards */
 }
-
-.lower-section {
-  position: relative;
-  padding: 20px;
-  margin-left:5%;
-  margin-top:2%;
- 
-  border-top:1px solid rgba(255, 255, 255, 0.3);
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  z-index: 1;
-  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
-}
-
 	</style>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -79,166 +71,169 @@ body{
     {% include 'navbar.html'  %} 
 	{%load static%}  
 
-{% block content %}
-<div class="cardmain">
-<div class="upper-section">
-  <div class="card " style="background-color:#f4eeff; width:30%; margin-top:5%;
-  float: left;">
-    <center><h4>Nombre d'infopreneurs pour chaque abonnement</h4></center>
-     <canvas id="myChart" class="content"></canvas>
-     <script>
-       var ctx = document.getElementById('myChart').getContext('2d');
- 
-       // Filter distinct subscription types
-       var distinctSubscriptionTypes = Array.from(new Set([{% for utilisateur in utilisateurs %}'{{ utilisateur.Abonnement }}',{% endfor %}]));
- 
-       // Count number of users for each subscription type
-       var userCounts = [];
-       for (var i = 0; i < distinctSubscriptionTypes.length; i++) {
-         var count = 0;
-         {% for utilisateur in utilisateurs %}
-         if ('{{ utilisateur.Abonnement }}' === distinctSubscriptionTypes[i]) {
-           count++;
-         }
-         {% endfor %}
-         userCounts.push(count);
-       }
- 
-       var myChart = new Chart(ctx, {
-         type: 'doughnut',
-         data: {
-           labels: distinctSubscriptionTypes,
-           datasets: [{
-             label: '# of Users',
-             data: userCounts,
-             backgroundColor: [
-               'rgba(255, 99, 132, 0.5)',
-               'rgba(54, 162, 235, 0.5)',
-               'rgba(255, 206, 86, 0.5)'
-             ],
-             borderColor: [
-               'rgba(255, 99, 132, 1)',
-               'rgba(54, 162, 235, 1)',
-               'rgba(255, 206, 86, 1)'
-             ],
-             borderWidth: 1
-           }]
-         },
- 
-       });
-     </script>
-  
-  </div>
-  
-</div>
 
-<div class="lower-section"  style="background-color:#f4eeff;width: 25%;height:5%;margin-left:55%; ">
-  <center><h4>Nombre d'infopreneurs par ville</h4></center>
-  <canvas id="myChart2" class="content" ></canvas>
-     <script>
-       var ctx = document.getElementById('myChart2').getContext('2d');
- 
-       // Filter distinct cities
-       var distinctCities = Array.from(new Set([{% for utilisateur in utilisateurs %}'{{ utilisateur.City }}',{% endfor %}]));
- 
-       // Count number of users for each city
-       var userCounts = [];
-       for (var i = 0; i < distinctCities.length; i++) {
-         var count = 0;
-         {% for utilisateur in utilisateurs %}
-         if ('{{ utilisateur.City }}' === distinctCities[i]) {
-           count++;
-         }
-         {% endfor %}
-         userCounts.push(count);
-       }
- 
-       var myChart = new Chart(ctx, {
-         type: 'polarArea',
-         data: {
-           labels: distinctCities,
-           datasets: [{
-             label: '# of Users',
-             data: userCounts,
-             backgroundColor: [
-               'rgba(255, 99, 132, 0.5)',
-               'rgba(54, 162, 235, 0.5)',
-               'rgba(255, 206, 86, 0.5)'
-               // Add more colors if needed
-             ],
-             borderColor: [
-               'rgba(255, 99, 132, 1)',
-               'rgba(54, 162, 235, 1)',
-               'rgba(255, 206, 86, 1)'
-               // Add more colors if needed
-             ],
-             borderWidth: 1
-           }]
-         },
-         // Add any other chart options as needed
-       });
-     </script>
-  </div>
-  <div class="card " style="background-color:#f4eeff;margin-left:30%;">
-    
-    <center><h4>Nombre de Tunnels réalisés par chaque infopreneur</h4></center>
-      <canvas id="postChart" class="content" ></canvas>
-      <script>
-        // Retrieve the data from the view
-        var data = {
-          {% for username, post_count in chart_data.items %}
-          '{{ username }}': {{ post_count }},
-          {% endfor %}
-        };
-  
-        // Extract the labels (user names) and data values (post counts)
-        var labels = Object.keys(data);
-        var values = Object.values(data);
-  
-        // Create the chart
-        var ctx = document.getElementById('postChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Number of Posts',
-              data: values,
-              backgroundColor: [
-           'rgba(255, 99, 132, 0.5)',
-           'rgba(54, 162, 235, 0.5)',
-           'rgba(255, 206, 86, 0.5)'
-           // Add more colors if needed
-         ],
-         borderColor: [
-           'rgba(255, 99, 132, 1)',
-           'rgba(54, 162, 235, 1)',
-           'rgba(255, 206, 86, 1)'
-           // Add more colors if needed
-         ],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                stepSize: 1
+<div class="cardmain" >
+  <div class="left">
+        <div class="card " style=" width:600px;">
+          <center><h4>Nombre d'infopreneurs pour chaque abonnement</h4></center>
+          <canvas id="myChart" class="content"></canvas>
+          <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+      
+            // Filter distinct subscription types
+            var distinctSubscriptionTypes = Array.from(new Set([{% for utilisateur in utilisateurs %}'{{ utilisateur.Abonnement }}',{% endfor %}]));
+      
+            // Count number of users for each subscription type
+            var userCounts = [];
+            for (var i = 0; i < distinctSubscriptionTypes.length; i++) {
+              var count = 0;
+              {% for utilisateur in utilisateurs %}
+              if ('{{ utilisateur.Abonnement }}' === distinctSubscriptionTypes[i]) {
+                count++;
               }
+              {% endfor %}
+              userCounts.push(count);
             }
-          }
-        });
-      </script>
-     </div>
+      
+            var myChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: distinctSubscriptionTypes,
+                datasets: [{
+                  label: '# of Users',
+                  data: userCounts,
+                  backgroundColor: [
+                  
+                      'rgba(75, 192, 192, 0.5)',
+                      'rgba(153, 102, 255, 0.5)',
+                      'rgba(255, 159, 64, 0.5)',
+                      'rgba(240, 120, 50, 0.5)',
+                            ],
+                  borderColor: [
+                    
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)',
+                      'rgba(240, 120, 50, 1)',
+
+                            ],
+                  borderWidth: 1
+                }]
+              },
+      
+            });
+          </script>
+        </div>
+   
+        <div class="card  " style=" width:750px;  ">
     
-
-
+          <center><h4>Nombre de Tunnels réalisés par chaque infopreneur</h4></center>
+            <canvas id="postChart" class="content" ></canvas>
+            <script>
+              // Retrieve the data from the view
+              var data = {
+                {% for username, post_count in chart_data.items %}
+                '{{ username }}': {{ post_count }},
+                {% endfor %}
+              };
+        
+              // Extract the labels (user names) and data values (post counts)
+              var labels = Object.keys(data);
+              var values = Object.values(data);
+        
+              // Create the chart
+              var ctx = document.getElementById('postChart').getContext('2d');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Nombre de Tunnel',
+                    data: values,
+                    backgroundColor: [
+                    
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                    'rgba(240, 120, 50, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+               ],
+               borderColor: [
+                
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(240, 120, 50, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+               ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      stepSize: 1
+                    }
+                  }
+                }
+              });
+            </script>
+        </div>
+          
+        
+      
+      
+      <div class="card  " style="width:850px;  ">
+        <center><h4>Nombre de réclamations par jour</h4></center>
+        <canvas id="reclamationChart"></canvas>
+           <script>
+               var sorted_dates = {{ sorted_dates|safe }};
+               var counts = {{ counts|safe }};
+      
+               var ctx = document.getElementById('reclamationChart').getContext('2d');
+               var chart = new Chart(ctx, {
+                   type: 'line',
+                   data: {
+                       labels: sorted_dates,
+                       datasets: [{
+                           label: 'Reclamations',
+                           data: counts,
+                           borderColor: 'purple',
+                           fill: false
+                       }]
+                   },
+                   options: {
+                       responsive: true,
+                       scales: {
+                           x: {
+                               display: true,
+                               title: {
+                                   display: true,
+                                   text: 'Date'
+                               }
+                           },
+                           y: {
+                               display: true,
+                               title: {
+                                   display: true,
+                                   text: 'Nombre de Reclamations'
+                               }
+                           }
+                       }
+                   }
+               });
+           </script>
+          </div>  
+     
+       
+  </div>
 </div>
-</div>
-{% endblock content %}
-
-
-
+  
 
 </body>
 </html>

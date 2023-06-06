@@ -19,7 +19,7 @@ class PostForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):  
     class Meta:  
         model = Contact  
-        fields = ['name', 'contact', 'email','categorie'] 
+        fields = ['name', 'contact', 'email','categorie','Sexe'] 
         widgets = { 'name': forms.TextInput(attrs={ 'class': 'form-control' }), 
             'email': forms.EmailInput(attrs={ 'class': 'form-control' }),
             'categorie': forms.TextInput(attrs={ 'class': 'form-control' }), 
@@ -91,7 +91,7 @@ class PopCreateForm(forms.ModelForm):
 class UtilisateurForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
-        fields = ['Address', 'City', 'Country', 'postal_code', 'about_me', 'phonenumber', 'date_naissance']
+        fields = ['avatar']
         widgets = {
             'Address': forms.TextInput(attrs={'class': 'form-control'}),
             'City': forms.TextInput(attrs={'class': 'form-control'}),
@@ -101,12 +101,6 @@ class UtilisateurForm(forms.ModelForm):
             'phonenumber': forms.TextInput(attrs={'class': 'form-control'}),
             'date_naissance': forms.DateInput(attrs={'class': 'form-control'}),
         }
-
-
- 
-        
- 
-
 
 
 class UserForm(UserChangeForm):

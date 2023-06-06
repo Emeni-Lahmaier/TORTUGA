@@ -239,7 +239,9 @@ h2{
                 <th>Email</th>
                 <th>Numéro de Téléphone</th>
                 <th>Ville</th>
+                <th>Sexe</th>
                 <th>Actions</th>
+
               </tr>
             </thead>
             <tbody>
@@ -251,6 +253,7 @@ h2{
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.contact }}</td>
                 <td>{{ contact.categorie }}</td>
+                <td>{{ contact.Sexe}}</td>
                 <td>
                   <button type="button" onclick="window.location.href='/edit/{{ contact.id }}'" class="btn color-a top">Editer</button>
                   <button type="button" onclick="window.location.href='/delete/{{ contact.id }}'" class="btn color-a top">Supprimer</button>

@@ -1,0 +1,283 @@
+<head>
+  {%include 'sidebar.html'%}
+  <style>
+    /* Custom font */
+    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+    
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      height: 100%;
+      background: #f2f2f2; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to left, #6441A5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+    }
+    
+    body {
+      font-family: Rockwell;
+      background: transparent;
+    }
+    
+    body::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(45deg, #655add, #d84b87);
+      clip-path: circle(25% at right 5%);
+    }
+    
+    body::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(#c14e993b, #90654b4f);
+      clip-path: circle(20% at left 95%);
+    }
+    
+    /* Form styles */
+    .subscribe-form {
+      text-align: center;
+      position: relative;
+      margin-top: 30px;
+    }
+    
+    .card {
+      background: white;
+      border: 0 none;
+      border-radius: 30px;
+      box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+      padding: 20px 30px;
+      box-sizing: border-box;
+      width: 65%;
+      margin: 3% 18%;
+      /* Stacking fieldsets above each other */
+      position: relative;
+    }
+    
+    /* Inputs */
+    .card input,
+    .card textarea {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      margin-left:10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: montserrat;
+      color: #2C3E50;
+      font-size: 13px;
+    }
+    
+    .card input:focus,
+    .card textarea:focus {
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      border: 1px solid #ee0979;
+      outline-width: 0;
+      transition: all 0.5s ease-in;
+      -webkit-transition: all 0.5s ease-in;
+      -moz-transition: all 0.5s ease-in;
+      -o-transition: all 0.5s ease-in;
+    }
+    
+    /* Buttons */
+    .card button {
+      width: 60%;
+      background: #ee0979;
+      color: white;
+      border: 0 none;
+      border-radius: 25px;
+      cursor: pointer;
+      padding: 10px 5px;
+      margin: 10px 5px;
+    }
+    
+    .card button:hover,
+    .card button:focus {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+    }
+    
+    /* Headings */
+    .card h1 {
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #2C3E50;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+    
+    .card label {
+      font-weight: normal;
+      font-size: 15px;
+      color: black
+    ;
+    margin-left:10px;
+    margin-bottom: 2px;
+    }
+    
+    /* Progressbar /
+    #progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    / CSS counters to number the steps */
+    counter-reset: step;
+    }
+    
+    #progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+    letter-spacing: 1px;
+    }
+    
+    #progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 24px;
+    height: 24px;
+    line-height: 26px;
+    display: block;
+    font-size: 12px;
+    color: #333;
+    background: white;
+    border-radius: 25px;
+    margin: 0 auto 10px auto;
+    }
+    
+    /* Progressbar connectors /
+    #progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; / Put it behind the numbers */
+    }
+    
+    #progressbar li:first-child:after {
+    /* Connector not needed before the first step */
+    content: none;
+    }
+    
+    /* Marking active/completed steps green /
+    / The number of the step and the connector before it = green */
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+    background: #ee0979;
+    color: white;
+    }
+    
+    /* Not relevant to this form */
+    .dme_link {
+    margin-top: 30px;
+    text-align: center;
+    }
+    
+    .dme_link a {
+    background: #FFF;
+    font-weight: bold;
+    color: #ee0979;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px 25px;
+    font-size: 12px;
+    }
+    
+    .dme_link a:hover,
+    .dme_link a:focus {
+    background: #C5C5F1;
+    text-decoration: none;
+    }
+    
+    h3 {
+    margin: 3% 15%;
+    }
+    .form-group{
+      display:flex;
+    }
+      
+          </style>
+        
+      <head/>
+
+{% block content %}
+<h3>Modifier Les Détails de votre profile</h3>  
+<div class="subscribe-form">
+   
+
+    <div class="card bg-light shadow">
+      <div class="card-body">
+  <form method="POST" class="post-form" enctype="multipart/form-data" action="{% url 'updateprofile1' utilisateur_id=utilisateur_id %}">
+      {% csrf_token %}  
+      <div class="form-group">
+        <label>Changer de photo de profil:</label>
+        <img src="{{ utilisateur.avatar.url }}" alt="Current Avatar" style="width:100px;border-radius: 20%; margin-bottom:2%;">
+        <input type="file" id="id_avatar" name="avatar">
+    </div>
+    <div class="form-group">
+      <label>Nom d'utilisateur:</label>  
+      <input type="text" id="id_username" name="username" class="form-control" placeholder="Nom d'utilisateur" value="{{ user.username}}">
+      <label>Email:</label>  
+      <input type="text" id="id_email" name="email" class="form-control" placeholder="Email" value="{{ user.email}}">
+    </div> 
+    <div class="form-group">
+      <label>Nom:</label>  
+      <input type="text" id="id_last_name" name="last_name" class="form-control" placeholder="Nom" value="{{ user.last_name}}">
+      <label>Prénom:</label>  
+      <input type="text" id="id_first_name" name="first_name" class="form-control" placeholder="Prénom" value="{{ user.first_name}}">
+    </div> 
+         <div class="form-group">
+            <label>Numéro de Télephone:</label>  
+            <input type="number" id="id_phonenumber" name="phonenumber" class="form-control" placeholder="Phone Number" value="{{ utilisateur.phonenumber}}">
+            <label>Date de Naissance:</label>
+          <input type="date" class="form-control" name="date_naissance" id="id_date_naissance"  value="{{ utilisateur.date_naissance }}"/>
+          </div> 
+        
+           <div class="form-group">
+              <label class="form-control-label" >Addresse</label>
+              <input type="text" name="Address" id="id_Address" class="form-control" placeholder="Adresse" value="{{ utilisateur.Address }}"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" >Ville</label>
+              <input type="text" name="City" id="id_City" class="form-control" placeholder="Ville" value="{{ utilisateur.City }}"/>
+              <label class="form-control-label" for="input-country">Pays</label>
+              <input type="text" name="Country" id="id_Country" class="form-control" placeholder="Pays" value="{{ utilisateur.Country }}"/>
+              <label class="form-control-label" for="input-country">Code Postal</label>
+              <input type="number" name="postal_code" id="id_postal_code" class="form-control"  value="{{ utilisateur.postal_code}}"/>
+            </div>
+        
+        
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea rows="4" name="about_me" class="form-control form-control-alternative" placeholder="Quelques mots sur vous ...">{{ utilisateur.about_me }}</textarea>
+        </div>
+        
+      </div>
+        
+           <center> <button type="submit" class="btn color-a top">Mettre a jours</button>  </center>
+          </div>
+      </div>
+  </div>
+</form>
+ 
+{% endblock content %}   

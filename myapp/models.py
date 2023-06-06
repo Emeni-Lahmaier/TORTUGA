@@ -4,16 +4,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 from PIL import Image
-from ckeditor.fields import RichTextField
 from django.forms import ModelForm;
 from django import forms;
 from django.core.files.base import ContentFile
 import requests
+
 # Create your models here.
 class Utilisateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
     phonenumber = models.CharField(max_length=20, null=True)
-    date_naissance = models.DateField(null=True)
+    date_naissance = models.DateField(null=True, default='2001-01-01')
     Address = models.CharField(max_length=256, null=True)
     City = models.CharField(max_length=256, null=True)
     Country = models.CharField(max_length=256, null=True)
@@ -46,10 +46,10 @@ class UserProfileForm(forms.ModelForm):
         }
 
     # Include User fields
-    username = forms.CharField(max_length=30, required=True)
-    first_name = forms.CharField(max_length=30, required=True)
-    last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=254, required=True)
+    username = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=30 )
+    last_name = forms.CharField(max_length=30 )
+    email = forms.EmailField(max_length=254)
     
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -166,6 +166,12 @@ class Contact(models.Model):
     email = models.EmailField(null=True)  
     contact = models.CharField(max_length=15)
     categorie= models.CharField(max_length=100, null=True)
+    sexe_type = (
+        ('femme', 'Femme'),
+        ('homme', 'Homme'),
+        ('autre', 'Autre'),
+    )
+    Sexe = models.CharField(max_length=30, choices=sexe_type, default='homme', null=True)
     class Meta:  
         db_table = "Contactt"
 

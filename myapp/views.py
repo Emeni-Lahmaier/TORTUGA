@@ -54,6 +54,7 @@ import os
 from django.conf import settings
 from django.http import HttpResponseServerError
 from django.http import HttpResponseBadRequest
+from django.db.models import Count
 @csrf_exempt
 def save_image(request):
     if request.method == 'POST':
@@ -196,13 +197,22 @@ def edit(request, id):
     contact = Contact.objects.get(id=id)  
     return render(request,'edit.html', {'contact':contact})  
  
-def update(request, id):  
-    contact = Contact.objects.get(id=id)  
-    form = ContactForm(request.POST, instance = contact)  
-    if form.is_valid():  
-        form.save()  
-        return redirect("/index")  
-    return render(request, 'edit.html', {'contact':contact})  
+def update(request, id):
+    contact = Contact.objects.get(id=id)
+    if request.method == 'POST':
+        form = ContactForm(request.POST, instance=contact)
+        if form.is_valid():
+            form.save()
+            return redirect("/index")
+    else:
+        form = ContactForm(instance=contact)
+        
+    context = {
+        'form': form,
+        'contact': contact
+    }
+
+    return render(request, 'edit.html', context)  
      
 def destroy(request, id):  
     contact = Contact.objects.get(id=id)  
@@ -289,7 +299,7 @@ def destroyadmin(request, id):
 
 def reclamationSucc(request):
    return render(request,'reclamationSucc.html')
-
+import json
 def acceuil(request):
     # Get the ID of the current user
     user_id = request.user.id
@@ -297,10 +307,27 @@ def acceuil(request):
     contacts = Contact.objects.filter(id_infopreneur_id=user_id)
     tunnels=Post.objects.filter(id_infopreneur_id=user_id)
     affilies=Affilie.objects.filter(id_infopreneur_id=user_id)
+    user = request.user
+
+    #Fetch the number of contacts for the authenticated user
+    contact_count = user.contact_set.count()
+
+    # Fetch the number of affiliates for the authenticated user
+    affiliate_count = user.affilie_set.count()
+
+    # Fetch the number of posts for the authenticated user
+    post_count = user.post_set.count()
+    contacts_list = list(contacts.values('Sexe'))
+    contacts_json = json.dumps(contacts_list)
+
     context = {
+        'contact_count': contact_count,
+        'affiliate_count': affiliate_count,
+        'post_count': post_count,
         'contacts': contacts,
         'affilies':affilies,
         'tunnels':tunnels,
+        'contacts_json': contacts_json,
     }
 
     return render(request,'acceuil.html',context)
@@ -313,10 +340,22 @@ def homeadmin(request):
     for post in posts:
         username = post.id_infopreneur.username
         chart_data[username] = chart_data.get(username, 0) + 1
+    reclamation_data = ContactFormSubmission.objects.values('submitted_at').annotate(count=Count('id')).order_by('submitted_at')
+    date_counts = {}
+    for data in reclamation_data:
+        date = data['submitted_at'].strftime('%Y-%m-%d')
+        date_counts[date] = date_counts.get(date, 0) + 1
+
+        sorted_dates = sorted(date_counts.keys())
+        counts = [date_counts[date] for date in sorted_dates]
+
+   
 
     context = {
         'chart_data': chart_data,
         'utilisateurs':utilisateurs,
+        'sorted_dates': sorted_dates,
+        'counts': counts,
     }
     return render(request,'homeadmin.html',context)
 
@@ -456,6 +495,94 @@ def updatep(request, id):
         return redirect("/acceuil") 
     return render(request, 'profil.html', {'utilisateur':utilisateur}, {'user':user}) 
 
+from datetime import datetime
+
+@login_required
+def updateprofile1(request, utilisateur_id):
+    utilisateur = Utilisateur.objects.get(id=utilisateur_id)
+    user = utilisateur.user
+
+    if request.method == 'POST':
+        fields = request.POST.dict()
+        avatar_file = request.FILES.get('avatar')
+        # Store the existing avatar URL
+        existing_avatar_url = utilisateur.avatar.url if utilisateur.avatar else None
+
+        # Update other fields
+        for field_name, field_value in fields.items():
+            if hasattr(utilisateur, field_name):
+                if field_name == 'date_naissance':
+                    try:
+                        date_value = datetime.strptime(field_value, '%Y-%m-%d').date()
+                        setattr(utilisateur, field_name, date_value)
+                    except ValueError:
+                        pass
+                else:
+                    setattr(utilisateur, field_name, field_value)
+            if hasattr(user, field_name):
+                setattr(user, field_name, field_value)
+
+        if avatar_file:
+            # Read the file content
+            file_content = avatar_file.read()
+            # Set the file content as the avatar field value
+            utilisateur.avatar.save(avatar_file.name, ContentFile(file_content))
+        elif existing_avatar_url:
+            # Preserve the existing avatar if no new avatar file is provided
+            setattr(utilisateur, 'avatar', existing_avatar_url)
+
+        # Save the utilisateur and user objects
+        utilisateur.save()
+        user.save()
+
+        return redirect('profile', utilisateur_id)
+
+    return render(request, 'updateprofile1.html', {'utilisateur_id': utilisateur_id, 'utilisateur': utilisateur})
+
+
+@login_required
+def updateprofile1admin(request, utilisateur_id):
+    utilisateur = Utilisateur.objects.get(id=utilisateur_id)
+    user = utilisateur.user
+
+    if request.method == 'POST':
+        fields = request.POST.dict()
+        avatar_file = request.FILES.get('avatar')
+        # Store the existing avatar URL
+        existing_avatar_url = utilisateur.avatar.url if utilisateur.avatar else None
+
+        # Update other fields
+        for field_name, field_value in fields.items():
+            if hasattr(utilisateur, field_name):
+                if field_name == 'date_naissance':
+                    try:
+                        date_value = datetime.strptime(field_value, '%Y-%m-%d').date()
+                        setattr(utilisateur, field_name, date_value)
+                    except ValueError:
+                        pass
+                else:
+                    setattr(utilisateur, field_name, field_value)
+            if hasattr(user, field_name):
+                setattr(user, field_name, field_value)
+
+        if avatar_file:
+            # Read the file content
+            file_content = avatar_file.read()
+            # Set the file content as the avatar field value
+            utilisateur.avatar.save(avatar_file.name, ContentFile(file_content))
+        elif existing_avatar_url:
+            # Preserve the existing avatar if no new avatar file is provided
+            setattr(utilisateur, 'avatar', existing_avatar_url)
+
+        # Save the utilisateur and user objects
+        utilisateur.save()
+        user.save()
+
+        return redirect('profiladmin', utilisateur_id)
+
+    return render(request, 'updateprofile1admin.html', {'utilisateur_id': utilisateur_id, 'utilisateur': utilisateur})
+
+
 def update_profile(request, user_id):
     # Retrieve the utilisateur object or return 404 error if not found
     utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
@@ -497,7 +624,7 @@ def update_profile(request, user_id):
 def update_profiladmin(request, user_id):
     # Retrieve the utilisateur object or return 404 error if not found
     utilisateur = get_object_or_404(Utilisateur, user_id=user_id)
-
+    
     # Populate the form with existing data
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
